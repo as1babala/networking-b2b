@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+   <p class="white"><a href="{% url 'jobs:job-list' %}">job list</a></p> 
+
+    <h3 class="white">Job title: {{jobs.slug}}</h3>
+    <hr>
+    
+            <p class="white">Company name: {{jobs.company_name}} || Contact name: {{jobs.job_contact}} || contact email: {{jobs.email}}
+            <br>Conutry: {{jobs.country}}
+            <br>City: {{jobs.city}}
+            <br>Job grade: {{jobs.job_grade}}
+            <br>Salary($): {{jobs.Salary}}
+            <br>Department: {{jobs.Department}}
+            <br>Job type: {{jobs.job_type}}
+            <br>Job summary: {{jobs.summary}}
+            <br>Job description: {{jobs.job_description}}
+            <br>Required qualifications: {{jobs.job_qualifications}}
+            <br>Travel required: {{jobs.travel_required}}
+            <br/>Projected starting date: {{jobs.created_on|date}} 
+            <br/>Date posted: {{jobs.created_on|date}}</p>
+    
+<hr />
+<button type="button" class="btn btn-primary" onclick="location.href='{% url 'jobs:application-create' jobs.pk %}'">Apply</button></td> 
+<button type="button" class="btn btn-secondary" onclick="location.href='{% url 'jobs:job-update' jobs.pk %}'">Edit</button>
+<button type="button" class="btn btn-danger" onclick="location.href='{% url 'jobs:job-delete' jobs.pk %}'">Delete</button>
+<button type="button" class="btn btn-dark" onclick="location.href='{% url 'jobs:job-list' %}'">Cancel</button>
+
+
+{% endblock %}

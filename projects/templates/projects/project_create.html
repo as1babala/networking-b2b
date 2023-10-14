@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title%}
+
+{% endblock title%}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+{% load bootstrap5 %}
+
+<div class="container white">
+    <div class="row my-5">
+        <div class="col-md-12">
+            <div class="container">
+                <div class="row my-5">
+                <div class="col-md-2">
+              <button type="button" class="btn btn-outline-secondary" onclick="location.href='{% url 'projects:project-create' %}'">Enter a new project</button> 
+             </div>
+             <div class="col-md-2">
+              <button type="button" class="btn btn-outline-secondary" onclick="location.href='{% url 'projects:project-notreviewed' %}'">Pending for review</button>
+            </div>
+            <div class="col-md-2">
+              <button type="button" class="btn btn-outline-secondary" onclick="location.href='{% url 'projects:project-reviewed' %}'">Pending for approval</button>
+            </div>
+            <div class="col-md-2">
+              <button type="button" class="btn btn-outline-secondary" onclick="location.href='{% url 'projects:project-approved' %}'">Approved projects</button>
+            </div>
+            <div class="col-md-2">
+              <button type="button" class="btn btn-outline-secondary" onclick="location.href='{% url 'projects:project-rejected' %}'">Rejected projects</button>
+            </div>
+            <div class="col-md-2">
+              <button type="button" class="btn btn-outline-secondary" onclick="location.href='{% url 'projects:project-list' %}'">All projects</button>
+            </div>
+            </div>
+            </div>
+            <form method="post" class="form" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                {% buttons %}
+                <button type="submit" class="btn btn-primary">Submit</button>
+                {% endbuttons %}
+            </form>
+        </div>
+    </div>
+</div>
+
+    {% endblock %}

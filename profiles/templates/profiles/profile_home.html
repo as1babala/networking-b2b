@@ -1,0 +1,79 @@
+
+{% extends "base.html" %}
+
+{% load static %}
+{% load bootstrap5 %}
+
+{% block content %}
+<body>
+<head>
+    <!--link rel="stylesheet" href="{% static 'css/style_main.css' %}"-->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  </head>
+  <div class="container-fluid">
+    <section class="deals">
+      <div class="container top_message">
+        <div class="shadow-lg p-3 mb-1 bg-body-tertiary rounded">
+        <h3 class="robust"><span class="about"><i class="fa-solid fa-users"></i></span> Eperts List</h3>
+        {% for exprofile in expert_profile %}
+      <ul><li><i><b>User name:</b></i> {{ exprofile.user}}  ||<i><b> Name: </b></i>  {{exprofile.last_name}}  {{exprofile.first_name}} 
+        || <i><b> Company name:</b></i> {{exprofile.company_name}} || <i><b> Company email:</b></i> {{exprofile.email}} 
+        || <i><b>created on:</b></i> {{exprofile.created_on|date}}  </li></ul>
+      {% endfor %}
+
+      </div>
+      </div>
+    </section>
+
+    <section class="blogs">
+      <div class="container top_message">
+        <div class="shadow-lg p-3 mb-1 bg-body-tertiary rounded">
+        <h3 class="robust"><span class="about"><i class="fa-solid fa-users"></i></span> Companies listing</h3>
+       <!-- {% include 'accounts/top_blogs.html'%}-->
+       {% for cprofile in company_profile %}
+       <ul><li><i><b>User name:</b></i> {{ cprofile.user}}  ||<i><b> Name: </b></i>  {{cprofile.last_name}}  {{cprofile.first_name}} 
+        || <i><b> Company name:</b></i> {{cprofile.company_name}} || <i><b> Company email:</b></i> {{cprofile.email}} 
+        || <i><b>created on:</b></i> {{cprofile.created_on|date}}  </li></ul>
+       {% endfor %}
+
+       
+     </div>
+      </div>
+    </section>
+
+    <section class="company">
+      <div class="container top_message">
+        <div class="shadow-lg p-3 mb-1 bg-body-tertiary rounded">
+        <h3 class="robust"><span class="about"><i class="fa-solid fa-buildings"></i></span>Employees list</h3>
+       
+        {% for eprofile in employee_profile %}
+       <ul><li>{{ eprofile.user}}   {{eprofile.last_name}}  {{eprofile.firts_name}}   {{eprofile.DOB|date}} {{cprofile.created_on|date}}  </li></ul>
+       {% endfor %}
+
+       
+     </div>
+      </div>
+    </section>
+
+    <section class="fiche">
+      <div class="container top_message">
+        <div class="shadow-lg p-3 mb-1 bg-body-tertiary rounded">
+        <h3 class="robust"><span class="about"><i class="fa-solid fa-buildings"></i></span>Admin list</h3>
+       
+        {% for aprofile in admin_profile %}
+       <ul><li>{{ aprofile.user}}   {{aprofile.last_name}}  {{aprofile.firts_name}}   {{aprofile.company_name}} {{aprofile.created_on|date}}  </li></ul>
+       {% endfor %}
+          
+        
+     </div>
+      </div>
+    </section>
+
+      
+{% include 'footer.html' %} 
+
+
+{% endblock content%}
+
+</div>
+</body>

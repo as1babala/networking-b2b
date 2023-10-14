@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+   <p><a href="{% url 'projects:project-list' %}">Projects list</a></p> 
+    <h1>This is the Detail of {{projects.project_name}} Project</h1>
+    
+<hr />
+<button type="button" class="btn btn-secondary" onclick="location.href='{% url 'projects:project-update' projects.pk %}'">Update</button>
+<button type="button" class="btn btn-danger" onclick="location.href='{% url 'projects:project-delete' projects.pk %}'">Delete</button>
+<button type="button" class="btn btn-dark" onclick="location.href='{% url 'projects:project-list' %}'">Cancel</button>
+
+
+{% endblock %}

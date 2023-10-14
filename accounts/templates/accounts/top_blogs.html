@@ -1,0 +1,5 @@
+{% for blog in blogs %}
+<ul>
+  <li>{{blog.slug}} {{ blog.title }} - {{ blog.author }} {{blog.content|truncatewords:'50'}}</li>
+</ul>
+{% endfor %}

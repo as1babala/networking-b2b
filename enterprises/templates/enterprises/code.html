@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title%}
+
+{% endblock title%}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+
+{% load bootstrap5 %}
+{% load static %}
+
+<div class="container">
+    <div class="row my-5">
+        <div class="col-md-12">
+            <!--form method="post" id="EnterprisesForm" data-cities-url="{% url 'enterprises:ajax_load_sectors' %}" novalidate-->
+            <form method="post" class="form">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                {% buttons %}
+                <button type="submit" class="btn btn-primary">Submit</button>
+                {% endbuttons %}
+            </form>
+        </div>
+    </div>
+</div>
+<!--jquery script-->
+<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+<!-- select2 script -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="{% static 'js/dropdown.js' %}"></script>
+<script>
+    // In your Javascript (external .js resource or <script> tag)
+$(document).ready(function() {
+    $('.js-example-basic-single').select2();
+});
+</script>
+  
+    {% endblock %}
+
+
+<div class="container">
+    <p><a href="{% url 'enterprises:enterprise-list' %}">Go Back to companies List</a></p> 
+    <form method="post" class="form">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+        <button type="submit" class="btn btn-primary">Submit</button>
+        {% endbuttons %}
+    </form>
+</div> 
+
+<!--jquery script-->
+<!--script src="https://code.jquery.com/jquery-3.6.3.min.js" 
+integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" 
+crossorigin="anonymous"></script-->
+<!-- select2 script -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+    
+$(document).ready(function() {
+    $('.id_sector').select2();
+});
+</script>
+{% endblock %}

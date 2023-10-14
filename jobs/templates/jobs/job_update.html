@@ -1,0 +1,22 @@
+{% block content %}
+{% load bootstrap5 %}
+
+{% load crispy_forms_tags %}
+<div class="container">
+    <div class="row my-5">
+        <div class="col-md-8">
+   <p><a href="{% url 'jobs:job-list' %}">Go Back to jobs list</a></p>
+
+    <h1>Update for {{jobs.job_title}}</h1><br>
+    <form method="post" class="form">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+        <button type="submit" class="btn btn-primary">Submit</button>
+        {% endbuttons %}
+    </form>
+</div>
+</div>
+</div>
+
+    {% endblock %}

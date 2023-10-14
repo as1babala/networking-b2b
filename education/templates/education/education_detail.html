@@ -1,0 +1,19 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+   <p><a href="{% url 'education:education-list' %}">List of companies</a></p> 
+    <h1>{{education.institution_name}} details:</h1>
+    <p>Category: {{education.degree}}</p>
+    <p>Description: {{education.major}}</p>
+    <p>Risks: {{education.minor}}</p>
+    <p>Seed: {{education.graduated}}</p>
+    <p>Seed supplier: {{education.description}}<p>
+    
+<hr />
+<button type="button" class="btn btn-secondary" onclick="location.href='{% url 'education:education-update' education.slug %}'">Update</button>
+<button type="button" class="btn btn-danger" onclick="location.href='{% url 'education:education-delete' educatoion.slug %}'">Delete</button>
+<button type="button" class="btn btn-dark" onclick="location.href='{% url 'education:education-list' %}'">Cancel</button>
+
+
+{% endblock %}

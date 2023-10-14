@@ -1,0 +1,84 @@
+
+{% extends "base.html" %}
+
+{% load static %}
+{% load bootstrap5 %}
+
+{% block content %}
+<body>
+<head>
+    <!--link rel="stylesheet" href="{% static 'css/style_main.css' %}"-->
+  </head>
+  
+
+<section class="content1">
+  <div class="container">
+    <div class="row my-5">
+        <div class="col-md-4 column mx-2">
+            <img src="{% static 'images/mission_vision.png' %}" style="width:100%" class="img-fluid img-thumbnail" alt="Mission Statement">
+        </div>
+        <div class="col-md-8 column mx-2">
+        <h3 class="robust text-left" >Our Mission Statement</h3>
+        <p class="white">We are a networking company that specializes in bringing companies and experts together to collaborate, share business opportunities, resources, and expertise. We enable our clients to request technical, financial, commercial, and managerial assistance, allowing them to grow their businesses and reach new heights.
+        <br/><br/>Our mission is to help businesses connect with the right people and resources to succeed. <span class="about">
+          <br/><b><br/>We believe that collaboration is key to success and that by working together, we can achieve great things.</b></span>
+           <br/><br/><a href="{% url 'accounts:signup' %}" >
+            <button class="btn btnfont btnbg"> <span><i class="fa-solid fa-play"></i></span>  Let's Start</button></a> 
+        </p>
+        </div>
+    </divi>
+  </section>
+  <section>
+    <div class="container">
+    <div class="row my-5">
+        <div class="col-md-8 column mx-2">
+          <div class="shadow-lg p-3 mb-2 bg-body-tertiary rounded">
+          <h3 class="robust text-left">Vision</h3>
+          <p class="white"> 
+            To become the leading platform for businesses and experts to collaborate, share resources, and expertise, creating a community of innovators that drives the growth of the global economy. 
+            <br>We envision a world where all businesses and experts can easily connect, exchange knowledge, and form strategic partnerships to achieve their goals and make a positive impact on society. 
+            <br>With our user-friendly platform and cutting-edge technology, we aim to break down barriers and facilitate seamless communication between businesses and experts worldwide. Together, we can unlock endless possibilities and shape the future of business.
+ 
+        </p>
+        <br>
+ 
+        <a href="{% url 'accounts:signup' %}" >
+            <button class="btn btnfont btnbg"> <span><i class="fa-solid fa-play"></i></span>  Let's Start</button></a>
+        </div></div>
+        <div class="col-md-4 column mx-2">
+          <img src="{% static 'images/vision.jpeg' %}" style="width:100%; vh:100%" class="img-thumbnail img-fluid" alt="...">
+      </div>
+    </div>
+  </div>
+    </section>
+
+    <section>
+      <div class="row my-5 mx-5">
+        <div class="col-md-4 column mx-2">
+          <img src="{% static 'images/values.jpeg' %}" style="width:100%" class="img-thumbnail" alt="...">
+      </div> 
+        <div class="col-md-8 column mx-2">
+          <div class="shadow-lg p-3 mb-1 bg-body-tertiary rounded">
+          <h3 class="robust text-left">Values</h3>
+          <p class="white"> 
+            <span class="about"><i>Collaboration:</i></span> We believe in the power of collaboration and strive to bring companies and experts together to create mutually beneficial partnerships.
+          </p>
+            <p class="white"><span class="about"><i>Innovation: </i></span>We encourage innovative thinking and seek to be at the forefront of industry advancements.
+
+                <br/><br/><span class="about"><i>Accountability: </i></span>We take responsibility for our actions and hold ourselves accountable to our clients, partners, and stakeholders.
+                    <br/><br/><span class="about"><i> Integrity: </i></span> We believe in honesty, transparency, and ethical business practices.</span>
+        </p>
+         <p class="white"> <a href="{% url 'accounts:signup' %}" >
+            <button class="btn btnfont btnbg"><span><i class="fa-solid fa-play"></i></span> Let's Start</button></a> </p>
+        </div></div>
+        
+</section>
+
+{% include 'footer.html' %}        
+
+
+
+{% endblock content%}
+
+
+</body>

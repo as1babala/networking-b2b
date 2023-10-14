@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+   <p><a href="{% url 'industries:industry-list' %}">Industry list</a></p> 
+    <h1>This is the Detail of {{industry.industry_name}}</h1>
+    
+<hr />
+<button type="button" class="btn btn-secondary" onclick="location.href='{% url 'industries:industry-update' industry.pk %}'">Update</button>
+<button type="button" class="btn btn-danger" onclick="location.href='{% url 'industries:industry-delete' industry.pk %}'">Delete</button>
+<button type="button" class="btn btn-dark" onclick="location.href='{% url 'industries:industry-list' %}'">Cancel</button>
+
+
+{% endblock %}

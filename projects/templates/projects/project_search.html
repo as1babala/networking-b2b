@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}
+
+{% endblock title%}
+
+{% block content %}
+<div class="p-3 mb-2 bg-info text-dark" >
+  <h2 class="text-4xl text-gray800">Projects search result </h2>
+  <hr class="text-danger border-2 opacity-50">
+ 
+  <form class="d-flex" role="search" action='/search/' method='GET' enctype="">
+      <input class="form-control me-2" name="q" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+    <hr class="border-primary border-3 opacity-75">
+  </div>
+  <br>
+ <p> <a href="{% url 'projects:project-create' %}">Create a new project</a><p>
+
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        
+        <th scope="col">project ID</th>
+        <th scope="col">company name</th>
+        <th scope="col">project name</th>
+        <th scope="col">Reviewer</th>
+        <th scope="col">Approver</th>
+        <th scope="col">Created on</th> 
+       
+      </tr>
+    </thead>
+    <tbody>
+      {% for project in object_list %}
+          <tr>
+              
+              <td><a href="{% url 'projects:project-detail' project.pk %}">{{project.id}}</a></td>
+             
+              <td>{{project.}}</td>
+              <td>{{project.project_name}}</td>
+              <td>{{project.reviewer}}</td>
+              <td>{{project.approver}}</td>
+
+              <td>{{project.created_on|date}}</td>
+              
+          </tr>
+      {% endfor %}
+  
+    </tbody>
+  </table>
+
+  <div>
+    {% block pagination %}
+      {% if is_paginated %}
+
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+          <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
+          <li class="page-item"><a class="page-link" href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Previous </a></li>
+          {% endif %}
+          <span class="page-current">
+            <li class="page-item"><a class="page-link" href="#">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a></li>
+        </span>
+        {% if page_obj.has_next %}
+          <li class="page-item"><a class="page-link" href="{{ request.path }}?page={{ page_obj.next_page_number }}">Next</a></li>
+          <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+        </ul>
+      </nav>
+      {% endif %}
+      {% endblock %}
+        </div>
+
+{% endblock content %}

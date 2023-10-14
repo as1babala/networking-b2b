@@ -1,0 +1,81 @@
+{% load static %}
+
+{% url 'accounts:home-page' as path_to_home_page %}
+{% url 'accounts:home' as path_to_home %}
+{% url 'accounts:login' as path_to_login %}
+{% url 'accounts:about-us' as path_to_about_us %}
+{% url 'contacts:contact-create' as path_to_contact %}
+{% url 'accounts:signup' as path_to_signup %}
+
+{% url 'profiles:user-profile' as path_to_my_profile %}
+{% url 'profiles:expert-profile' as path_to_expert_profile %}
+{% url 'profiles:company-profile' as path_to_company_profile %}
+{% url 'profiles:employee-profile' as path_to_employee_profile %}
+
+{% url 'employees:employee-create' as path_to_emp_create %}
+{% url 'jobs:job-create' as path_to_job_create %}
+{% url 'jobs:job-list' as path_to_job_listing %}
+{% url 'applications:application-list' as path_to_app_listings %}
+{% url 'applications:application-create' as path_to_app_create %}
+<link rel="stylesheet" href="{% static 'style_main.css' %}">
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="navtop container-fluid" style="align-left">
+    
+    <!--<a class="navbar-brand" href=""><img src="{% static "/images/bckgrd.png" %}" style="width:10%; height:10%"></a-->
+    <h2 class="logo">Net<span>working</span></h2>
+ 
+  <div > 
+  <div class="collapse navbar-collapse" id="navbarNav">
+      
+    <ul class="navbar-nav">
+  <li class="nav-item"><a class="nav-link {% if request.path == path_to_home_page %}active{% endif %}" href="{{path_to_home_page}}">Home</a></li>
+  <li class="nav-item"><a class="nav-link {% if request.path == path_to_login %}active{% endif %}" href="{{path_to_login}}">Login</a></li>
+  <li class="nav-item"><a class="nav-link {% if request.path == path_to_signup %}active{% endif %}" href="{{path_to_signup}}">Join Us</a></li>
+  <li class="nav-item"><a class="nav-link {% if request.path == path_to_emp_create %}active{% endif %}" href="{{path_to_emp_create}}">Employee Profile</a></li>
+  <li class="nav-item"><a class="nav-link {% if request.path == path_to_job_create %}active{% endif %}" href="{{path_to_job_create}}">Post New Job</a></li>
+  <li class="nav-item"><a class="nav-link {% if request.path == path_to_job_listing %}active{% endif %}" href="{{path_to_job_listing}}">Job Listing</a></li>
+  <li class="nav-item"><a class="nav-link {% if request.path == path_to_app_listing %}active{% endif %}" href="{{path_to_app_listing}}"> Applications</a></li>
+  <li class="nav-item"><a class="nav-link {% if request.path == path_to_app_create %}active{% endif %}" href="{{path_to_app_create}}"></a></li>
+
+</ul>
+
+  </div>
+  </div>
+  <div class="nav-item dropdown">
+    <div class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <!--img src="{{request.user.profile.avatar.url}}" class="avatar-sm">&nbsp;{{request.user}}-->
+      More
+    </div>
+    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+      <li><a class="nav-link {% if request.path == path_to_contact%}active{% endif %}" href="{{path_to_contact}}">contact Us</a></li>
+      <li><a class="nav-link {% if request.path == path_to_about_us%}active{% endif %}" href="{{path_to_about_us}}">Who We Are</a></li>
+    </ul>
+  </div>
+  
+    <div class="nav-item dropdown">
+      <div class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="{{request.user.profile.avatar.url}}" class="avatar-sm">&nbsp;{{request.user}}
+      </div>
+      <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+        {% if CustomUser.is_company %} 
+        <li><a class="nav-link {% if request.path == path_to_company_profile%}active{% endif %}" href="{{path_to_company_profile}}">Profile</a></li>
+        <li><a class="dropdown-item" href="{% url 'accounts:signup' %}">Logout</a></li>
+        
+        {% elif CustomUser.is_consultant %}
+        <li><a class="nav-link {% if request.path == path_to_expert_profile%}active{% endif %}" href="{{path_to_expert_profile}}">Profile</a></li>
+        <li><a class="dropdown-item" href="{% url 'accounts:signup' %}">Logout</a></li> 
+  
+        {% endif %}
+        <li><a class="nav-link {% if request.path == path_to_my_profile%}active{% endif %}" href="{{path_to_my_profile}}">Profile</a></li>
+        <li><a class="dropdown-item" href="{% url 'accounts:signup' %}">Logout</a></li>
+      </ul>
+    </div>
+
+</div>
+
+</nav>
+
+
+

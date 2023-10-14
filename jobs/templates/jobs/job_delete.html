@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+
+{% block title %} Delete this Job? {% endblock title %}
+
+
+{% block content %}
+                
+    <form method="post">
+        
+        {% csrf_token %}
+        
+        <fieldset class="form-group white">
+            <div style="color:#ea2088; font-style: bold; font-size: 3rem; border-bottom: 1px solid white;">Delete job form jobs list</div> <br>
+            <h2>Are you sure you want to delete "{{ object.job_title }}"?</h2>
+        </fieldset>
+
+        <div class="form-group">  
+            <button type="submit" class="btn btnfont btnbg mb-1 mx-2">Yes, Delete</button>
+            <a href="{% url 'jobs:job-list' %}" class="btn btnfont btnbg mb-1 mx-2">Cancel</a>
+        </div>
+        
+    </form>
+
+{% endblock content %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+   <p><a href="{% url 'fiches:fiche-list' %}">List of companies</a></p> 
+    <h1 class="white">{{fiches.name}} details:</h1><br/>
+    <p class="white">Category: {{fiches.category}}<br/><br/>
+    Description: {{fiches.description}}<br/><br/>
+    Risks: {{fiches.principal_risks}}<br/><br/>
+    Seed: {{fiches.seed}}<br/><br/>
+    Seed supplier: {{fiches.seed_supplier}}
+</p>
+    
+<hr />
+<button type="button" class="btn btn-secondary" onclick="location.href='{% url 'fiches:fiche-update' fiches.pk %}'">Update</button>
+<button type="button" class="btn btn-danger" onclick="location.href='{% url 'fiches:fiche-delete' fiches.pk %}'">Delete</button>
+<button type="button" class="btn btn-dark" onclick="location.href='{% url 'fiches:fiche-list' %}'">Cancel</button>
+
+
+{% endblock %}

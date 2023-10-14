@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% block title %}
+
+{% endblock title%}
+
+{% block content %}
+
+<div class="row" style="color: #0d6efd; font-style: bold; font-size: 2rem; ">
+    <div class="col-md-8">Product and animals list</div>
+    
+</div>
+
+<div style="border-bottom: 1px solid white;" class="row">
+    <div class="col-md-4">               
+   
+    <div style="float:left; color: #0d6efd" width="30%"> 
+        <a class="btn ghost-blue" href="{% url 'fiches:fiche-create' %}">
+        <button class="btn btn-outline-secondary" type="submit">Add a new</button></a> 
+    </div>
+
+</div>
+<div class="col-md-4" style="float:right" width="70%">
+  <form class="d-flex" role="search" action="{% url 'fiches:fiche-search' %}" method='GET' enctype="">
+    <input class="form-control me-2" name="q" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success" type="submit">Search</button>
+  </form>
+</div>
+</div>
+
+<br>
+
+<table class="table table-css">
+
+    <br>
+    
+    <thead class="thead-inverse align-middle">
+        <tr>
+            
+            <th scope="col">Action</th>
+        <th scope="col">Name</th>
+        <th scope="col">Category</th>
+        <th scope="col">Description</th>
+        <th scope="col">Principal risk </th>
+        <th scope="col">Seed </th>
+        <th scope="col">Seed supplier</th>
+        <th scope="col">Created on</th>
+       
+        </tr>
+    </thead>
+              
+{% if object_list %}
+
+    <tbody>         
+        {% for consultant in object_list %}
+            <tr>
+                <td class="align-middle" style="color:#0d6efd; font-style: bold; font-size: .7rem">
+                    <td><a href="{% url 'fiches:fiche-detail' fiche.slug %}">Check Details</a></td>
+              
+                    <td>{{fiche.name}}</td>
+                    <td>{{fiche.category}}</td>
+                    <td>{{fiche.description}}</td>
+                    <td>{{fiche.principal_risks}}</td>
+                    <td>{{fiche.seed}}</td>
+                    <td>{{fiche.seed_supplier}}</td>
+                    <td>{{fiche.created_on|date}}</td>    
+            </tr>
+        {% endfor %}                   
+    </tbody>
+
+</table>  
+
+<div class="align-middle">
+    {% if is_paginated %}
+
+        {% if page_obj.has_previous %}
+            <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+            <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+                <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+            <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+        {% endif %}
+
+    {% endif %}
+</div>
+
+{% else %}
+
+    <tbody></tbody>   
+</table>
+
+<br><br>
+<div style="color: #ea2088; font-style: bold; font-size: 1.5rem; text-align: center;">WOW, No results for your search query</div>
+
+{% endif %}
+
+
+{% endblock content %}

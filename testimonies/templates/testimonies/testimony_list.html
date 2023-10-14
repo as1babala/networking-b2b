@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}
+
+{% endblock title%}
+
+{% block content %}
+<section class="search-colum">
+  <div class="p-3 mb-2 bg-info text-blue search-column" >
+    <h2 class="text-4xl text-gray800"></h2>
+    <form class="d-flex" role="search" action="{% url 'testimonies:testimony-search' %}" method='GET' enctype="">
+        <input class="form-control me-2" name="q" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+      <hr class="border-primary border-3 opacity-75">
+    </div>
+</section>
+<section>
+ <p> <a href="{% url 'testimonies:testimony-create' %}">Leave a testimony</a><p>
+
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">user Name</th>
+        <th scope="col">testimony</th>
+        <th scope="col">Create on</th>
+       
+      </tr>
+    </thead>
+    <tbody>
+      {% for testimony in testimony %}
+          <tr>
+              <td><a href="{% url 'testimonies:testimony-detail' testimony.pk %}">{{testimony.id}}</a></td>
+              <td>{{testimony.user}}</td>
+              <td>{{testimony.testimony}}</td>
+              <td>{{testimony.created_at|date}}</td>
+              
+          </tr>
+      {% endfor %}
+  
+    </tbody>
+  </table>
+
+  <div>
+    {% block pagination %}
+      {% if is_paginated %}
+
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+          <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
+          <li class="page-item"><a class="page-link" href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Previous </a></li>
+          {% endif %}
+          <span class="page-current">
+            <li class="page-item"><a class="page-link" href="#">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a></li>
+        </span>
+        {% if page_obj.has_next %}
+          <li class="page-item"><a class="page-link" href="{{ request.path }}?page={{ page_obj.next_page_number }}">Next</a></li>
+          <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+        </ul>
+      </nav>
+      {% endif %}
+      {% endblock %}
+        </div>
+      </section>
+{% endblock content %}

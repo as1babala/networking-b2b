@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}
+
+{% load static %}
+
+{% endblock title %}
+
+{% block content %}
+<section>
+  <div class="p-3 mb-2 bg-info text-blue search-column" >
+    <h2 class="text-4xl text-gray800"></h2>
+    <form class="d-flex" role="search" action="{% url 'blogs:blog-search' %}" method='GET' enctype="">
+        <input class="form-control me-2" name="q" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+      <hr class="border-primary border-3 opacity-75">
+    </div>
+</section>
+ 
+    <div class="container col-container">
+      <div class="row">
+        {% if blogs %}
+        {% for blog in blogs %}
+        <div class="col-md-6 white col">
+          <div class="card mb-4 box-shadow">
+            
+            <!--img src="{% static 'images/user-solid.svg' %}" style="width:10 height=10"-->
+            <!--img class="card-img-top" src="{% static 'images/technic.jpeg' %}" alt="{{ consultant.user }}"-->
+            <div class="card-body">
+              <img src="{{blog.blog_image.url}}" alt="Smiley face" width="100%" height="250" class="blog-image">
+              <p class="list blog"><i>Title:</i> {{ blog.title }}</p>
+              <p class="list blog"><span class="about"><i class="fa-solid fa-user"></span></i> {{ blog.author }} </p>
+              <p class=" list blog"><span class="about"> <i class="fa-sharp fa-solid fa-at"></i></span> {{ blog.email }}</p>
+              
+              <p class="list"><i></i> {{ blog.content|truncatewords:'50'|safe }}</p>
+              <p>  <small class="text-muted"><i><span class="about">Date created: </i>{{ blog.created_on|date }}</span></small></p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  {% if blog.author == request.user %}
+              <p><button type="button" class="btn btn-secondary mx-2" onclick="location.href='{% url 'blogs:blog-update' blog.pk %}'"><i class="fa-sharp fa-solid fa-pen-to-square"></i> Update</button></p>
+              {% endif %} 
+              <p><button type="button" class="btn btn-secondary mx-2" onclick="location.href='{% url 'blogs:blog-detail' blog.pk %}'"><i class="fa-sharp fa-solid fa-circle-info"></i> Read blog </p>
+              
+              {% if user.is_admin %}
+               <p><button type="button" class="btn btn-danger" onclick="location.href='{% url 'blogs:blog-delete' blog.pk %}'"><i class="fa-sharp fa-solid fa-trash-can"></i> Delete blog </p-->
+                {% endif %}
+
+               </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+        {% else %}
+        <p> No blogs available for the time being</p>
+        {% endif %}
+   </div>
+    </div>
+
+
+    {% block pagination %}
+      {% if is_paginated %}
+
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+          <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
+          <li class="page-item"><a class="page-link" href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Previous </a></li>
+          {% endif %}
+          <span class="page-current">
+            <li class="page-item"><a class="page-link" href="#">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a></li>
+        </span>
+        {% if page_obj.has_next %}
+          <li class="page-item"><a class="page-link" href="{{ request.path }}?page={{ page_obj.next_page_number }}">Next</a></li>
+          <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+        </ul>
+      </nav>
+      {% endif %}
+      {% endblock %}
+        </div>
+
+        {% include 'footer.html' %}
+
+{% endblock content %}

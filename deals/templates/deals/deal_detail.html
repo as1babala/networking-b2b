@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}
+
+{% load static %}
+{% load bootstrap5 %}
+
+{% endblock title%}
+
+{% block content %}
+<div class="container" >
+        <div class="col-md-8 white">
+<p><a href="{% url 'deals:deal-list' %}">Deals list</a></p> 
+
+<h3>Company name: {{deal.company_name}} </h3>
+<p>Deal title: {{deal.deal_title}}     ||  Contact via: {{deal.email}} </p>
+
+<hr>
+<p>{{deal.descriptions}}</p>
+
+<p><small>Created On: {{deal.created_on|date}}</small></p>
+<hr>
+<div class=''>
+<h3>Request For Proposals</h3>
+
+{% for rfi in rfi %}
+  <p>by {{ rfi.email }} on {{ rfi.created_on|date }}</p>
+  
+  <p>{{ rfi.message }}</p>
+  
+  {% empty %}
+    <p>No reviews yet.</p>
+
+  {% endfor %}
+</div>
+  <hr>
+      
+
+    {% if user.is_authenticated %}
+    <h3>Submit your request</h3>
+    <form method="POST" action="{% url 'deals:rfi-create' pk=deal.pk %}">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+        <button type="submit" class="btn btn-primary">Submit</button>
+        {% endbuttons %}
+    </form>
+  {% endif %}
+</div>
+</div>
+
+{% endblock content %}

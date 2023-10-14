@@ -1,0 +1,5 @@
+{% for fiche in fiches %}
+<ul>
+  <li>{{fiche.slug}} Name {{ fiche.name }}  {{ fiche.description|truncatewords: '70' }} created on: {{fiche.created_on|date}}</li>
+</ul>
+{% endfor %}

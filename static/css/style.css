@@ -1,0 +1,513 @@
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto serif', sans-serif;
+    /*background-color: #ffffff;*/
+    background-image: url('../images/background_image1.jpg');
+    /*background: linear-gradient(to right, #0a2647, #0a2647)*/
+}
+
+.box {
+    width: 500px;
+    padding: 40px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: #191919;
+    ;
+    text-align: center;
+    transition: 0.25s;
+    margin-top: 100px
+}
+
+.box input[type="text"],
+.box input[type="password"] {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid #3498db;
+    padding: 10px 10px;
+    width: 250px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s
+}
+
+.box h1 h2 h3 h4{
+    color: white;
+    text-transform: uppercase;
+    font-weight: 500
+}
+
+.box input[type="text"]:focus,
+.box input[type="password"]:focus {
+    width: 300px;
+    border-color: #2ecc71
+}
+
+.box input[type="submit"] {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid #2ecc71;
+    padding: 14px 40px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s;
+    cursor: pointer
+}
+
+.box input[type="submit"]:hover {
+    background: #2ecc71
+}
+
+.forgot {
+    text-decoration: underline
+}
+
+ul.social-network {
+    list-style: none;
+    display: inline;
+    margin-left: 0 !important;
+    padding: 0
+}
+
+ul.social-network li {
+    display: inline;
+    margin: 0 5px
+}
+
+.social-network a.icoFacebook:hover {
+    background-color: #3B5998
+}
+
+.social-network a.icoTwitter:hover {
+    background-color: #33ccff
+}
+
+.social-network a.icoGoogle:hover {
+    background-color: #BD3518
+}
+
+.social-network a.icoFacebook:hover i,
+.social-network a.icoTwitter:hover i,
+.social-network a.icoGoogle:hover i {
+    color: #fff
+}
+
+a.socialIcon:hover,
+.socialHoverClass {
+    color: #44BCDD
+}
+
+.social-circle li a {
+    display: inline-block;
+    position: relative;
+    margin: 0 auto 0 auto;
+    border-radius: 50%;
+    text-align: center;
+    width: 50px;
+    height: 50px;
+    font-size: 20px
+}
+
+.social-circle li i {
+    margin: 0;
+    line-height: 50px;
+    text-align: center
+}
+
+.social-circle li a:hover i,
+.triggeredHover {
+    transform: rotate(360deg);
+    transition: all 0.2s
+}
+
+.social-circle i {
+    color: #fff;
+    transition: all 0.8s;
+    transition: all 0.8s
+}
+
+p h3 h2 h1 h4 h5 th td{
+    font-size: medium;
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+}
+
+.blog {
+    color: #f0f3f6
+}
+
+.robust {
+    color: white;
+    font-size: 25px;
+    margin: 20px 0px 20px;
+    margin-bottom: 50px ;
+    letter-spacing: 2px;
+}
+
+.white {
+    color: #0a2647;
+    font-style: normal;
+   
+    letter-spacing: 0px;
+
+}
+
+span{
+    color:#00e6e6;
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.column{
+    padding: 10px;
+    
+    -webkit-flex: 1; /* Safari */
+    -ms-flex: 1; /* IE 10 */
+    flex: 1; /* Standard syntax */
+    height: auto;
+}
+
+a {
+    color: white;
+}
+
+a:hover{
+    color: #00e6e6;
+}
+
+.btnbg {
+    background-color: #ffffff;
+}
+
+.btn:hover {
+    background-color: #0f4c75;
+    color: white;
+
+}
+
+.btnfont {
+    color: #0a2647;
+    font-weight: bold;
+}
+
+.about {
+    color: #00e6e6;
+    font-size: 20px;
+}
+
+hr {
+    color: #44BCDD
+}
+/*
+.bordernew {
+    color: white;
+    border: white;
+
+}
+
+/*testing code*/
+
+.section {
+    padding: 50px 0;
+  }
+
+  .column {
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    color: #fff;
+  }
+
+  .column img {
+    width: 100%;
+    height: auto;
+  }
+
+  .message {
+    position: static;
+    top: 20%;
+    left: 20%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    padding-left: 200px;
+    text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+  }
+
+  .left-column {
+    float: left;
+    width: 50%;
+    text-align: left;
+  }
+
+  .right-column {
+    float: right;
+    width: 50%;
+    text-align: right;
+  }
+
+  .bottom-section {
+    image-rendering: crisp-edges; 
+    text-align: center;
+    padding: 50px 0;
+    height: 500px;
+  }
+
+  /*#############*/
+  .top-section {
+    background-color: #f5f5f5;
+  }
+  .middle-section {
+    background-color: #fff;
+  }
+  .bottom-section {
+    /*background-color: #0a2647;*/
+    height: 450px;
+  }
+ 
+  .left-column img,
+  .right-column img {
+    width: 100%;
+    height: 300px;
+    border-radius: 3px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  .left-column,
+  .right-column {
+    padding: 5px;
+  }
+  .right-column {
+    text-align: right;
+  }
+/*
+  .left-column:hover{
+   
+    outline: 4px solid red;
+  outline-offset: 15px;
+  }*/
+  .bottom-image {
+    position: relative;
+    width: 100%;
+    border-radius: 5px;
+  }
+  .bottom-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 32px;
+    text-align: center;
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .home-image {
+    width: 100%;
+    height: 200px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+
+  .home-image:hover{
+    outline: 2px solid #00e6e6;
+    /*transform: scale(1.2);*/
+    outline-offset: 15px;
+
+
+  }
+/*
+.section1 {
+    background-image: url("images/sky.jpeg");
+}
+*/
+hr {
+    color:#44BCDD;
+    border-top: 20px;
+}
+
+.list {
+    color:#0a2647
+}
+
+th {
+    color: #ffffff;
+}
+
+.bottom-image {
+    width: 100%;
+    height: 400px;
+}
+
+.search-column {
+    width: 100%;
+    height: 100px;
+    border-radius: 3px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin: 10px;
+  }
+
+/* Centered text */
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  /* navigation tab*/
+.nav-item{
+    list-style-type: none;
+    color: #ffffff;
+    display: inline-white;
+    padding: 10px, 25px;
+    background-color: #0f4c75;
+}
+
+.nav-link {
+    color:#ffffff;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: capitalize;
+    background-color: #0f4c75;
+}
+
+.nav-link:hover {
+    color: #CC0000;
+    transition: .4s;
+}
+
+.no-member {
+    background-color: #0f4c75;
+
+}
+
+.admin {
+    background-color: #0f4c75;
+}
+
+.employee {
+    background-color: #00e6e6;
+}
+
+.business {
+    background-color: #44BCDD;
+}
+
+.blog-image {
+   
+    
+    border-radius: 5px;
+  }
+
+  /* home_page top slider  */
+
+  * {box-sizing:border-box}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+/* Hide the images by default */
+.mySlides {
+  display: none;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* Caption text */
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+.col-container {
+    display: table; /* Make the container element behave like a table */
+    width: 100%; /* Set full-width to expand the whole page */
+  }
+  
+  .col {
+    display: table-cell; /* Make elements inside the container behave like table cells */
+  }

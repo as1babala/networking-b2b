@@ -1,0 +1,170 @@
+*{
+    padding: 0;
+    margin: 0;
+    font-family: 'Josefin Sans', Sans-serif;
+    box-sizing: border-box;
+    background-color:#006699 ;
+   
+
+}
+.hero{
+    height: 100vh;
+    width: 100%;
+    background-image: url();
+    background-color: #006699;
+
+    
+}
+
+.navtop {
+    display: flex;
+    color:#006699;
+    align-items: center;
+    background-color: white;
+    justify-content: space-between;
+    padding-top: 25px;
+    padding-left: 8%;
+    padding-right: 8%;
+}
+
+.collapse{
+    background-color: white;
+    color:#006699
+}
+
+
+
+.logo {
+    color: #006699;
+    font-size: 35px;
+    font-style: bold;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    align-items: left;
+    padding-right: 20px;
+    align-items: left;
+
+
+}
+
+span {
+    color: #b30000;
+
+}
+
+
+.about {
+    color: #00e6e6;
+    font-size: 20px;
+
+}
+
+.listing{
+    color: #b30000
+}
+
+
+.nav-item{
+    list-style-type: none;
+    display: inline-white;
+    padding: 10px, 25px;
+    background-color: white;
+}
+
+.nav-link {
+    color:#006699;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: capitalize;
+    background-color: white;
+}
+
+.nav-link:hover {
+    color: #CC0000;
+    transition: .4s;
+}
+
+.robust {
+    color: white;
+    font-size: 25px;
+    margin: 20px 0px 20px;
+    margin-bottom: 50px ;
+    letter-spacing: 2px;
+}
+
+h3 {
+    color: white;
+    font-size: 25px;
+    margin: 20px 0px 20px;
+    margin-bottom: 50px ;
+    letter-spacing: 2px;
+
+}
+
+h4 {
+    color: white;
+    font-size: 20px;
+    margin: 20px 0px 20px;
+    margin-bottom: 50px ;
+    letter-spacing: 2px;
+
+}
+
+section {
+    background-color:#CC0000  ;    
+}
+
+.text{
+    color: white;
+    font-style:normal;
+    font-size: 16px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+
+}
+p{
+    align-items: center;
+    font-size: 18px;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    
+}
+
+body {
+    background-color: #006699;
+}
+
+a {
+    color: white;
+}
+
+a:hover{
+    color: #00e6e6
+}
+
+th{
+    color: #00e6e6;
+}
+
+td{
+    color: #CCEEFF;
+}
+
+.list{
+    background-color: #006699;
+}
+
+div{
+    background-color: #006699;
+}
+.list{
+    color: white;
+    font-size: 10;
+    font-family: sans-serif;
+}
+
+.top_message{
+    background-color: #CCEEFF;
+    color:#006699
+}
+

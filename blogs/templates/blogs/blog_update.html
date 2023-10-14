@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title%}
+
+{% endblock title%}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+{% load bootstrap5 %}
+
+<p><a href="{% url 'blogs:blog-list' %}">Available blogs List</a></p> 
+<div class="container">
+    <div class="row my-5">
+        <div class="col-md-12">
+            <form method="post" class="white">
+                {% csrf_token %}
+                {{form.media}}
+                {{form.as_p}}    
+                <button type="submit" class="btn btnfont btnbg mx-2">Submit</button>
+            
+            </form>
+        </div>
+    </div>
+</div>
+
+    {% endblock %}

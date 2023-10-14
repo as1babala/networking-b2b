@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}
+login
+{% endblock title %}
+{% load bootstrap5 %}
+
+
+
+{% block content %}
+<style>
+    .background-image {
+        /* Set the background image URL */
+        background-image: url('{% static 'images/Farmland.jpeg' %}');
+        /* Set the background image size */
+        background-size: cover;
+        /* Set the background image position */
+        background-position: center;
+        /* Set the background image repetition */
+        background-repeat: no-repeat;
+        /* Set the height of the div */
+        height: 500px; /* Adjust this value as per your needs */
+    }
+</style>
+
+<script src="https://kit.fontawesome.com/f8ad9b7ea6.js" crossorigin="anonymous"></script>
+{% if error_message %}
+    <div class="alert alert-danger" role="alert">
+        {{error_message}}
+    </div>
+{% endif %}
+
+
+
+
+<div class=" rounded col-container ">
+    <div class="row">
+        <div class="col-6 shadow p-3 mb-5 border mx-2 ">
+           
+            <form action="" method="POST" class="form p-3  white mx-2 mb-2 my-2">
+                <h3 class="white">Already A User?</h3>
+                <h3 class='white'>Login</h3></br>
+                {% csrf_token %}
+                {% bootstrap_form form %}    
+                <button type="submit" class="btn btnfont btnbg mt-3">Login</button>
+            </form>
+        
+                <p class="text-center">
+                    <span class="about"><i class="fa-solid fa-pen"></i></span><a href="{% url 'accounts:pass-change' %} ">  Change password   </a>
+
+                    <span class="about"> </span><a href="{% url 'accounts:pass-change' %}">    </a>
+                   <br/> <span class="about"><i class="fa-solid fa-lock"></i></span><a href="{% url 'accounts:password_reset' %} " >  Click here to reset your password</a>
+                <p>
+   
+        </div>
+        <div class="col-5 shadow p-3 mb-5 border border-2 mx-2 background-image">
+            <h4 class="white text-center my-5">Do You Want To </br>Become A Member? </h4><br> 
+                
+                <button class="btn btnfont btnbg mb-1 mx-2 my-4" onclick="location.href='{% url 'accounts:signup' %}'"> <span class="about "><i class="fa-sharp fa-solid fa-address-card"></i></span> Join Our Netwrok! </button>
+                <br/>
+                <h4 class="white text-center my-5">For any issues or concerns / information </h4><br/>  
+                <button class="btn btnfont btnbg mb-1 mx-2 my-4" onclick="location.href='{% url 'contacts:contact-create' %}'"> <span class="about"><i class="fa-solid fa-envelope"></i></span> Contact us </button>
+        
+        </div>
+
+    </div>
+  
+</div>
+
+{% include 'footer.html' %} 
+
+
+
+{% endblock content %}

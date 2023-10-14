@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}
+
+{% load static %}
+
+{% endblock title%}
+
+{% block content %}
+
+    <section>
+    <div class="container">
+      <div class="row">
+        {% if drafts %}
+        {% for draft in drafts %}
+        <div class="col-md-6">
+          <div class="card mb-4 box-shadow">
+            
+            <!--img src="{% static 'images/user-solid.svg' %}" style="width:10 height=10"-->
+            <!--img class="card-img-top" src="{% static 'images/technic.jpeg' %}" alt="{{ consultant.user }}"-->
+            <div class="card-body">
+              <p class="list"><i>Title:</i> {{ draft.title }}</p>
+              <p class="list"><span class="about"><i class="fa-solid fa-user"></span></i> {{ draft.author }} </p>
+              <p><span class="about"> <i class="fa-sharp fa-solid fa-at"></i></span> {{ draft.email }}</p>
+              
+              <p class="list"><i></i> {{ draft.content|truncatewords:'50' }}</p>
+              <p>  <small class="text-muted"><i><span class="about">Date created: </i>{{ draft.created_on|date }}</span></small></p>
+            <div class="d-flex justify-content-between align-items-center">
+            <!--div class="btn-group">
+                  {% if draft.author == request.user %}
+              <p><button type="button" class="btn btn-secondary mx-2" onclick="location.href='{% url 'blogs:blog-update' blog.pk %}'"><i class="fa-sharp fa-solid fa-pen-to-square"></i> Update</button></p>
+              {% endif %} 
+              <p><button type="button" class="btn btn-secondary mx-2" onclick="location.href='{% url 'blogs:blog-detail' blog.pk %}'"><i class="fa-sharp fa-solid fa-circle-info"></i> Read blog </p>
+              
+              {% if user.is_admin %}
+               <p><button type="button" class="btn btn-danger" onclick="location.href='{% url 'blogs:blog-delete' blog.pk %}'"><i class="fa-sharp fa-solid fa-trash-can"></i> Delete blog </p>
+                {% endif %}
+
+               </div-->
+                </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+        {% else %}
+        <p> No blogs available for the time being</p>
+        {% endif %}
+   </div>
+    </div>
+  </section>
+
+
+    {% block pagination %}
+      {% if is_paginated %}
+
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+          <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
+          <li class="page-item"><a class="page-link" href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Previous </a></li>
+          {% endif %}
+          <span class="page-current">
+            <li class="page-item"><a class="page-link" href="#">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a></li>
+        </span>
+        {% if page_obj.has_next %}
+          <li class="page-item"><a class="page-link" href="{{ request.path }}?page={{ page_obj.next_page_number }}">Next</a></li>
+          <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+        </ul>
+      </nav>
+      {% endif %}
+      {% endblock %}
+        </div>
+
+        {% include 'footer.html' %}
+
+{% endblock content %}

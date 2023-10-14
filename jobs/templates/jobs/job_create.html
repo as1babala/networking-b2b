@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title%}
+
+{% endblock title%}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+{% load bootstrap5 %}
+
+<div class="container">
+    <div class="row my-5">
+        <div class="col-md-12">
+            <form method="post" class="form white">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                {% buttons %}
+                <button type="submit" class="btn btnfont btnbg mx-2">Submit</button>
+                {% endbuttons %}
+            </form>
+        </div>
+    </div>
+</div>
+
+    {% endblock %}

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}
+
+{% load static %}
+{% load bootstrap5 %}
+
+{% endblock title%}
+
+{% block content %}
+
+<head>
+</head>
+<div class="container" >
+        <div class="col-md-8 white">
+<p><a href="{% url 'blogs:blog-list' %}">blogs list</a></p> 
+
+<h3> {{blog.title}}</h3>
+<p class="white" style="text-align:justify">Written by: {{blog.author}}     ||  Contact via: {{blog.email}} || Created On: {{blog.created_on|date}} </p>
+
+<hr>
+<p class="white">{{blog.content|safe}}</p>
+
+<hr>
+<div class=''>
+<h3>Reviews</h3>
+
+{% for review in reviews %}
+  <p>by {{ review.user }} on {{ review.created_on|date }}</p>
+  
+  <p>{{ review.content }}</p>
+  <p>Rating: {{ review.rating }}</p>
+  {% empty %}
+    <p>No reviews yet.</p>
+
+  {% endfor %}
+</div>
+  <hr>
+      
+
+    {% if user.is_authenticated %}
+    <h3>Add a review</h3>
+    <form method="POST" action="{% url 'blogs:review-create' pk=blog.pk %}" class="white">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+        <button type="submit" class="btn btnfont btnbg mx-2">Submit</button>
+        {% endbuttons %}
+    </form>
+  {% endif %}
+</div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+   <p><a href="{% url 'testimonies:testimony-list' %}"> <i class="fa-solid fa-messages"></i>Testimonies</a></p> 
+    <section>
+        <h3><u>{{testimony.title}}</u></h3>
+    <p><i>User:</i> {{testimony.user}}</p>
+    <p><i>Testimony:</i> {{testimony.testimony}}</p>
+    <p><i>Posted on:</i> {{testimony.created_at|date}}</p>
+   
+    
+    
+    
+</section>
+
+{% endblock %}

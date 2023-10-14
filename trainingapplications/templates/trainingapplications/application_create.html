@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title%} {% endblock title%}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+{% load bootstrap5 %}
+
+<div class="container">
+    <div class="row my-5">
+        <div class="col-md-12">
+            <!--h1>Apply to "{{ object_list.job_title }}"</h1-->
+            <form  method="post" class="form white" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                 {% buttons %}
+                <button type="submit" class="btn btn-primary">Submit</button>
+                {% endbuttons %}
+            </form>
+        </div>
+    </div>
+</div>
+{% include 'footer.html' %} 
+    {% endblock %}

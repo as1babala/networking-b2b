@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title%}
+
+{% endblock title%}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+{% load bootstrap5 %}
+
+<p><a href="{% url 'experts:expert-list' %}">experts List</a></p> 
+<div class="container white">
+    <div class="row my-5">
+        <div class="col-md-12">
+            <form method="post" class="form">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                {% buttons %}
+                <button type="submit" class="btn btn-primary">Submit</button>
+                {% endbuttons %}
+            </form>
+        </div>
+    </div>
+</div>
+
+    {% endblock %}

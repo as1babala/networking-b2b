@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title%}
+
+{% endblock title%}
+
+{% block content %}
+{% load bootstrap5 %}
+
+{% load crispy_forms_tags %}
+
+   <p><a href="{% url 'industries:sector-list' %}">Go Back to Sector list</a></p>
+
+    <h1>Update for {{sectors.name}}</h1><br>
+    <form method="post" >  
+        {% csrf_token %}
+
+        {% bootstrap_form form %}
+        <button class="btn btn-primary"> Submit</button>
+    </form>
+
+    {% endblock %}

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}
+
+{% load static %}
+{% load bootstrap5 %}
+
+{% endblock title%}
+
+{% block content %}
+<div class="container" >
+        <div class="col-md-8">
+<p><a href="{% url 'experts:expert-list' %}">Experts list</a></p> 
+
+<h3> {{expert.user}}</h3>
+<p>Written by: {{expert.first_name}}     ||  Contact via: {{expert.last_name}} || Created On: {{expert.created_on|date}} </p>
+
+<hr>
+<p style="text-align:justify">{{blog.content|safe}}</p>
+
+<p><small></small></p>
+<hr>
+<div class=''>
+<h3>Reviews</h3>
+
+{% for education in education %}
+  <p>by {{ education.user }} on {{ education.created_on|date }}</p>
+  
+  <p>{{ education.institution_name }}</p>
+  <p>Rating: {{ education.degree }}</p>
+  {% empty %}
+    <p>No reviews yet.</p>
+
+  {% endfor %}
+</div>
+  <hr>
+      
+
+    {% if user.is_authenticated %}
+    <h3>Add a review</h3>
+    <form method="POST" action="{% url 'educations:education-create' pk=expert.pk %}">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+        <button type="submit" class="btn btn-primary">Submit</button>
+        {% endbuttons %}
+    </form>
+  {% endif %}
+</div>
+</div>
+
+{% endblock content %}

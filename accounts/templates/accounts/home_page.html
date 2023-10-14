@@ -1,0 +1,286 @@
+
+{% extends "base.html" %}
+
+{% load static %}
+{% load bootstrap5 %}
+
+{% block content %}
+<body>
+<head>
+    <!--link rel="stylesheet" href="{% static 'css/style_main.css' %}"-->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: Arial;
+        font-size: 17px;
+      }
+      
+      .container {
+        position: relative;
+        max-width: 100%;
+        height: 400px;
+        margin: 0 auto;
+      }
+      
+      .container img {vertical-align: middle;}
+      
+      .container .content {
+        position: absolute;
+        bottom: 0;
+        background: rgb(0, 0, 0); /* Fallback color */
+        background: rgba(0, 0, 0, 0.4); /* Black background with 0.5 opacity */
+        color: #f1f1f1;
+        width: 100%;
+        padding: 10px;
+      }
+      </style>
+  </head>
+  <div class="container-fluid">
+  
+  <section >
+    <div class="row bottom-section">
+      <div class="col-md-12 ">
+        <div class="bottom-image home-image">
+          <img src="{% static 'images/forest.jpeg' %}" class="bottom-image" alt="Bottom Image">
+          <div class="bottom-message content">Networking Opprotunities to Deal With Partners Across the World<br/><br/>
+            <h3 class="text-justify my-3"><span>One platform, one objective <br/>
+              Create Your Perfect Network <br/>
+              With Businesses and experts <br/>
+            In All Domains and Industries</span></h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  <hr>  
+  </section>
+
+  <section class="section1 white">
+    <div class="container col-container">
+      <div class="row">
+        <div class="col-md-6 left-column col ">
+          <img src="{% static 'images/sky.jpeg' %}"  class="img-thumbnail img-fluid home-image" alt="Image 1">
+          <div class="message mx-2 my-4 ">Available Deals</div>
+          <hr>
+          <p class="white">    
+            {% for deal in deals %}
+            <ul class="white"><li>{{ deal.company_name}} is  {{deal.opportunity_title}} in {{deal.category}}  category {{deal.descriptions}}  </li></ul>
+           <hr/>
+            {% endfor %}
+      <br/>
+
+      {% if user.is_authenticated %}
+            <button class="btn btnfont btnbg mb-1 mx-2" onclick="location.href='{% url 'deals:deal-list' %}'"> <span class="about"><i class="fa-solid fa-magnifying-glass"></i></span> Search for New Deals  </button>
+          {% else%}
+          <button type="button" class="btn btnfont btnbg mx-2" onclick="location.href='{% url 'accounts:login' %}'"><span class="about"><i class="fa-solid fa-magnifying-glass"></i></span> Search for New Deals  </button>
+    
+          </p>   
+          {% endif%}   
+        </div>
+        <div class="col-md-6 left-column col">
+          <img src="{% static 'images/blogs.png' %}"   class="img-thumbnail img-fluid home-image" alt="Image 2">
+          <div class="message mx-2 my-4"> Blogs </div>
+          <hr/>
+           <!-- {% include 'accounts/top_blogs.html'%}-->
+        {% for blog in blogs %}
+        <p><ul class="white">
+          <li><b>{{ blog.title }} </b> - Published by:  {{ blog.author }} </li>
+        </ul>
+        <hr/>
+      </p>
+        {% endfor %}
+
+        {% if user.is_authenticated %}
+       <p> <button class="btn btnfont btnbg mb-1 mx-2" onclick="location.href='{% url 'blogs:blog-list' %}'"> <span class="about"><i class="fa-solid fa-blog mx-3"></i></span> Read Blogs  </button>      
+        {% else%}
+      <button type="button" class="btn btnfont btnbg mx-2" onclick="location.href='{% url 'accounts:login' %}'"><span class="about"><i class="fa-solid fa-magnifying-glass"></i></span> Read Blogs  </button>
+
+      </p>   
+      {% endif%}   
+        </div>
+       
+      </div>
+    </div>
+    <hr/>
+  </section>
+
+  <section class="section white">
+    <div class="container col-container">
+      <div class="row">
+        <div class="col-md-6 left-column col">
+          <img src="{% static 'images/buliding 1.jpeg' %}"  alt="Building" class="img-thumbnail img-fluid home-image">
+          <div class="message mx-2 my-5"> Member Companies </div> 
+          <p class="white">  
+          {% for company in companies %}
+          <ul class="white">
+            <li>User: {{company.user}} company name: {{ company.company_name }} 
+              Industry {{ company.indudtry }} {{company.email}} {{company.partnership_type}}
+  
+            </li>
+          </ul><br/>
+          {% endfor %}
+
+          {% if user.is_authenticated %}
+          <p> <button class="btn btnfont btnbg mb-1 mx-2" onclick="location.href='{% url 'enterprises:enterprise-list' %}'"> <span class="about"><i class="fa-sharp fa-solid fa-building"></i></span> Contact Our Member Companies  </button>      
+           {% else%}
+         <button type="button" class="btn btnfont btnbg mx-2" onclick="location.href='{% url 'accounts:login' %}'"><span class="about"><i class="fa-sharp fa-solid fa-building"></i></span> Contact Our Member Companies  </button>
+   
+         </p>   
+         {% endif%}
+        </p>
+        </div>
+        <div class="col-md-6 left-column col">
+          <img src="{% static 'images/experts1.jpeg' %}"  alt="Image 5" class="img-thumbnail img-fluid home-image">
+          <div class="message mx-2 my-5"> Expert Members </div> 
+          <p class="white">  
+          {% for expert in experts %}
+          <ul class="white">
+            <li>User: {{expert.user}} company name: {{ expert.company_name }} 
+              Industry {{ expert.indudtry }} {{expert.email}} {{expert.partnership_type}}
+            </li>
+          </ul><br/>
+          {% endfor %}
+          {% if user.is_authenticated %}
+          <p> <button class="btn btnfont btnbg mb-1 mx-2" onclick="location.href='{% url 'experts:expert-list' %}'"> <span class="about"><i class="fa-sharp fa-solid fa-building"></i></span> Contact Our Expert Members  </button>      
+           {% else%}
+         <button type="button" class="btn btnfont btnbg mx-2" onclick="location.href='{% url 'accounts:login' %}'"><span class="about"><i class="fa-sharp fa-solid fa-building"></i></span> Contact Our Expert Members  </button>
+   
+         </p>   
+         {% endif%}
+
+        </div>
+      </div>
+    </div>
+    <hr/>
+  </section>
+
+    <section class="fiche">
+      <div class="container top_message col-container">
+        <div class="shadow-lg p-3 mb-1 bg-body-tertiary rounded">
+          <div class="row my-5">
+            <div class="col-md-4 col">  <img src="{% static 'images/farmland.jpeg' %}"  alt="Image 5" class="img-thumbnail img-fluid home-image" width="100%" height="100%"></div>
+            <div class="col-md-8 col">
+        <h3 class="robust"><span class="about"><i class="fa-solid fa-file-pen"></i></span> Technical Fiche</h3>
+       
+        {% for fiche in fiches %}
+        <ul class="white">
+          <li> {{fiche.slug}} {{ fiche.name }} 
+            {{ fiche.description|truncatewords:'50'}} {{fiche.category}} {{fiche.created_on|date}}
+          </li>
+        </ul>
+        {% endfor %}</p>
+        <p align="center">
+          {% if user.is_authenticated %}
+          <p> <button class="btn btnfont btnbg mb-1 mx-2" onclick="location.href='{% url 'fiches:fiche-list' %}'"> <span class="about"><i class="fa-sharp fa-solid fa-building"></i></span> Check Agricultural Technics  </button>      
+           {% else%}
+   
+         <button type="button" class="btn btnfont btnbg mb-1 mx-2" onclick="location.href='{% url 'accounts:signup' %}'"><span class="about"><i class="fa-sharp fa-solid fa-building"></i> </span> Check Agricultural Technics </button> 
+         {% endif %}
+        </p>
+     </div>
+      </div>
+      <hr/>
+    </section>
+<section class="content1 my-2">
+  <div class="container col-container">
+    <div class="row my-5">
+        <div class="col-md-8 col">
+          
+          <div class="shadow-lg p-3 mb-1 bg-body-tertiary rounded">
+            <h3 class="robust">Training Calendar</h3>
+            {% for training in trainings %}
+          <ul class="white">
+            <li class="listing"><p>{{ training.training_title}} by {{training.teacher}} from {{training.start_date}} to {{training.end_date}} on weekdays 
+              {% if training.monday %} Monday, {% endif %}
+              {% if training.tuesday %} Tuesday,  {% endif %}
+              {% if training.wednesday %} Wednesday, {% endif %}
+              {% if training.thursday %} Thursday,  {% endif %}
+              {% if training.friday %} Friday,  {% endif %}
+              {% if training.saturday %} Saturday,  {% endif %}
+              </p></li></ul>
+          {% endfor %}
+
+          {% if user.is_authenticated %}
+          <p> <button class="btn btnfont btnbg mb-1 mx-2" onclick="location.href='{% url 'trainings:training-list' %}'"> <span class="about"><i class="fa-solid fa-calendar-check"></i></i></span> Check Training Calendar  </button>      
+           {% else%}
+         <button type="button" class="btn btnfont btnbg mx-2" onclick="location.href='{% url 'accounts:login' %}'"><span class="about"><i class="fa-solid fa-calendar-check"></i></span> Check Training Calendar  </button>
+   
+         </p>   
+         {% endif%}    
+        </div></div>
+
+        <div class="col-md-2 col">
+          <div class="shadow-lg p-3 mb-1 bg-body-tertiary rounded">
+          <h3 class="robust">Expert Insights</h3>
+          <p class="white"> 
+            We offer a wealth of resources, including expert articles, webinars, and podcasts, designed to help you stay informed and up-to-date on the latest industry trends and best practices.
+          </p>
+          <p align="center"> <button class="btn btnfont btnbg"> <span><i class="fa-solid fa-play"></i></span> Let's Start</button></p>
+        </div></div>
+
+        <div class="col-md-2 col">
+          <div class="shadow-lg p-3 mb-1 bg-body-tertiary rounded">
+          <h2 class="robust">Private Messaging: </h2>
+          <p class="white"> 
+            Our platform includes private messaging capabilities, making it easy for you to connect with other members and start building valuable relationships.
+          </p>
+          <p align="center"><button class="btn btnfont btnbg"><span><i class="fa-solid fa-play"></i></span> Let's Start</button></p>
+        </div></div>
+        <hr>
+      </section>
+<section>
+        <div class="container col-container">
+          <div class="row my-5">
+              <div class="col-md-6 col">
+                <div class="shadow-lg p-3 mb-1 bg-body-tertiary rounded">
+                <h2 class="robust">Customizable Profiles</h2>
+                <p class="white"> 
+                  With our customizable profiles, you can showcase your skills and expertise, making it easy for others to find and connect with you.
+                </p>
+                <p align="center"> <button class="btn btnfont btnbg"><span><i class="fa-solid fa-play"></i></span> Let's Start</button></p>
+                </div></div>
+      
+              <div class="col-md-6 col">
+                <div class="shadow-lg p-3 mb-1 bg-body-tertiary rounded">
+                <h2 class="robust">Discussion Forums</h2>
+                <p class="white"> Our platform provides advanced search tools that allow you to easily find and connect with other professionals and businesses in your industry</p>
+                <p align="center"> <button class="btn btnfont btnbg"><span class="about"><i class="fa-solid fa-play"></i></span> Let's Start</button></p>
+              </div></div>     
+              <hr/>     
+</section>
+
+<section>
+  <h2></h2>
+
+  <div class="container">
+    <img src="{% static 'images/forest.jpeg' %}" alt="Notebook" style="width:100%;">
+    <div class="content">
+      <h3>Heading</h3>
+      <p>testing </p>
+    </div>
+  </div>
+</section>
+<script>
+  let slideIndex = 0;
+showSlides();
+
+function showSlides() {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  slideIndex++;
+  if (slideIndex > slides.length) {slideIndex = 1}
+  slides[slideIndex-1].style.display = "block";
+  setTimeout(showSlides, 2000); // Change image every 2 seconds
+}
+</script>
+{% include 'footer.html' %} 
+
+{% endblock content%}
+</div>
+</body>
