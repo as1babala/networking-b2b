@@ -14,15 +14,15 @@ from django_cascading_dropdown_widget.widgets import CascadingModelchoices
 
 
 ACTIVE = (('YES', 'YES'), ('NO','NO'))
-class EnterprisesForm(DynamicFormMixin, forms.ModelForm):
+class EnterprisesForm1(DynamicFormMixin, forms.ModelForm):
     registration_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
     class Meta:
         model = Enterprises
-        exclude = ['created_on', 'updated_on', 'active', 'slug', 'user','company_id', 'id']
+        exclude = ['user','created_on', 'updated_on', 'active', 'slug','company_id', 'id']
         
     def __init__(self, *args, **kwargs):                                                        # used to set css classes to the various fields
         super().__init__(*args, **kwargs)
-        self.fields['sector'].queryset = Sectors.objects.none()
+        self.fields['sector'].queryset = Sectors.objects.none() # replace all() by none for dynamic 
 
         if 'industry' in self.data:
             try:
@@ -35,9 +35,9 @@ class EnterprisesForm(DynamicFormMixin, forms.ModelForm):
 
 
         #self.fields['sector'].queryset = self.instance.industry.sector_set.order_by('name')
-        self.fields['first_name'].widget.attrs.update({'class': 'textinput form-control', 'placeholder':'Enter your first name'})
-        self.fields['last_name'].widget.attrs.update({'class': 'textinput form-control', 'placeholder':'Enter your last name'})
-        self.fields['email'].widget.attrs.update({'class': 'email form-control', 'placeholder':'Enter your email address'})
+        #self.fields['first_name'].widget.attrs.update({'class': 'textinput form-control', 'placeholder':'Enter your first name'})
+        #self.fields['last_name'].widget.attrs.update({'class': 'textinput form-control', 'placeholder':'Enter your last name'})
+        #self.fields['email'].widget.attrs.update({'class': 'email form-control', 'placeholder':'Enter your email address'})
         self.fields['phone_code'].widget.attrs.update({'class': 'textinput form-control', 'placeholder':'Enter your country code'})
         self.fields['registration_id'].widget.attrs.update({'class': 'textinput form-control', 'placeholder':'Enter the company registration ID'}) 
         self.fields['phone_number'].widget.attrs.update({'class': 'textinput form-control', 'placeholder':'Enter your phone number'})
@@ -52,6 +52,7 @@ class EnterprisesForm(DynamicFormMixin, forms.ModelForm):
         self.fields['sector'].widget.attrs.update({'class': 'textinput form-control', 'placeholder':'Enter your company sector of activities'})
         self.fields['number_employees'].widget.attrs.update({'class': 'textinput form-control', 'placeholder':'Number of employees'})
         commercial = forms.CharField(widget = forms.CheckboxInput)
+        email = forms.EmailField()
         technical = forms.CharField(widget = forms.CheckboxInput)
         financial = forms.CharField(widget = forms.CheckboxInput)
         management = forms.CharField(widget = forms.CheckboxInput)
@@ -60,6 +61,35 @@ class EnterprisesForm(DynamicFormMixin, forms.ModelForm):
         #self.fields['registration_date'].widget.attrs.update({'class': 'date form-control', 'placeholder':'Number of employees'})
         
         
-
-    
+class EnterprisesForm2(forms.ModelForm):
+    registration_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    class Meta:
+        model = Enterprises
+        exclude = ['user','created_on', 'updated_on', 'active', 'slug','company_id', 'id'] 
         
+        def clean__FIELD_NAME(self):
+            data = self.cleaned_data.get(('FIELD_NAME'))
+            
+            
+            
+ 
+class EnterprisesForm(forms.ModelForm):
+    class Meta:
+        model = Enterprises
+        exclude = ['user','created_on', 'updated_on', 'active', 'slug','company_id', 'id'] 
+    
+    def __init__(self, *args, **kwargs): 
+        super().__init__(*args, **kwargs)
+        self.fields['sector'].queryset = Sectors.objects.none() # replace all() by none for dynamic 
+
+        if 'industry' in self.data:
+            try:
+                industry_id = int(self.data.get('industry'))
+                self.fields['sector'].queryset = Sectors.objects.filter(industry_id=industry_id).order_by('name')
+            except (ValueError, TypeError):
+                pass  # invalid input from the client; ignore and fallback to empty City queryset
+        elif self.instance.pk:
+            pass
+            #self.fields['sector'].queryset = self.instance.industry.sector.order_by('name')
+
+ 

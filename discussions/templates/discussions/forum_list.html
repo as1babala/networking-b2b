@@ -1,0 +1,105 @@
+{% extends "base_content.html" %}
+{% block title %}
+
+{% load static %}
+
+{% endblock title%}
+
+{% block content %}
+<head>
+   <link rel="stylesheet" href="{% static 'css/card_hover.css' %}">
+
+   <style>
+    .card:hover{
+      transform: scale(1.02);
+      box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+  }
+
+  .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+  }
+</style>
+</head>
+
+<section class="" style="width:100%">
+  <div class="p-3 mb-2 bg-info text-blue " >
+    <!--h2 class="text-4xl text-gray800"></h2-->
+    <form class="d-flex" role="search" action="{% url 'discussions:forum-search' %}" method='GET' enctype="">
+        <input class="form-control me-2" name="q" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+      <hr class="border-primary border-3 opacity-75">
+    </div>
+</section >
+
+
+    <section style="width:100%">
+    <div class="container-fluid">
+      <div class="row">
+        {% if forums %}
+        {% for forum in forums %}
+        <div class="col-md-6">
+          <div class="card mb-4 box-shadow">
+            
+            <div class="card-body card-3 ">
+             
+              <p class="list"><i>Forum Category:</i> {{ forum.category }}<br>
+               <i>Forum Topic:</i> <span class="about"> </span> {{ forum.topic }} <br> 
+                <i>Author email:</i> <span class="about"><i class="fa-sharp fa-solid fa-at"></i></span> {{ forum.creator_email }} </p>
+              
+              <p class="list"><i></i> {{ forum.description|truncatewords:'20' }}</p>
+              <small class="text-muted"><i>Date created: </i>{{ forum.created_on|date }}</span></small>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  {% if deal. == request.user or user.is_admin %}
+              <small><button type="button" class="btn btn-secondary mx-2" onclick="location.href='{% url 'discussions:forum-update' forum.pk %}'"><i class="fa-sharp fa-solid fa-pen-to-square"></i> Edit Forum</button></small>
+              {% endif %} 
+              <small><button type="button" class="btn btn-secondary mx-2" onclick="location.href='{% url 'discussions:forum-detail' forum.pk %}'"><i class="fa-sharp fa-solid fa-circle-info"></i> Read Discussion </small>
+              
+              {% if user.is_admin %}
+              <small><button type="button" class="btn btn-danger" onclick="location.href='{% url 'discussions:forum-delete' forum.pk %}'"><i class="fa-sharp fa-solid fa-trash-can"></i> Delete forum </small>
+                {% endif %}
+
+               </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+        {% else %}
+        <p> No deals available for the time being</p>
+        {% endif %}
+   </div>
+    </div>
+  </section>
+
+
+    {% block pagination %}
+      {% if is_paginated %}
+
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+          <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
+          <li class="page-item"><a class="page-link" href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Previous </a></li>
+          {% endif %}
+          <span class="page-current">
+            <li class="page-item"><a class="page-link" href="#">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a></li>
+        </span>
+        {% if page_obj.has_next %}
+          <li class="page-item"><a class="page-link" href="{{ request.path }}?page={{ page_obj.next_page_number }}">Next</a></li>
+          <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+        </ul>
+      </nav>
+      {% endif %}
+      {% endblock %}
+        </div>
+
+    
+
+{% endblock content %}

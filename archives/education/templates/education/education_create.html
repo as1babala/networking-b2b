@@ -1,0 +1,107 @@
+{% extends "base_content.html" %}
+
+{% block title%}
+
+{% endblock title%}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+{% load bootstrap5 %}
+
+<p><a href="{% url 'education:education-list' %}"><i class="fa-solid fa-users"></i> Education Page </a></p> 
+<div class="container white">
+    <div class="row my-5">
+        <div class="col-md-12">
+            <form method="post" class="form white">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                {% buttons %}
+                <button type="submit" class="btn btn-primary">Submit</button>
+                {% endbuttons %}
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<!--
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+<div class="container">
+    
+
+{{ form.non_field_errors }}
+<div style="border-bottom: 0px solid white; color: #ffffff;" class="row">
+<div class="col-4">
+    {{ form.institution_name.errors }}
+    <label for="{{ form.institution_name.id_for_label }}">School Name:</label><br>
+    {{ form.institution_name }}
+</div>
+<div class="col-4">
+    {{ form.degree.errors }}
+    <label for="{{ form.degree.id_for_label }}">Degree:</label><br/>
+    {{ form.degree }}
+</div>
+
+<div class="col-4">
+    {{ form.specialization.errors }}
+        <label for="{{ form.specialization.id_for_label }}">Specialization:</label><br>
+        {{ form.specialization }}
+</div>
+</div>
+
+<div style="border-bottom: 0px solid white; color: #ffffff;" class="row my-2">
+    <div class="col-4">
+        {{ form.minor.errors }}
+        <label for="{{ form.minor.id_for_label }}">Minor:</label><br>
+        {{ form.specialization }}
+    
+    </div>
+    
+    <div class="col-4">
+        {{ form.description.errors }}
+        <label for="{{ form.descrition.id_for_label }}">Description:</label><br>
+        {{ form.description }}
+    
+    </div>
+
+    <div style="border-bottom: 0px solid white; color: #ffffff;" class="row my-2">
+        <div class="col-4">
+            {{ form.start_date.errors }}
+            <label for="{{ form.start_date.id_for_label }}">Start Date:</label><br>
+            {{ form.start_date }}
+        
+        </div>
+        
+        <div class="col-4">
+            {{ form.end_date.errors }}
+            <label for="{{ form.end_date.id_for_label }}">End Date:</label><br>
+            {{ form.end_date }}
+        
+        </div>
+        <div class="col-4">
+            {{ form.graduated.errors }}
+            <label for="{{ form.graduated.id_for_label }}">Graduated:</label><br>
+            {{ form.graduated }}
+        
+        </div>
+        <br/>
+
+<div class="text-center my-3">
+        {% buttons %}
+        <button type="submit" class="btn btnfont btnbg">Submit</button>
+        {% endbuttons %} 
+        </div>
+    </div>
+</div>
+<br/>
+
+<br/>
+
+<br/>
+</form>
+-->
+{% endblock %}

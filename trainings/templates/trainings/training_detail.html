@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_content.html" %}
 
 {% block content %}
    <p class="white"><a href="{% url 'trainings:training-list' %}">Trainings list</a></p> 
@@ -32,5 +32,5 @@
 <button type="button" class="btn btnfont btnbg mx-2" onclick="location.href='{% url 'trainings:non-member-create' trainings.pk %}'">Apply</button>
 {% endif %}
 
-{% include 'footer.html' %}
+
 {% endblock %}

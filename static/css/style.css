@@ -208,6 +208,16 @@ a:hover{
     font-size: 20px;
 }
 
+.stats {
+  color: #3D30A2 ;
+  font-size: 20px;
+}
+
+.stats1 {
+  color: #362FD9;
+  font-size: 20px;
+}
+
 hr {
     color: #44BCDD
 }
@@ -371,18 +381,18 @@ th {
   /* navigation tab*/
 .nav-item{
     list-style-type: none;
-    color: #ffffff;
-    display: inline-white;
+    color: #0f4c75;
+    display: inline-dark;
     padding: 10px, 25px;
-    background-color: #0f4c75;
+    background-color: #00e6e6;
 }
 
 .nav-link {
-    color:#ffffff;
+    color:#0f4c75;
     text-decoration: none;
     font-weight: bold;
     text-transform: capitalize;
-    background-color: #0f4c75;
+    background-color:;
 }
 
 .nav-link:hover {
@@ -401,6 +411,7 @@ th {
 
 .employee {
     background-color: #00e6e6;
+    color:#0f4c75;
 }
 
 .business {
@@ -413,9 +424,12 @@ th {
     border-radius: 5px;
   }
 
+  
+
   /* home_page top slider  */
 
   * {box-sizing:border-box}
+  
 
 /* Slideshow container */
 .slideshow-container {
@@ -489,7 +503,7 @@ th {
 }
 
 .active, .dot:hover {
-  background-color: #717171;
+  background-color:;
 }
 
 /* Fading animation */

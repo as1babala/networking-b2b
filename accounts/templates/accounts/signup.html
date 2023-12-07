@@ -16,28 +16,25 @@
     <!--link rel="stylesheet" href="{% static 'css/style_main.css' %}"-->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
-    <div class="container"  >
+    <div class="container py-5"  >
         <div>
            <h2 class="white text-center my-5" style=""><span class="about"> <i class="fa-solid fa-registered"></i></span> <span>Become One of Us Today</span> </h2>
         </div>
-        <div class="row my-5">
-            <div class="col-md-3">
-            </div>
-            <div class="col-md-6">
+      
+
                 <form method="post" class="form white">
                     {% csrf_token %}
+    
                     {% bootstrap_form form %}
                     
                     <button type="submit" class="btn btnfont btnbg">Submit</button>
                    
                 </form>
                 
-            </div>
-            <hr/>
         </div>
     </div>
     
-    {% include 'footer.html' %} 
+
         {% endblock %}
     
     </div>

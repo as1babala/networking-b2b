@@ -10,10 +10,23 @@
 
 {% load bootstrap5 %}
 
-<div class="container">
-    <div class="row my-5">
-        <div class="col-md-12">
-            <p><a href="{% url 'industries:sector-list' %}">Go Back to Sector list</a></p>
+<div id="sector-form">
+    <p><a href="{% url 'industries:sector-list' %}">Go Back to Sector list</a></p>
+<!--
+{% include 'industries/partials/sector_create.html' %}
+
+
+<button class="btn btn-success" 
+hx-get = "{% url 'industries:sector-create' %}" 
+hx-target="#sector-form"
+hx-swap="beforeend"> + Add Sector</button>
+
+<ul id="sector-list">
+{% for sector in sectors %}
+{% include 'industries/partials/sector.html' %}
+{% endfor %}
+</ul>
+
             <form method="post" class="form">
                 {% csrf_token %}
                 {% bootstrap_form form %}
@@ -24,5 +37,17 @@
         </div>
     </div>
 </div>
+</div>
+<!--/div-->
+<!--{% include 'footer.html' %}>
+</div-->
 
-    {% endblock %}
+<form method="post" class="form" enctype="multipart/form-data">
+  {% csrf_token %}
+  {% bootstrap_form form %}
+  {% buttons %}
+  <button type="submit" class="btn btn-primary">Submit</button>
+  {% endbuttons %}
+</form>
+
+{% endblock content %}

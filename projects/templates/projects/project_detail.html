@@ -1,13 +1,39 @@
-{% extends "base.html" %}
+{% extends "base_content.html" %}
 
 {% block content %}
-   <p><a href="{% url 'projects:project-list' %}">Projects list</a></p> 
-    <h1>This is the Detail of {{projects.project_name}} Project</h1>
+<section class="">
+<div class="py-5">
+   <p class="white"><a href="{% url 'projects:project-list' %}">Projects list</a></p> 
+    <h3>This is the Detail of {{projects.project_name}} Project</h3>
+    <hr/>
+    <p>Project Category: {{projects.project_category}} </br> Project Estiomated Cost: {{projects.estimated_cost}} </br> Project Estiomated Cost: {{projects.estimated_annual_revenue}}</br> 
+    Project Description:</br> {{projects.project_description}}</p>
+    <hr/>
+    <p>Project Reviewed: {{projects.reviewed}} </p>
+    <p> Reviewer Observations: </br>  {{projects.reviewer_observations}}
+        <hr/>
+    <p>Project Approved: {{projects.approved}} || Final Decision:{{ projects.final_decision}}</p></p>
+    <p> Approver Observations: </br>  {{projects.approver_observations}}
     
 <hr />
-<button type="button" class="btn btn-secondary" onclick="location.href='{% url 'projects:project-update' projects.pk %}'">Update</button>
-<button type="button" class="btn btn-danger" onclick="location.href='{% url 'projects:project-delete' projects.pk %}'">Delete</button>
+{% if projects.approved  %}
 <button type="button" class="btn btn-dark" onclick="location.href='{% url 'projects:project-list' %}'">Cancel</button>
 
+{% elif projects.reviewed  %}
+
+<button type="button" class="btn btn-success" onclick="location.href='{% url 'projects:approve-project' projects.pk %}'">Approve Project</button>
+<button type="button" class="btn btn-dark" onclick="location.href='{% url 'projects:project-list' %}'">Cancel</button>
+
+
+<button type="button" class="btn btn-secondary" onclick="location.href='{% url 'projects:project-update' projects.pk %}'">Update</button>
+
+{% else %}
+
+<button type="button" class="btn btn-secondary" onclick="location.href='{% url 'projects:review-project' projects.pk %}'">Review Project</button>
+<button type="button" class="btn btn-dark" onclick="location.href='{% url 'projects:project-list' %}'">Cancel</button>
+
+{% endif %}
+</div>
+</section>
 
 {% endblock %}

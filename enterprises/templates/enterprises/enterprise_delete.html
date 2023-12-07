@@ -1,11 +1,12 @@
-{% extends "base.html" %}
+{% extends "base_content.html" %}
 
 
 {% block title %} Delete this Industry? {% endblock title %}
 
 
 {% block content %}
-                
+
+<section class="py-5">
     <form method="post">
         
         {% csrf_token %}
@@ -17,9 +18,10 @@
 
         <div class="form-group">  
             <button type="submit" class="btn btn-danger mx-2" >Yes, Delete</button>
-            <button type="button" class="btn btn-dark" onclick="location.href='{% url 'enterprises:enterprise-list' %}'">Cancel</button>
+            <button type="button" class="btn btn-dark" onclick="location.href='{% url 'enterprises:enterprise-detail' enterprises.slug %}'">Cancel</button>
         </div>
         
     </form>
+</section>
 
 {% endblock content %}

@@ -1,24 +1,26 @@
-{% extends "base.html" %}
+{% extends "base_content.html" %}
 
-{% block title %} Delete this opportunity? {% endblock title %}
+
+{% block title %} Delete Information {% endblock title %}
 
 
 {% block content %}
-                
+
+<section class="py-5 ">
     <form method="post">
         
         {% csrf_token %}
         
         <fieldset class="form-group">
-            <div style="color:#ea2088; font-style: bold; font-size: 3rem; border-bottom: 1px solid white;">Delete Industry form industries list</div> <br>
-            <h2>Are you sure you want to delete the industry "{{ object.opportunity_title }}"?</h2>
+            <div style="color:#ea2088; font-style: bold; font-size: 2rem; border-bottom: 1px solid white;">Delete {{object.slug}}  from list</div> <br>
+            <h3>Are you sure you want to delete "{{ object.deal_title }}"?</h3>
         </fieldset>
 
         <div class="form-group">  
-            <button type="submit" class="btn ghost-red">Yes, Delete</button>
-            <a href="{% url 'deals:deal-list' %}" class="btn ghost-button">Cancel</a>
+            <button type="submit" class="btn btn-danger mx-2" >Yes, Delete</button>
+            <button type="button" class="btn btn-dark" onclick="location.href='{% url 'deals:deal-detail' object.pk %}'">Cancel</button>
         </div>
         
     </form>
-
+</section>
 {% endblock content %}

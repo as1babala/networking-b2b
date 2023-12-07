@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_content.html" %}
 {% block title %}
 
 {% load static %}
@@ -7,45 +7,55 @@
 {% endblock title%}
 
 {% block content %}
-<div class="container" >
-        <div class="col-md-8 white">
-<p><a href="{% url 'deals:deal-list' %}">Deals list</a></p> 
+<head>
+  
+</head>
+<section class="text-white " style="width:100%">
+  <div class="shadow p-3 mb-5 bg-body-tertiary rounded" style="border-width:0;color:#0a2647;background-color: ">
+<p><span class="about"><a href="{% url 'deals:deal-list' %}">Deals list</a></span></p> 
 
 <h3>Company name: {{deal.company_name}} </h3>
-<p>Deal title: {{deal.deal_title}}     ||  Contact via: {{deal.email}} </p>
+<p>Deal title: <i>{{deal.deal_title}} </i>    <br>  Contact via: <i>{{deal.email}} </i></p>
 
-<hr>
+
 <p>{{deal.descriptions}}</p>
 
 <p><small>Created On: {{deal.created_on|date}}</small></p>
-<hr>
-<div class=''>
+<hr style="height:2px;border-width:0;color:gray;background-color:#0a2647; width:100%">
+        </div>
+        </section>
+<section class="text-white " style="border-width:0;color:gray">
+<div class="shadow p-3 mb-5 bg-body-tertiary rounded" style="border-width:0;color:#0a2647;background-color: ">
 <h3>Request For Proposals</h3>
-
+<hr style="height:3px;border-width:0;color:gray;background-color:gray">
 {% for rfi in rfi %}
-  <p>by {{ rfi.email }} on {{ rfi.created_on|date }}</p>
+  <p>Message from: {{ rfi.client_name }} {{ rfi.client_email }} </p>
   
   <p>{{ rfi.message }}</p>
-  
+
+  <p><small> Create on: {{ rfi.created_on|date }}</small></p>
+  <hr style="height:2px;border-width:0;color:#0a2647;background-color:gray">
   {% empty %}
     <p>No reviews yet.</p>
 
   {% endfor %}
-</div>
-  <hr>
-      
 
+</div>  
+<div class="shadow p-3 mb-5 bg-body-tertiary rounded" style="border-width:0;color:#0a2647;background-color: "> 
     {% if user.is_authenticated %}
-    <h3>Submit your request</h3>
+    <!--h3>Submit your request</h3-->
     <form method="POST" action="{% url 'deals:rfi-create' pk=deal.pk %}">
         {% csrf_token %}
         {% bootstrap_form form %}
         {% buttons %}
         <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="button" class="btn btn-dark" onclick="location.href='{% url 'deals:deal-list' %}'">Cancel</button> 
         {% endbuttons %}
     </form>
   {% endif %}
+  </div>
 </div>
 </div>
-
+</section>
+  
 {% endblock content %}

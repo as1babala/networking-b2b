@@ -17,11 +17,15 @@ urlpatterns = [
     path('<int:pk>/delete/', IndustryDeleteView.as_view(), name='industry-delete'),
     path('search/', SearchIndView.as_view(), name='industry-search'),
     
-     path('sectors/', SectorListView.as_view(), name='sector-list'),
+    path('sectors/', SectorListView.as_view(), name='sector-list'),
+    #path('sectors/', sector_list, name='sector-list'),
     path('sectors/create/', SectorsCreateView.as_view(), name='sector-create'),
+    #path('sectors/create/', sector_create, name='sector-create'),
     path('sectors/<int:pk>/', SectorsDetailView.as_view(), name='sector-detail'),
     path('sectors/<int:pk>/update/', SectorsUpdateView.as_view(), name='sector-update'),
     path('sectors/<int:pk>/delete/', SectorsDeleteView.as_view(), name='sector-delete'),
     path('sectors/search/', SearchSectorView.as_view(), name='sector-search'),
+    path('import-csv/', import_csv, name='import-csv'),
+    #path('success/', success_page, name='success-page'),
     
 ]

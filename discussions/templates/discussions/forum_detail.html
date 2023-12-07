@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}
+
+{% load static %}
+{% load bootstrap5 %}
+
+{% endblock title%}
+
+{% block content %}
+
+<head>
+  <link rel="stylesheet" href="{% static 'css/card_hover.css' %}">
+  <style>
+    .line-spacing-1-5 {
+        line-height: 2.0;
+    }
+
+    .center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
+    }
+.format {
+    background: #04364A;
+    color: #64CCC5;
+}
+.format1 {
+    background: 
+}
+</style>
+</head>
+<section style="width:100%" class="format py-3 rounded line-spacing-1-5">
+<div class="container-fluid" >
+<div class="col-md-12 white text-justify ">
+<p><a href="{% url 'discussions:forum-list' %}">Forum Dashboard</a></p> 
+<hr style="height:3px;border-width:0;color:gray;background-color:gray">
+<h3><span class="about"><b><i>{{forum.category}}</i></b></br> {{forum.topic}}</span></h3>
+
+
+<p class="white" style="text-align:justify">Posted by: <i>{{forum.forum_creator}}</i> <br> Contact via: <i><a href="mailto:{{forum.creator_email}}">{{forum.creator_email}}</i></a></p>
+<hr>
+<p class="white" style="text-justify">{{forum.description|safe}}</p>
+
+<p><small> Created On: {{forum.created_on |date}} </small></p>
+</section>
+
+<section style="width:100%" class=" my-2 rounded">
+<div class="shadow p-3 mb-5 bg-body-tertiary rounded" style="border-width:0;color:gray;background-color: #176B87">
+<h3 class="white">Discussions</h3>
+
+{% for discussion in discussions %}
+<hr style="height:3px;border-width:0;color:gray;background-color:gray">
+  <p class="white">by {{ discussion.discussion_creator }} {{ discussion.discussion_email }}on {{ discussion.created_on|date }} </p>
+  
+  <p class="white">{{ discussion.discuss }}</p>
+ 
+  {% endfor %}
+</div>
+
+<div class="shadow mb-1 bg-body-tertiary rounded" style="background-color: #9BBEC8" >
+    {% if user.is_authenticated %}
+    <h5 class="format">Continue the discussion</h5>
+    <form method="POST" action="{% url 'discussions:discussion-create' pk=forum.pk %}" class="white">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+        <button type="submit" class="btn btn-primary">Submit</button>
+        {% endbuttons %}
+    </form>
+  {% endif %}
+  </div>
+</div>
+</div>
+</section>
+
+{% include 'footer.html'%}
+{% endblock content %}

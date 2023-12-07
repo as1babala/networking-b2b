@@ -1,57 +1,48 @@
 {% extends "base.html" %}
-
-{% block title%}
-
-{% endblock title%}
+{% load static %}
+{% load bootstrap5 %}
 
 {% block content %}
-
-{% load crispy_forms_tags %}
-
-{% load bootstrap5 %}
+<body>
+<head>
+    
+    <link rel="stylesheet" href="{% static 'css/card_hover.css' %}">
+  </head>
+  
 <section class="text-gray-600 body-font relative">
-   
-  </section>
-  <section class="text-gray-600 mx-2">
-<div class="container">
-    <div class="row my-5">
-        <div class="col-md-6">
+  </section >
+  <section class="text-gray-600 mx-2 bg-gray py-5" style="width:100%">
+    <div class="row my-2">
+        <div class="col-md-5 rounded section_color2 mx-1">
           <h2 class="white text-center"> <span>Leave Us a Message</span></h2>
           <form method="post" class="form white">
             {% csrf_token %}
             {% bootstrap_form form %}
             {% buttons %}
-            <button type="submit" class="btn btnfont btnbg mx-2">Submit</button>
+            <button type="submit" class="bg-primary my-2"> Submit </button>
             {% endbuttons %}
         </form>
         </div>
-        <div class="col-md-6">
-          <h2 class="white text-center "> <span>Use the Below contact Information</span></h2>
-          
-          <h4 class="white text-center mx-4 my-4">New York - USA</h1>
+        <div class="col-md-6 rounded section_color22">
+          <h4 class="white text-center mx-4 my-4"><span>New York - USA</span></h1>
           <br>
           <p class="white text-center">
               Address - 13473 Bedell Street <br><br>
                          Springfileds Gardens <br><br>
                         NY 11434 <br><br>
-                        <span><i class="fa-solid fa-phone-volume"></i> </span>  +1 929-391-6710 <br>
-          </p>
+                        <span><i class="fa-solid fa-phone-volume"></i> </span>  +1 929-391-6710 <br> </p>
           <hr>
-          <h4 class="white text-center my-4" >TOGO / AFRICA</h1>
+          <h4 class="white text-center my-4" ><span>TOGO / AFRICA</span></h1>
           <br>
           <p class="white text-center">
               Address - Adetikope  <br><br/>
                          PIA <br><br/>
-                        
             <span><i class="fa-solid fa-phone-volume"></i> </span>  +228 9001 0000 <br>
           </p>
           <br/>
-         
-
-         
       </div>
     </div>
-</div>
+
 </section>
 {% include 'footer.html' %} 
 

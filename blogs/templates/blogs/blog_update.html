@@ -14,12 +14,12 @@
 <div class="container">
     <div class="row my-5">
         <div class="col-md-12">
-            <form method="post" class="white">
+            <form method="post"class="form" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{form.media}}
-                {{form.as_p}}    
-                <button type="submit" class="btn btnfont btnbg mx-2">Submit</button>
-            
+                {% bootstrap_form form %}
+                {% buttons %}
+                <button type="submit" class="btn btn-primary">Submit</button>
+                {% endbuttons %}
             </form>
         </div>
     </div>

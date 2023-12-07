@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_content.html" %}
 
 {% block title%}
 
@@ -8,6 +8,8 @@
 {% load bootstrap5 %}
 
 {% load crispy_forms_tags %}
+
+<section class="py-5">
    <p><a href="{% url 'deals:deal-list' %}">Go Back to Industry list</a></p>
 
     <h1>Update for {{deals.opportunity_title}}</h1><br>
@@ -16,6 +18,7 @@
 
         {% bootstrap_form form %}
         <button class="btn btn-primary"> Submit</button>
+        <a href="{% url 'deals:deal-list' %}" class="btn btn-dark">Cancel</a>
     </form>
-
+</section>
     {% endblock %}

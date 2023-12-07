@@ -23,9 +23,9 @@ from .filters import EnterprisesFilter
 class EnterpriseListView1(LoginRequiredMixin, generic.ListView):
     model = Enterprises
     template_name = "enterprises/enterprise_list.html"
-    #queryset = Enterprises.objects.all() # not adding context here
-    #context_object_name = "enterprises"
-    paginate_by = 2
+    queryset = Enterprises.objects.all() # not adding context here
+    context_object_name = "enterprises"
+    paginate_by = 3
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -36,16 +36,24 @@ class EnterpriseListView1(LoginRequiredMixin, generic.ListView):
 class EnterpriseListView(LoginRequiredMixin, generic.ListView):
     model = Enterprises
     template_name = "enterprises/enterprise_list.html"
-    #queryset = Enterprises.objects.all() # not adding context here
-    #context_object_name = "enterprises"
-    paginate_by = 2
+    queryset = Enterprises.objects.all() # not adding context here
+    context_object_name = "enterprises"
+    paginate_by = 3
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['filter'] = EnterprisesFilter(self.request.GET, queryset=self.get_queryset())
         #context['filter'] = self.ProjectFilter(self.request.GET, queryset=self.get_queryset())
         return context
-      
+
+class EnterpriseListView2(LoginRequiredMixin, generic.ListView):
+    model = Enterprises
+    template_name = "enterprises/enterprise_list.html"
+    queryset = Enterprises.objects.all() # not adding context here
+    context_object_name = "enterprises"
+    paginate_by = 3
+    
+       
 class EnterpriseDetailView(LoginRequiredMixin, generic.DetailView):
     template_name = "enterprises/enterprise_detail.html"
     queryset = Enterprises.objects.all() # not adding context here
@@ -53,10 +61,33 @@ class EnterpriseDetailView(LoginRequiredMixin, generic.DetailView):
     
 class EnterpriseCreateView(LoginRequiredMixin, CreateView):
     template_name = "enterprises/enterprise_create.html"
+    model = Enterprises
     form_class = EnterprisesForm
     
     def get_success_url(self):
         return reverse("enterprises:enterprise-list")
+    
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        messages.success(self.request, f'Your account has been created! You are now able to log in')
+            
+        return super().form_valid(form)
+
+def load_industry(request):
+    industry_id = request.GET.get('industry')
+    sectors = Sectors.objects.filter(industry_id=industry_id).order_by('name')
+    return render(request, 'enterprises/sectors_dropdown_list_options.html', {'sectors': sectors} )
+
+
+
+
+
+def get_json_industry_data(request):
+    qs_industry = list(Industry.objects.all())
+    return JsonResponse({'qs_industry': qs_industry})
+
+
+
 
 def companies(request):
     form = EnterprisesForm()
@@ -101,9 +132,14 @@ class SearchEntView(ListView):
             Q(company_email__icontains=query)  |
             Q(company_address__icontains=query)  |
             Q(company_city__icontains=query)|
-            Q(company_country__icontains=query)|  
+            Q(company_country__icontains=query)| 
+            Q(company_type__icontains=query)|
+            Q(commercial__icontains=query)|
+            Q(technical__icontains=query)|
+            Q(financial__icontains=query)|
+            Q(management__icontains=query)|
             Q(company_web__icontains=query)|
-            Q(number_employees__icontains=query)|
+            Q(sector__icontains=query)|
             Q(industry__icontains=query)|
             Q(annual_revenue__icontains=query)
             
@@ -162,12 +198,4 @@ def downloadCompany_pdf(request,pk):
     return render_to_pdf('enterprises/enterprise_pdf.html',dict)
 
 
-def load_industry(request):
-    industry_id = request.GET.get('industry')
-    sectors = Sectors.objects.filter(industry_id=industry_id).order_by('name')
-    return render(request, 'enterprises/sectors_dropdown_list.html', {'sectors': sectors} )
 
-
-def get_json_industry_data(request):
-    qs_industry = list(Industry.objects.all())
-    return JsonResponse({'qs_industry': qs_industry})

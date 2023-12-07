@@ -6,7 +6,11 @@ app_name = 'projects'
 
 urlpatterns = [
     path('', ProjectListView.as_view(), name='project-list'),
-    path('create/', ProjectCreateView.as_view(), name='project-create'),
+    #path('create/', ProjectCreateView.as_view(), name='project-create'),
+    path('create/', create_project, name='project-create'),
+    path('<int:pk>/review/', review_project, name='review-project'),
+    path('<int:pk>/approve/', approve_project, name='approve-project'),
+    
     path('search/', SearchProjectView.as_view(), name='project-search'),
     #path('<int:id>/generatePDF/', generatePDF, name='generatePDF'),
     

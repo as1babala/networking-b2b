@@ -18,24 +18,31 @@ from core.forms import *
 from django.db.models import Count
 
 class TrainingApplicationListView( generic.ListView):
-    template_name = "trainingapplications/trainingapplication_list.html"
+    template_name = "trainingapplications/training_application_list.html"
     queryset = TrainingApplication.objects.all() # not adding context here
     context_object_name = "applications"
     paginate_by = 4
-    
 
+class UserTrainingApplicationListView( generic.ListView):
+    template_name = "trainingapplications/user_training_application_list.html"
+    context_object_name = "user_applications"
+    paginate_by = 4 
+    
+    def get_queryset(self):
+        return TrainingApplication.objects.filter(name=self.request.user).order_by('-created_on')
+   
 class TrainingApplicationDetailView(LoginRequiredMixin, generic.DetailView):
-    template_name = "trainingapplications/trainingapplication_detail.html"
+    template_name = "trainingapplications/training_application_detail.html"
     queryset = TrainingApplication.objects.all() # not adding context here
     context_object_name = "applications"
     
 class TrainingApplicationDetailView(LoginRequiredMixin, generic.DetailView):
-    template_name = "trainingapplications/trainingapplication_detail.html"
+    template_name = "trainingapplications/training_application_detail.html"
     queryset = TrainingApplication.objects.all() # not adding context here
     context_object_name = "applications"
     
 class TrainingApplicationUpdateView(LoginRequiredMixin, generic.UpdateView):
-    template_name = "trainingapplications/trainingapplication_update.html"
+    template_name = "trainingapplications/training_application_update.html"
     form_class = TrainingApplicationForm
     queryset = TrainingApplication.objects.all()
     

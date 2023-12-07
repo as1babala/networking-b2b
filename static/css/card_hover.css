@@ -1,0 +1,141 @@
+body{
+    font-family: 'Nunito', sans-serif;
+    padding: 50px;
+  }
+  .card{
+      border-radius: 4px;
+      background: #fff;
+      box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
+      transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+    padding: 14px 80px 18px 36px;
+    cursor: pointer;
+  }
+  
+  .card:hover{
+      transform: scale(1.02);
+      box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+  }
+  
+  .card h3{
+    font-weight: 600;
+  }
+ /* 
+  .card img{
+    position: absolute;
+    top: 20px;
+    right: 15px;
+    max-height: 120px;
+  }
+  */
+  .card-1{
+    background-image: url(https://ionicframework.com/img/getting-started/ionic-native-card.png);
+        background-repeat: no-repeat;
+      background-position: right;
+      background-size: 80px;
+  }
+  
+  .card-2{
+     /*background-image: url(https://ionicframework.com/img/getting-started/components-card.png);*/
+        background-repeat: no-repeat;
+      background-position: right;
+      background-size: 80px;
+  }
+  
+  .card-3{
+     /*background-image: url(https://ionicframework.com/img/getting-started/theming-card.png);
+    background-image: url('../images/deals.jpeg');*/
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: 80px;
+  }
+  
+  @media(max-width: 990px){
+    .card{
+      margin: 20px;
+    }
+  }
+  
+  .section_color1{
+    background: #0a2647;
+    
+  }
+
+  .section_color12{
+    background: #1d2d50;
+    
+  }
+
+  .section_color13{
+    background: #1b262c;
+    
+  }
+
+  .section_color2{
+    background: #144272;
+    
+  }
+
+  .section_color22{
+    background: #133b5c;
+    
+  }
+
+  .section_color23{
+    background: #0f4c75;
+    
+  }
+
+  .white{
+    color:#ffffff
+  }
+
+.text{
+    color: white;
+    font-style:normal;
+    /*font-size: 16px;*/
+    font-family: Georgia, 'Times New Roman', Times, serif;
+
+}
+
+.section_color3{
+  background: #205295;
+  
+}
+
+.section_color32{
+  background: #1e5741;
+  
+}
+
+.section_color33{
+  background: #328238;
+  
+}
+
+.section_color4{
+  background: #2c74b3;
+  
+}
+
+.section_color42{
+  background: #00a8ec;
+  
+}
+
+.section_color43{
+  background: #38a3a5;
+  backgroung-transparent: 
+  
+}
+
+.line-spacing-1-5 {
+  line-height: 2.0;
+}
+
+.center {
+display: block;
+margin-left: auto;
+margin-right: auto;
+width: 50%;
+}
+  

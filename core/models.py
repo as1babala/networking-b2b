@@ -5,9 +5,15 @@ from django.dispatch import receiver
 from django.dispatch import receiver
 from common.utils import *
 from django.utils.text import slugify
-from accounts.models import CustomUser
+#from accounts.models import CustomUser
 from django.contrib.auth import get_user_model
-
+from django.db import models
+from django.contrib.auth.models import User, AbstractUser
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.db import models
+#from common.utils import *
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 from django.utils.translation import pgettext_lazy, gettext_lazy as _
 from datetime import datetime
 from django.conf import settings
@@ -15,6 +21,7 @@ from django.utils import timezone
 from django_random_id_model import RandomIDModel
 from django.dispatch import receiver
 import stripe
+from PIL import Image
 from profiles.models import *
 from ckeditor.fields import RichTextField
 #from django_extensions.db.fields import RandomPrimaryKey
@@ -28,11 +35,109 @@ from tinymce import HTMLField
 #User = CustomUser
 # Create your models here.
 
+PARTNERSHIP_TYPE = (('COMMERCIAL', 'COMMERCIAL'),
+                     ('TECHNIQUE', 'TECHNIQUE'),
+                     ('FINANCIER', 'FINANCIER'),
+                     ('MANAGEMENT', 'MANAGEMENT'))
+SALUTATIONS = (("MISS","MISS"), ("Mrs","Mrs"), ("Ms", "Ms"), ("Mr", "Mr"))
+class CustomUser(AbstractUser):
+    company_name = models.CharField(max_length=100, default="")
+    COMPANY = 'COMPANY'
+    EXPERT = 'EXPERT'
+    #EMPLOYEE = 'EMPLOYEE'
+    #ADMIN = 'ADMIN'
+    USER_CHOICES = ( (COMPANY, 'COMPANY'), (EXPERT, 'EXPERT'), )
+    salutations = models.CharField(max_length=10, choices=SALUTATIONS, default="")
+    #user_type = models.CharField(choices=USER_CHOICES, max_length=12, default="")
+    is_admin = models.BooleanField('Is Admin', default=False)
+    is_expert = models.BooleanField('Would like to register as an expertise', default=False)
+    #is_company = models.BooleanField('Would like to register my company', default=False)
+    is_employee = models.BooleanField('Is Employee', default=False)
+    commercial = models.BooleanField('Would like to be a commercial partner', default=False)
+    technical = models.BooleanField('Would like to be a technical partner', default=False)
+    financial = models.BooleanField('Would like to be a financial partner', default=False)
+    management = models.BooleanField('Would like to be a management partner', default=False)
+    is_reviewer = models.BooleanField('Is reviewer', default=False)
+    is_approver = models.BooleanField('Is approver', default=False)
+    agreement = models.BooleanField('By clicking I accept to become member and share my information with your organization', default=False)
+    #partnership_type = models.CharField('What type of partnership do you want to establish? ',choices=PARTNERSHIP_TYPE, max_length=50, default='')
+        
+    class Meta:
+        ordering = ('id',)   
+        
+        '''
+class UserManager(BaseUserManager):
+    def create_user(self, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError('The Email field must be set')
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+        return self.create_user(email, password, **extra_fields)
+     
+class CustomUser(AbstractBaseUser, PermissionsMixin):
+    USER_TYPE_CHOICES = (
+        ('C', 'Company'),
+        ('E', 'Expert'),
+        ('P', 'Employee'),
+        ('A', 'Admin'),
+    )
+    email = models.EmailField(unique=True)
+    user_type = models.CharField(max_length=1, choices=USER_TYPE_CHOICES)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+    date_joined = models.DateTimeField(auto_now_add=True)
+
+    objects = UserManager()
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['user_type']
+
+    def __str__(self):
+        return self.email
+
+    def get_full_name(self):
+        return self.email
+
+    def get_short_name(self):
+        return self.email
+
+    class Meta:
+        verbose_name = 'User'
+        verbose_name_plural = 'Users'
+        '''
+class ContactUs(models.Model):
+
+    name = models.CharField(max_length=50)
+    email = models.CharField(max_length = 50)
+    phone_ind= models.CharField(max_length=3)
+    phone_number = models.CharField(max_length=10)
+    message = models.CharField(max_length = 500)
+    created_on = models.DateTimeField(auto_now_add = True)
+    updated_on = models.DateTimeField( auto_now=True)
+   
+    class Meta: 
+        verbose_name = "Contacts"
+        verbose_name_plural = "Contacts"
+        ordering = ('-created_on',)
+    
+    def __str__(self):
+        return self.name
+    
+    
 class Pricing(models.Model):
     name = models.CharField(_('pricing tier'), max_length=100) # free / basic / pro
     
     def __str__(self):
         return self.name
+    
+    
     
 
 class Subscription(models.Model):
@@ -66,30 +171,35 @@ def post_save_user(sender, instance, created, *args, **kwargs):
     
            
 class Product(RandomIDModel):
-    slug = models.SlugField(unique=True)
-    product_name = models.CharField(max_length=100)
+    slug = models.SlugField(unique=True, null=True)
+    name = models.CharField(max_length=100)
     category = models.CharField(max_length=100, default="")
     description = models.CharField(max_length=255, default="")
     product_features = models.CharField(max_length=255, default="")
-    price = models.PositiveIntegerField(default=0) # cents 1000 = $10.00
+    price = models.PositiveIntegerField(default=0) # cents 1000 = $10.00 while in stripe
     created_on = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
         return self.id
     
+    
+    def get_display_price(self):
+        return "{0:.2f}".format(self.price / 100)# get dollars and round to 2 decimals
+    
+    
 def pre_save_product(sender, instance, *args, **kwargs):
     if not instance.slug:
-        instance.slug = slugify(instance.product_name)        
+        instance.slug = slugify(instance.name)        
     
+''' 
 
-
-class Employee(RandomIDModel):
+class EmployeeProfile(RandomIDModel):
 #class Employee(models.Model):
     slug = models.SlugField(unique=True)
     user=models.OneToOneField(CustomUser,on_delete=models.CASCADE, null=True, blank=True)
     user_type = models.OneToOneField(CustomUser, on_delete=models.CASCADE, default='EMPLOYEE', related_name='employees')
     DOB = models.DateField()
-    prof_pic = models.ImageField(upload_to='employee_pictures/',null=True,blank=True)
+    prof_pic = models.ImageField(upload_to='employee_pictures/', default='blog_pics/person_icon 1.png')
     street_number = models.CharField(max_length=5, default="")
     city = models.CharField(max_length = 66, default="")
     state = models.CharField(default='', max_length = 2)
@@ -152,15 +262,15 @@ class Employee(RandomIDModel):
 def pre_save_employee(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = slugify(instance.user)
-''''
+
 def post_save_employee(sender, instance, created, *args, **kwargs):
     if created:
         if instance.is_employee:
-            Employee.objects.create(user=instance, last_name = instance.last_name, first_name = instance.first_name, 
+            EmployeeProfile.objects.create(user=instance, last_name = instance.last_name, first_name = instance.first_name, 
                                     email = instance.email
             )             
 
-'''
+
 
 class Experts(RandomIDModel):
 #class Experts(models.Model):
@@ -226,14 +336,14 @@ def post_save_expert(sender, instance, created, *args, **kwargs):
                                     company_name = instance.company_name, email = instance.email, commercial=instance.commercial, technical=instance.technical,
                                     financial=instance.financial, management=instance.management
             )             
-
+'''
 
 class AdminProfile(RandomIDModel):
     slug = models.SlugField(unique=True)
     user=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
     first_name = models.CharField(max_length=100, default="")
     last_name = models.CharField(max_length=100, default="")
-    DOB = models.DateField(null=True)
+    DOB = models.DateField(null=True, blank=True)
     prof_pic = models.ImageField(upload_to='document/', default='blog_pics/person_icon 1.png')
     street_number = models.CharField(max_length=5, default="")
     city = models.CharField(max_length = 66, default="")
@@ -354,25 +464,30 @@ class EmployeeProfile(RandomIDModel):
 def pre_save_employee_p(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = slugify(f"{instance.user}-{instance.id}")
-'''      
+     
 def post_save_employee_p(sender, instance, created, *args, **kwargs):
     if created:
         if instance.is_employee:
             EmployeeProfile.objects.create(user=instance, last_name = instance.last_name, first_name = instance.first_name, 
                                      email = instance.email
             )
-'''
-class ExpertProfile(RandomIDModel):
+
+#class ExpertProfile(RandomIDModel):
+class ExpertProfile(models.Model):
     slug = models.SlugField(unique=True)
     user=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
     first_name = models.CharField(max_length=100, default="")
     last_name = models.CharField(max_length=100, default="")
-    DOB = models.DateField(null=True)
+    DOB = models.DateField("Enter Your Date of Birth", null=True, blank=True)
     company_name = models.CharField(max_length=50, null=True, blank=True)
-    prof_pic = models.ImageField(upload_to='document/', default='blog_pics/person_icon 1.png')
-    street_number = models.CharField(max_length=5, default="")
+    avatar = models.ImageField(upload_to='document/', default='document/person_icon_1.png')
+    #avatar = models.ImageField(
+        #default='document/person_icon 1.png', # default avatar
+        #upload_to='profile_avatars/' # dir to store the image
+   # )
+    street_address = models.CharField(max_length=50, default="", null=True, blank=True)
     city = models.CharField(max_length = 66, default="")
-    state = models.CharField( max_length = 2, default="")
+    state = models.CharField( max_length = 2, default="", null=True, blank=True)
     country = models.CharField(choices=COUNTRIES, max_length =2, default="" )
     phone_code = models.CharField(max_length=10, choices=PHONE_CODE, default="")
     phone_number = models.CharField(max_length=10, default="")
@@ -402,11 +517,6 @@ class ExpertProfile(RandomIDModel):
        
         return nbr_yrs
     
-    @property
-    def get_name(self):
-        return self.user
-    
-    
     def get_absolute_url(self):
         return reverse("profiles:expert-detail", kwargs={"slug": self.slug})
     
@@ -415,8 +525,22 @@ class ExpertProfile(RandomIDModel):
         return self.id
     
     def __str__(self):
-        return self.user.email
+        return self.email
+    
+    '''
+    def save(self, *args, **kwargs):
+        # save the profile first
+        super().save(*args, **kwargs)
 
+        # resize the image
+        img = Image.open(self.avatar.path)
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
+            # create a thumbnail
+            img.thumbnail(output_size)
+            # overwrite the larger image
+            img.save(self.avatar.path)
+'''
 def pre_save_expert_p(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = slugify(f"{instance.user}-{instance.id}")
@@ -424,14 +548,12 @@ def pre_save_expert_p(sender, instance, *args, **kwargs):
 def post_save_expert_p(sender, instance, created, *args, **kwargs):
     if created:
         if instance.is_expert:
-            ExpertProfile.objects.create(user=instance, last_name = instance.last_name, first_name = instance.first_name, 
-                                     company_name = instance.company_name, email = instance.email, commercial=instance.commercial, technical=instance.technical,
-                                     financial=instance.financial, management=instance.management
+            ExpertProfile.objects.create(user=instance, last_name = instance.last_name, first_name = instance.first_name, company_name = instance.company_name, email = instance.email, commercial=instance.commercial, technical=instance.technical, financial=instance.financial, management=instance.management
                                      )
 
 class Industry(models.Model):
     #industry_id = models.IntegerField(primary_key=True)
-    name = models.CharField(choices=INDCHOICES, max_length=255, unique=True)
+    name = models.CharField( max_length=200, unique=True)
     description = models.TextField(max_length=255)
     created_on = models.DateTimeField(auto_now_add = True)
     updated_on = models.DateTimeField(auto_now = True)
@@ -463,33 +585,31 @@ class Sectors(models.Model):
 class Enterprises(RandomIDModel):
 #class Enterprises(models.Model):
     slug = models.SlugField(unique = True )
-    user=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=100, default="")
-    last_name = models.CharField(max_length=100, default="")
-    email = models.EmailField()
+    user=models.ForeignKey(CustomUser, on_delete=models.CASCADE, default='')
+    company_logo = models.ImageField(upload_to='document/', default='document/maze_field.jpeg')
+    company_email = models.EmailField()
     registration_id = models.CharField(max_length=50, default="", null=True)
     registration_date = models.DateField(null=True)
     company_name = models.CharField(max_length=50)
     company_type = models.CharField(max_length=50, choices=TYPE_COMPANIES, default = '')
-    company_email = models.EmailField()
     company_address = models.CharField(max_length=255)
     company_city = models.CharField(max_length=100)
     company_country = models.CharField(max_length=255, choices=COUNTRIES)
     industry = models.ForeignKey(Industry, on_delete=models.SET_NULL, null=True)
     sector = models.ForeignKey(Sectors, on_delete=models.SET_NULL, null=True)
     company_web = models.CharField(max_length=255)
-    phone_code = models.CharField(max_length=10, choices=PHONE_CODE)
-    phone_number = models.CharField(max_length=10)
-    number_employees = models.CharField(max_length=15, choices=EMP_NUMBER, default='0_10')
-    activity_description = models.TextField(max_length=500)
-    annual_revenue = models.CharField(max_length = 50, choices=REVENUE, default='0_150 000 000')
-    is_company = models.BooleanField('Would like to register my company', default=False)
     commercial = models.BooleanField('Would like to be a commercial partner', default=False)
     technical = models.BooleanField('Would like to be a technical partner', default=False)
     financial = models.BooleanField('Would like to be a financial partner', default=False)
     management = models.BooleanField('Would like to be a management partner', default=False)
-    #partnership_type = models.CharField(max_length=255, choices=PARTNERSHIP_TYPE, default="", blank=True)
-    active = models.BooleanField(default=True)
+    phone_code = models.CharField(max_length=10, choices=PHONE_CODE)
+    phone_number = models.CharField(max_length=10)
+    number_employees = models.CharField(max_length=15, choices=EMP_NUMBER, default='0_10')
+    annual_revenue = models.CharField(max_length = 50, choices=REVENUE, default='0_150 000 000')
+    currency= models.CharField(max_length=50, choices=CURRENCIES_SYMBOLS, default='')
+    activity_description = models.TextField("Tell us more about your company's activities ", max_length=500)
+   
+    #is_company = models.BooleanField('Would like to register my company', default=False)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
     
@@ -506,7 +626,7 @@ class Enterprises(RandomIDModel):
         return reverse("enterprises:enterprise-detail", kwargs={"slug": self.slug})
     
     def __str__(self):
-        return self.user.email
+        return self.company_name
     
 def pre_save_enterprise(sender, instance, *args, **kwargs):
     if not instance.slug:
@@ -515,14 +635,11 @@ def pre_save_enterprise(sender, instance, *args, **kwargs):
            
 def post_save_company(sender, instance, created, *args, **kwargs):
     if created:
-        if instance.is_company:
+        if instance.is_expert:
             Enterprises.objects.create(
-                user=instance, last_name=instance.last_name, first_name=instance.first_name,
-            company_name=instance.company_name, email=instance.email, 
-            is_company=instance.is_company, commercial=instance.commercial, technical=instance.technical, financial=instance.financial,
-            management=instance.management
+                user=instance, company_name=instance.company_name, commercial=instance.commercial, technical=instance.technical, financial=instance.financial, management=instance.management
             )
-
+'''
 class CompanyProfile(RandomIDModel):
     slug = models.SlugField(unique = True )
     user=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
@@ -580,35 +697,23 @@ def post_save_company_p(sender, instance, created, *args, **kwargs):
             company_name=instance.company_name, email=instance.email, is_company=instance.is_company, 
         commercial=instance.commercial, technical=instance.technical, financial=instance.financial,
             management=instance.management)
-        
-#class FicheTechnic(RandomIDModel):
-class FicheTechnic(models.Model):
+    '''    
+class FicheTechnic(RandomIDModel):
+#class FicheTechnic(models.Model):
     slug = models.SlugField(max_length = 20, unique=True)
     name = models.CharField(max_length=100)
+    fiche_avatar = models.ImageField(upload_to='document/', default='document/maze_field.jpeg')
     description = models.TextField(max_length = 768)
     category = models.CharField(max_length = 100, choices = FICHE_CAT)
     Expertise_level = models.CharField(max_length=100, choices=EXPERTISE_LEVEL)
-    soil_climate = models.TextField(max_length=368, null=True)
+    Technical_factors = models.TextField("This include climate,season, soil preparation,seeds, semis, care, conditions, and protection",max_length=1000, null=True, blank=True)
     principal_risks = models.TextField(max_length=368, null=True, blank=True)
-    season = models.CharField(max_length=100, null=True, blank=True)
-    seeds = models.CharField(max_length = 50, null=True, blank=True)
-    soil_preparation = models.TextField(max_length=368, null=True, blank=True)
-    semis = models.TextField(max_length = 368, null=True, blank=True)
-    care = models.TextField(max_length=368, null=True, blank=True)
-    protection = models.TextField(max_length=368, null=True, blank=True)
-    harvest = models.TextField(max_length=368, null=True, blank=True)
-    post_harvest = models.TextField(max_length=368, null=True, blank=True)
-    yield_harvest = models.TextField(max_length=160, null=True, blank=True)
-    seed_supplier = models.TextField(max_length=200, null=True, blank=True)
-    other_input = models.TextField(max_length=200, null=True, blank=True)
-    equipment = models.TextField(max_length=200, null=True, blank=True)
-    storage_requirements = models.TextField(max_length=200, null=True, blank=True)
-    average_price = models.TextField(max_length=200, null=True, blank=True)
-    marketing = models.TextField(max_length=200, null=True, blank=True)
-    cost_acre = models.TextField(max_length=500, null=True, blank=True)
+    harvest_factors = models.TextField("Include how to harvest, post harvest conditioning, yield", max_length=500, null=True, blank=True)
+    marketing_factor = models.TextField("include seed supplier, equipment cost, storage requirements, average price per unit (acre, kilo, tone...), average cost ", max_length=500, null=True, blank=True)
+    industrialization_factors = models.TextField("what to consider if industrializing", max_length=500, null=True, blank=True) 
+    other_factors = models.TextField("Import Export opportunities, main producers, main consumers...", max_length=200, null=True, blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
-    
     class Meta:
         verbose_name = "FicheTechnic"
         verbose_name_plural = "FicheTechnics"
@@ -638,6 +743,7 @@ class Jobs(RandomIDModel):
     job_title = models.CharField(max_length=100)
     job_grade = models.CharField(choices=JOB_GRADES, max_length=2)
     Salary = models.FloatField()
+    currency= models.CharField(max_length=50, choices=CURRENCIES_SYMBOLS, default='') 
     Department = models.CharField(choices=Departments, max_length=3)
     job_type = models.CharField(choices=JOB_TYPE, max_length=2)
     country = models.CharField(choices=COUNTRIES, max_length =2 )
@@ -705,9 +811,10 @@ class Testimonies(RandomIDModel):
 def pre_save_testimony(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = slugify(f"{instance.title} {instance.id}")
-        
+     
 class Category(models.Model):
     name = models.CharField(max_length=50)
+    description = models.CharField(max_length=250, blank=True, null=True)
     
     class Meta:
         verbose_name = "category"
@@ -721,27 +828,48 @@ class Blog(RandomIDModel):
 #class Blog(models.Model):
     slug = models.SlugField(max_length = 200, unique=True)
     title = models.CharField(max_length=200)
-    categories = models.ManyToManyField(Category, related_name='blog')
+    #categories = models.CharField(choices=BLOG_CATEGORIES, max_length=50, default='')
+    categories = models.ForeignKey(Category, on_delete=models.CASCADE, default='')
     #content = RichTextField(blank=True, null=True )# to use rich text for blog post
     content = models.TextField(max_length = 5000)
     created_on = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     email = models.EmailField(null=True)
-    blog_image = models.ImageField(upload_to='blog_pics', default='blog_pics/blogs.pnp')
-    status = models.IntegerField(choices=BLOG_STATUS, default=0)
+    blog_image = models.ImageField(upload_to='blog_pics/', default='blog_pics/blog 1.pnp')
+    status = models.CharField(max_length=15, choices=BLOG_STATUS, default="DRAFT")
     
     class Meta:
         verbose_name = "Blog"
         verbose_name_plural = "Blogs"
         ordering = ('-created_on',)
         
-          
+    @staticmethod
+    def count_blogs_by_status():
+        return {
+            'Draft': Blog.objects.filter(status="DRAFT").count(),
+            'Published': Blog.objects.filter(status="PUBLISHED").count(),
+            'Archived': Blog.objects.filter(status="ARCHIVED").count(),
+        }
+
+    def __str__(self):
+        return self.title
+      
     @property
     def get_id(self):
         return self.id
+    
+    @property 
+    def blog_length(self):
+        blog_length = len(self.content)
+        
+       
+        return blog_length
      
-    def __str__(self):
-        return self.title
+    def get_average_rating(self):
+        reviews = self.review_set.all()
+        if reviews:
+            return sum([review.rating for review in reviews]) / reviews.count()
+        return 0
     
     def get_absolute_url(self):
         return reverse("blog-detail", kwargs={'slug': self.slug})
@@ -754,8 +882,8 @@ class Review(RandomIDModel):
 #class Review(models.Model):
     slug = models.SlugField(max_length = 200, unique=True)
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE, related_name='reviews', default="")
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    content = models.TextField(max_length = 768)
+    reviewer = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    comment = models.TextField(max_length = 768)
     rating = models.IntegerField(choices=[(i, i) for i in range(1, 6)])
     created_on = models.DateTimeField(default=timezone.now)
     
@@ -763,18 +891,27 @@ class Review(RandomIDModel):
         verbose_name = "Review"
         verbose_name_plural = "Reviews"
         ordering = ('-created_on',)
-    '''
+    
+    @property 
+    def review_metrics(self):
+        average_review = sum(self.rating)/self.slug.count()
+        number_review = self.slug.count()
+        
+       
+        return average_review, number_review
     @property
     def get_id(self):
         return self.id
-    '''
-    def __str__(self):
-        return f"{self.user} - {self.blog.title}"
     
+    def __str__(self):
+        return f"{self.reviewer.username}'s review of {self.blog.title}"
+    '''
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         self.blog.average_rating = self.blog.reviews.aggregate(models.Avg('rating'))['rating__avg']
+        self.blog.number_of_reviews = self.blog.reviews.aggregate(models.count('rating')['rating_count'])
         self.blog.save()
+        '''
     @property
     def get_id(self):
         return self.id
@@ -785,17 +922,46 @@ class Review(RandomIDModel):
 def pre_save_review(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = slugify(f"{instance.blog} {instance.pk}")
+
+#class ReplyToComment(models.Model):
+class ReplyToReview(RandomIDModel):
+    slug = models.SlugField(max_length = 200, unique=True, null=True, blank=True)
+    review = models.ForeignKey(Review, related_name='replies', on_delete=models.CASCADE)
+    replier = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    comment = models.TextField()
+    created_on = models.DateTimeField(auto_now_add=True)
     
+    class Meta:
+        verbose_name = "ReplyToReview"
+        verbose_name_plural = "ReplyToReviews"
+        ordering = ('-created_on',)
+
+    def __str__(self):
+        return f'Reply by {self.replier} on {self.review}'
+    
+    @property
+    def get_id(self):
+        return self.id
+    def get_absolute_url(self):
+        return reverse("blogs:review-detail", kwargs={'slug': self.slug})
+
+def pre_save_reply_to_review(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = slugify(f"{instance.review_id} {instance.pk}")
+        
+             
 class Deals(RandomIDModel):
     slug = models.SlugField(max_length = 200)
     dealer = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="deals", null=True, blank=True)
+    service_category= models.CharField(max_length=100, choices=SERVICES_CATEGORIES, default='')
     email = models.EmailField(null=True)
     company_name = models.CharField(max_length=50)
-    category = models.CharField(max_length = 50, choices = OPP_CAT, default='')
+    #deal_category = models.CharField(max_length = 50, choices = SERVICES_CATEGORIES, default='')
     deal_title = models.CharField(max_length = 100)
+    deal_country = models.CharField(choices=COUNTRIES, max_length =2, default='')
+    deal_city = models.CharField(max_length=100, default='')
     deal_type = models.CharField(max_length=50, choices = OPPORTUNITY_TYPES, default='')
-    descriptions = models.TextField(max_length=750)
-    deal_picture = models.FileField("Supporting Documents", upload_to='deals/', null=True, blank=True)
+    descriptions = models.TextField(max_length=750) 
     active = models.BooleanField(default=True)
     created_on = models.DateTimeField(auto_now_add = True)
     updated_on = models.DateTimeField(auto_now = True)
@@ -819,12 +985,17 @@ def pre_save_deal(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = slugify(f"{instance.deal_title} {instance.pk}")
 
+class DealImages(models.Model):
+    deal = models.ForeignKey(Deals, on_delete=models.CASCADE)
+    image = models.FileField("Supporting Documents", upload_to='deals/', default='deals/deals.jpeg')
+    
+    
 class Rfi(RandomIDModel):
     slug = models.SlugField(max_length = 120, unique=True)
     deal = models.ForeignKey(Deals, on_delete=models.CASCADE)
-    message = models.TextField()
-    name = models.ForeignKey(CustomUser, on_delete = models.CASCADE, related_name='rfi')
-    email = models.EmailField()
+    message = models.TextField(max_length=5000)
+    client_name = models.ForeignKey(CustomUser, on_delete = models.CASCADE, related_name='rfi')
+    client_email = models.EmailField()
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now= True) 
     
@@ -846,20 +1017,21 @@ def pre_save_rfi(sender, instance, *args, **kwargs):
 
 class Projects(RandomIDModel):
     slug = models.SlugField(max_length=200, null=False)
+    project_initiator = models.ForeignKey(CustomUser, related_name="owner", on_delete=models.CASCADE, null=True, blank=True)
     project_name = models.CharField(max_length=100)
-    company_name = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='projects')
+    project_category = models.CharField(max_length=50, choices=PROJECT_CATEGORY, default='')
+    company_name = models.ForeignKey(Enterprises, on_delete=models.CASCADE, related_name='projects')
     project_description = models.TextField()
+    estimated_cost = models.PositiveIntegerField('Estimated Cost in US $',)
+    estimated_Annual_revenue = models.PositiveIntegerField('Estimated Annul Revenue in US $')
     supporting_document = models.FileField(upload_to ='documents/', null=True,blank=True)
-    reviewed = models.CharField(max_length = 10, choices = APPROVED, default='NO')
+    reviewed = models.BooleanField(default=False)
     reviewer_observations = models.TextField(default='', null=True, blank=True)
-    #reviewed_by = models.CharField(max_length=50, null=True, blank=True)
-    reviewed_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='reviewer', default='', null=True, blank=True)
-    #reviewed_date = models.DateField(null=True, blank=True, auto_now=True)
-    approved = models.CharField(max_length = 10, choices = APPROVED, default='NO')
-    #approved_by = models.CharField(max_length=50, null=True, blank=True)
-    approved_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='approver', default='', null=True, blank=True)
+    reviewed_by = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, related_name='reviewer', default='', null=True, blank=True)
+    approved = models.BooleanField( default=False)
+    approved_by = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, related_name='approver', default='', null=True, blank=True)
     approver_observations = models.TextField(default='', null=True, blank=True)
-    #approved_date = models.DateField(null=True, blank=True, auto_now=True)
+    final_decision = models.CharField(max_length=15, choices=PROJECT_DECISION, default='')
     created_on = models.DateTimeField(auto_now_add = True)
     updated_on = models.DateTimeField(auto_now=True)
     
@@ -881,43 +1053,7 @@ def pre_save_project(sender, instance, *args, **kwargs):
         instance.slug = slugify(f"{instance.project_name} {instance.id}")
      
 
-class Education(models.Model):
-    slug = models.SlugField(max_length=200, null=False)
-    user=models.ForeignKey(CustomUser,on_delete=models.CASCADE )
-    email = models.EmailField(null=True, blank=True)
-    institution_name = models.CharField(pgettext_lazy("School Name", "school_name"),max_length=100)
-    degree = models.CharField(choices=DEGREE_CHOICES, max_length=100, default="")
-    specialization = models.CharField(max_length=255)
-    minor = models.CharField(max_length=255)
-    start_date = models.DateField()
-    end_date = models.DateField( blank=True, null=True)
-    description = models.TextField(default='')
-    graduated = models.BooleanField(default=False)
-    created_on = models.DateTimeField(auto_now_add = True)
-    updated= models.DateTimeField( auto_now=True)
-    class Meta: 
-        verbose_name = "Education"
-        verbose_name_plural = "Educations"
-        ordering = ('-created_on',)
-    
-    @property
-    def get_name(self):
-        return self.user.first_name+" "+self.user.last_name
-    
-    @property
-    def get_id(self):
-        return self.id
-    
-    @property
-    def checkbox_character(self):
-        return 'X' if self.graduated else ' '
-    
-    def __str__(self):
-        return f"{self.degree} from {self.institution_name} ({self.start_date.year} - {self.end_date.year if self.end_date else 'Present'})"
-
-def pre_save_education(sender, instance, *args, **kwargs):
-    if not instance.slug:
-        instance.slug = slugify(f"{instance.institution_name} {instance.id}")
+#class Education(models.Model):
 
 class Trainings(RandomIDModel):
     slug = models.SlugField(max_length=200, null=False)
@@ -927,11 +1063,14 @@ class Trainings(RandomIDModel):
     training_title = models.CharField(max_length=100, default='')
     training_type = models.CharField(max_length=100, choices=TRAININGS)
     domain = models.CharField(max_length=100, choices=TRAININGS_DOMAIN)
+    venue_address = models.CharField(max_length=100, default='')
+    city = models.CharField(max_length=100, default='')
+    country = models.CharField(max_length=100, choices=COUNTRIES, default='')
     duration = models.CharField(max_length=15,default='', choices=TRAININGS_DURATION)
     training_mode = models.CharField(max_length=20, choices=TRAININGS_MODE, default='')
     requirements = models.CharField(max_length=50, choices=REQUIREMENTS, default='')
-    description = models.CharField(max_length=500)
-    teacher_bio = models.CharField(max_length=500, default='')
+    description = models.TextField(max_length=500)
+    teacher_bio = models.TextField(max_length=500, default='')
     monday = models.BooleanField( default=False)
     tuesday = models.BooleanField( default=False)
     wednesday = models.BooleanField(default=False)
@@ -943,6 +1082,7 @@ class Trainings(RandomIDModel):
     start_time = models.TimeField()
     end_time = models.TimeField()
     cost = models.FloatField()
+    currency= models.CharField(max_length=50, choices=CURRENCIES_SYMBOLS, default='')
     certification = models.BooleanField("Will this course deliver a certificate?", default=False)
     active = models.BooleanField(default=True)
     created_on = models.DateTimeField(auto_now_add=True)
@@ -978,6 +1118,7 @@ class TrainingApplication(RandomIDModel):
     member = models.BooleanField(default=False)
     status = models.CharField(max_length=50, choices=APPLICATION_STATUS_CHOICES, default='Applied')
     created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
     
     class Meta:
         ordering = ('-created_on',)
@@ -993,30 +1134,260 @@ def pre_save_training_application(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = slugify(f"{instance.name} {instance.id}")
 
+### ANNOUNCEMENTS Services and products
+#class ProductDeals(models.Model):
+class ProductDeals(RandomIDModel):
+    slug = models.SlugField(max_length = 120, unique=True)
+    email = models.EmailField(null=True)
+    dealer = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="product_deals", null=True, blank=True)
+    company_name = models.CharField(max_length=50, default='')
+    product_name = models.CharField(max_length=255)
+    product_category= models.CharField('Enter Your Product Category',max_length=100, choices=PRODUCTS_CATEGORIES, )
+    product_description = models.TextField()
+    product_image = models.ImageField(upload_to='products/images/', default='deals/deals.jpeg')
+    city = models.CharField(max_length=100, default='')
+    country = models.CharField(max_length=100, choices=COUNTRIES)
+    availability_date = models.DateField()
+    opportunity_type = models.CharField(max_length=50, choices=PRODUCTS_OPPORTUNITIES)
+    stock_quantity = models.PositiveIntegerField(null=True, blank=True)
+    quantity_unit = models.CharField(max_length=100, choices=MEASUREMENT_UNIT, default='')
+    is_available = models.BooleanField(default=True)
+    announcement_date = models.DateTimeField(auto_now_add=True)
+    price = models.DecimalField('Price Per Unit',max_digits=10, decimal_places=2, null=True, blank=True)
+    currency = models.CharField(max_length=100, choices=CURRENCIES_SYMBOLS, null=True, blank=True)
+    discount = models.CharField(max_length=5, choices=DISCOUNTS, null=True, blank=True)
+    #tags = models.ManyToManyField('Tag', blank=True)
+    notes = models.TextField(blank=True)
+    updated_on = models.DateTimeField(auto_now=True)
+    class Meta: 
+        verbose_name = "Product Deal"
+        verbose_name_plural = "Product Deals"
+        ordering = ('-announcement_date',)
+        
+    def __str__(self):
+        return self.product_name
 
+def pre_save_product_deals(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = slugify(f"{instance.product_name} {instance.id}")
+
+class ProductRFI (RandomIDModel):
+    slug = models.SlugField(max_length = 120, unique=True)
+    product_deal = models.ForeignKey(ProductDeals, on_delete=models.CASCADE)
+    message = models.TextField(max_length=5000)
+    client_name = models.ForeignKey(CustomUser, on_delete = models.CASCADE, related_name='product_rfi')
+    client_email = models.EmailField()
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now= True) 
+    class Meta: 
+        verbose_name = "Product rfi"
+        verbose_name_plural = "Product rfi"
+        ordering = ('-created_on',)
+        
+    def __str__(self):
+        return self.slug
+
+def pre_save_product_rfi(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = slugify(f"{instance.product_deal} {instance.id}")
+    
+
+#class WorkExperience(models.Model):
+class WorkExperience(RandomIDModel):
+    # A foreign key to associate experience with a specific employee
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    #email = models.CharField(max_length=100, null=True, blank=True)
+    # Details of the work experience
+    company_name = models.CharField(max_length=100)
+    work_location_address = models.CharField(max_length=100)
+    work_city = models.CharField("Enter the City where the work is located", max_length=100)
+    work_country = models.CharField(max_length=50, choices=COUNTRIES)
+    job_title = models.CharField("Enter Your Job Title",max_length=100, default="")
+    position = models.CharField("Enter Your Position" ,max_length=100)
+    start_date = models.DateField("Enter the starting date of this position")
+    end_date = models.DateField("Enter the end date of this position. If still in the position leave it blank",null=True, blank=True)  # Allow null for current job
+    description = models.TextField(blank=True)
+    created_on = models.DateField(auto_now_add=True)
+    updated_on = models.DateField(auto_now=True)
+    
+    class Meta: 
+        verbose_name = "Work history"
+        verbose_name_plural = "Work history"
+        ordering = ('-start_date',)
+
+    def __str__(self):
+        return f"{self.position} at {self.company_name}"
+'''
+def pre_save_work_experience(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = slugify(f"{instance.position} {instance.company_name}")    
+'''
+
+class ExpertPortfolio(models.Model):
+    # A foreign key to associate a project with a specific consultant
+    consultant = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='projects')
+    #consultant_email = models.EmailField(null=True, blank=True)
+    # Project Details
+    project_title = models.CharField(max_length=200)
+    project_type = models.CharField(max_length=200, default="")
+    project_city = models.CharField(max_length=100, default='')
+    project_country = models.CharField(max_length=50, choices=COUNTRIES, default='')
+    description = models.TextField()
+    start_date = models.DateField()
+    end_date = models.DateField(null=True, blank=True)  # Allow null for ongoing projects
+    client_name = models.CharField(max_length=200)
+    reference_email= models.EmailField()
+    technologies_used = models.CharField(max_length=300)  # Can be replaced with a many-to-many relationship if needed
+    created_on = models.DateTimeField(auto_now_add = True)
+    
+    class Meta: 
+        verbose_name = "Expert portfolio"
+        verbose_name_plural = "Expert portfolios"
+        ordering = ('-start_date',)
+     
+    def __str__(self):
+        return self.project_title
+  
+  
+class Education(RandomIDModel):
+    slug = models.SlugField(max_length=200, null=False)
+    student=models.ForeignKey(CustomUser,on_delete=models.CASCADE )
+    #student_email = models.EmailField(null=True, blank=True)
+    institution_name = models.CharField(pgettext_lazy("School Name", "school_name"),max_length=100)
+    degree = models.CharField(choices=DEGREE_CHOICES, max_length=100, default="")
+    specialization = models.CharField(max_length=255)
+    minor = models.CharField(max_length=255)
+    start_date = models.DateField("Enter Your Degree Starting Date")
+    end_date = models.DateField("Enter Your Degree Ending Date", blank=True, null=True)
+    gpa = models.FloatField("Enter Your Grade Point Average")
+    graduated = models.BooleanField(default=False)
+    description = models.TextField(default='')
+    created_on = models.DateTimeField(auto_now_add = True)
+    updated= models.DateTimeField( auto_now=True)
+    class Meta: 
+        verbose_name = "Education"
+        verbose_name_plural = "Educations"
+        ordering = ('-start_date',)
+    
+    @property
+    def get_name(self):
+        return self.user
+    
+    @property
+    def get_id(self):
+        return self.id
+    
+    @property
+    def checkbox_character(self):
+        return 'X' if self.graduated else ' '
+    
+    def __str__(self):
+        return f"{self.degree} from {self.institution_name} ({self.start_date.year} - {self.end_date.year if self.end_date else 'Present'})"
+
+class ExpertMessaging(RandomIDModel):
+    expert = models.ForeignKey(ExpertProfile, on_delete=models.CASCADE, related_name="message_receiver")
+    sender = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='message_sender')
+    sender_email = models.EmailField()
+    subject = models.CharField(max_length=250)
+    content = models.TextField()
+    attached_file = models.FileField(null=True, blank=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    class Meta: 
+        verbose_name = "Message"
+        verbose_name_plural = "Messages"
+        ordering = ('-created_on',)
+    
+    @property
+    def get_id(self):
+        return self.id
+     
+    def __str__(self):
+        return self.subject
+
+#parent model
+#class forum(models.Model):
+class Forum(RandomIDModel):
+    slug = models.SlugField(max_length=200, null=False)
+    forum_creator=models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    creator_email = models.EmailField(null=True, blank=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True)
+    topic= models.CharField(max_length=300)
+    description = models.TextField(max_length=1000,blank=True)
+    link = models.CharField(max_length=100 ,null =True)
+    active = models.BooleanField(default=False)
+    created_on=models.DateTimeField(auto_now_add=True,null=True)
+    
+    class Meta: 
+        verbose_name = "forum"
+        verbose_name_plural = "forums"
+        ordering = ('-created_on',)
+    
+    @property
+    def get_id(self):
+        return self.id
+    
+    def __str__(self):
+        return str(self.topic)
+     
+def pre_save_forum(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = slugify(f"{instance.topic} {instance.id}")
+
+ 
+#child model
+class Discussion(models.Model):
+    slug = models.SlugField(max_length=200, null=False)
+    discussion_creator = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    discussion_email = models.EmailField(null=True, blank=True)
+    forum = models.ForeignKey(Forum,on_delete=models.CASCADE)
+    discuss = models.TextField()
+    created_on=models.DateTimeField(auto_now_add=True,null=True)
+
+    class Meta: 
+            verbose_name = "Discussion"
+            verbose_name_plural = "Discussions"
+            ordering = ('-created_on',)
+    
+    @property
+    def get_id(self):
+        return self.id
+    
+    def __str__(self):
+        return str(self.discussion_creator)
+    
+    
+def pre_save_discussion(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = slugify(f"{instance.discussion_creator} {instance.id}")
+
+    
+pre_save.connect(pre_save_forum, sender=Forum)
+pre_save.connect(pre_save_discussion, sender=Discussion)  
 #post_save.connect(post_save_user, sender=Subscription )
-pre_save.connect(pre_save_employee, sender=Employee)
+#pre_save.connect(pre_save_employee, sender=Employee)
+pre_save.connect(pre_save_product_deals, sender=ProductDeals)
+pre_save.connect(pre_save_product_rfi, sender=ProductRFI)
 pre_save.connect(pre_save_job, sender=Jobs)
 pre_save.connect(pre_save_application, sender=JobApplication)
-pre_save.connect(pre_save_expert, sender=Experts)
+#pre_save.connect(pre_save_expert, sender=Experts)
 pre_save.connect(pre_save_expert_p, sender=ExpertProfile)
 pre_save.connect(pre_save_product, sender=Product)
-post_save.connect(post_save_expert, sender=CustomUser )
+#post_save.connect(post_save_expert, sender=CustomUser )
 #post_save.connect(post_save_employee, sender=CustomUser )
 post_save.connect(post_save_expert_p, sender=CustomUser )
 #post_save.connect(post_save_employee_p, sender=CustomUser )
 pre_save.connect(pre_save_testimony, sender=Testimonies)
-post_save.connect(post_save_company_p, sender=CustomUser)
+#post_save.connect(post_save_company_p, sender=CustomUser)
 post_save.connect(post_save_company, sender=CustomUser)
 pre_save.connect(pre_save_deal, sender=Deals)
 pre_save.connect(pre_save_project, sender=Projects)
-pre_save.connect(pre_save_company, sender=CompanyProfile)
 pre_save.connect(pre_save_fiche, sender=FicheTechnic)
 pre_save.connect(pre_save_blog, sender=Blog)
 pre_save.connect(pre_save_rfi, sender=Rfi)
 pre_save.connect(pre_save_enterprise, sender=Enterprises)
 pre_save.connect(pre_save_review, sender=Review)
-pre_save.connect(pre_save_education, sender=Education)
+pre_save.connect(pre_save_reply_to_review, sender=ReplyToReview)
+#pre_save.connect(pre_save_education, sender=Education)
 pre_save.connect(pre_save_employee_p, sender=EmployeeProfile)
 pre_save.connect(pre_save_training, sender=Trainings)
 pre_save.connect(pre_save_training_application, sender=TrainingApplication)

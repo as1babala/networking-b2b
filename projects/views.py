@@ -28,8 +28,6 @@ from .filters import ProjectFilter
 
 
 # Create your views here.
-
-
 class ProjectListView(LoginRequiredMixin, generic.ListView):
     model = Projects
     template_name = "projects/project_list.html"
@@ -54,6 +52,61 @@ class ProjectCreateView(LoginRequiredMixin, CreateView):
     
     def get_success_url(self):
         return reverse("projects:project-list")
+    
+# Multi-level create views
+@login_required
+def create_project(request):
+    if request.method == 'POST':
+        form = ProjectsForm(request.POST)
+        if form.is_valid():
+            project = form.save(commit=False)
+            form.instance.project_initiator = request.user
+            # Set the reviewer and approver here if needed or leave them to be set later
+            project.save()
+            messages.success(request, 'Project created successfully!')
+            #return redirect('projects:project-detail', pk=project.pk)
+            return redirect('projects:project-list')
+    else:
+        form = ProjectsForm()
+    return render(request, 'projects/project_create.html', {'form': form})
+
+
+@login_required
+def review_project(request, pk):
+    project = get_object_or_404(Projects, pk=pk)
+    if request.method == 'POST':
+        form = ProjectReviewedForm(request.POST, instance=project)
+        if form.is_valid():
+            form.instance.reviewed_by = request.user
+            form.save()
+            messages.success(request, 'Project reviewed successfully!')
+            #return redirect('projects:project-update', pk=project.pk)
+            return redirect('projects:project-list')
+    else:
+        form = ProjectReviewedForm(instance=project)
+    return render(request, 'projects/project_review.html', {'form': form, 'project': project})
+
+@login_required
+def approve_project(request, pk):
+    project = get_object_or_404(Projects, pk=pk)
+    if not project.reviewed:
+        messages.error(request, 'Project must be reviewed before approval.')
+        return redirect('projects:project-list', pk=project.pk)
+        #return redirect('projects:project-list')
+    
+    if request.method == 'POST':
+        form = ProjectApprovedForm(request.POST, instance=project)
+        if form.is_valid():
+            form.instance.approved_by = request.user
+            form.save()
+            messages.success(request, 'Project approval status updated!')
+            #return redirect('projects:project-list', pk=project.pk)
+            return redirect('projects:project-list')
+    else:
+        form = ProjectApprovedForm(instance=project)
+    return render(request, 'projects/project_approve.html', {'form': form, 'project': project})
+
+
 
 class ProjectUpdateView(LoginRequiredMixin, generic.UpdateView):
     template_name = "projects/project_update.html"
@@ -106,14 +159,14 @@ def ProjectDocumentUpload(request, parent_id=None):
 ### Project pending for review ###
 class NotReviewedListView(LoginRequiredMixin, generic.ListView):
     template_name = "projects/project_notreviewed.html"
-    queryset = Projects.objects.filter(reviewed='NO') # not adding context here
+    queryset = Projects.objects.filter(reviewed=False) # not adding context here
     context_object_name = "notreviewed"
     paginate_by = 2
     
 ### Project pending for approval ###
 class ReviewedListView(LoginRequiredMixin, generic.ListView):
     template_name = "projects/project_reviewed.html"
-    queryset = Projects.objects.filter(reviewed='YES', approved='NO') # not adding context here
+    queryset = Projects.objects.filter(reviewed=True, approved=False) # not adding context here
     context_object_name = "reviewed"
     paginate_by = 2
     
@@ -121,7 +174,7 @@ class ReviewedListView(LoginRequiredMixin, generic.ListView):
 ### Project approved ###
 class ApprovedListView(LoginRequiredMixin, generic.ListView):
     template_name = "projects/project_approved.html"
-    queryset = Projects.objects.filter(reviewed='YES', approved='YES') # not adding context here
+    queryset = Projects.objects.filter(reviewed=True, approved=True) # not adding context here
     context_object_name = "approved"
     paginate_by = 2
     
@@ -129,7 +182,7 @@ class ApprovedListView(LoginRequiredMixin, generic.ListView):
 ### Project Rejected ###
 class RejectedListView(LoginRequiredMixin, generic.ListView):
     template_name = "projects/project_rejected.html"
-    queryset = (Projects.objects.filter(reviewed='Rejected') | Projects.objects.filter(approved='Rejected')) # not adding context here
+    queryset = (Projects.objects.filter(reviewed=False) | Projects.objects.filter(approved=False)) # not adding context here
     context_object_name = "rejected"
     paginate_by = 2  
 

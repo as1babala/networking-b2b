@@ -5,11 +5,10 @@
 
 
 {% block content %}
-                
+         <section class="py-5">       
     <form method="post">
         
-        {% csrf_token %}
-        
+        {% csrf_token %} 
         <fieldset class="form-group white">
             <div style="color:#ea2088; font-style: bold; font-size: 3rem; border-bottom: 1px solid white;">Delete a name from the technical Form?</div> <br>
             <h2>Are you sure you want to delete "{{ object.name }}"?</h2></br>
@@ -21,5 +20,6 @@
         </div>
         
     </form>
+</section>
 
 {% endblock content %}

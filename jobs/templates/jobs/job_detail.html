@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_content.html" %}
 
 {% block content %}
    <p class="white"><a href="{% url 'jobs:job-list' %}">job list</a></p> 
@@ -22,8 +22,10 @@
     
 <hr />
 <button type="button" class="btn btn-primary" onclick="location.href='{% url 'jobs:application-create' jobs.pk %}'">Apply</button></td> 
+{% if user.is_admin or user.is_employee %}
 <button type="button" class="btn btn-secondary" onclick="location.href='{% url 'jobs:job-update' jobs.pk %}'">Edit</button>
 <button type="button" class="btn btn-danger" onclick="location.href='{% url 'jobs:job-delete' jobs.pk %}'">Delete</button>
+{% endif %}
 <button type="button" class="btn btn-dark" onclick="location.href='{% url 'jobs:job-list' %}'">Cancel</button>
 
 

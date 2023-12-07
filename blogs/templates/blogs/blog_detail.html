@@ -3,51 +3,113 @@
 
 {% load static %}
 {% load bootstrap5 %}
-
+{% load humanize %}
 {% endblock title%}
 
 {% block content %}
 
 <head>
+  <link rel="stylesheet" href="{% static 'css/card_hover.css' %}">
+  <style>
+    .line-spacing-1-5 {
+        line-height: 2.0;
+    }
+
+    .center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
+    }
+</style>
 </head>
-<div class="container" >
-        <div class="col-md-8 white">
+<section style="width:100%" class="section_color1 py-3 rounded line-spacing-1-5 opacity-25">
+<div class="container-fluid opacity-25" >
+<div class="col-md-12 white text-justify ">
 <p><a href="{% url 'blogs:blog-list' %}">blogs list</a></p> 
+<hr style="height:3px;border-width:0;color:gray;background-color:gray">
+<h3><span class="about"><b><i>{{blog.categories}}</i></b></br> {{blog.title}}</span></h3>
+<p><img src="{{ blog.blog_image.url}}" alt="testing"  class="img-responsive img-fluid rounded my-3 center" style="width: 800px; height: 300px;"></p></br>
 
-<h3> {{blog.title}}</h3>
-<p class="white" style="text-align:justify">Written by: {{blog.author}}     ||  Contact via: {{blog.email}} || Created On: {{blog.created_on|date}} </p>
 
+<p class="white" style="text-align:justify"><i class="">Written by:</i> {{blog.author}} <i class="mx-3">Contact via: </i><a href="mailto:{{blog.email}}">{{blog.email}}</a>
+
+  <button type="button" class="btn btn-primary position-relative mx-4 ">
+    Number of words
+    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary about">
+      {{  blog.blog_length|intcomma}}
+      <span class="visually-hidden"></span>
+    </span>
+  </button>
+
+<button type="button" class="btn btn-primary position-relative mx-4">
+  Number of Reviews
+  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary about">
+    {{review_count}}
+    <span class="visually-hidden"></span>
+  </span>
+</button>
+
+<button type="button" class="btn btn-primary position-relative mx-4">
+  Blog Rating
+  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary about">
+    {{average_rating}}
+    <span class="visually-hidden"></span>
+  </span>
+</button>
+</p>
 <hr>
-<p class="white">{{blog.content|safe}}</p>
+<p class="white" style="text-justify">{{blog.content|safe}}</p></
+<p>
 
-<hr>
-<div class=''>
+</p>
+<p><small> </br><i><u>Number of words:</u></i> {{  blog.blog_length}} </br>
+  <i><u>Reviews count:</u>   </i>{{review_count}} </br><i><u>Average Rating:</u>   
+  </i>{{average_rating}} </br> Created On: {{blog.created_on |date}} </small></p>
+</section>
+
+<section style="width:100%" class=" my-2 rounded">
+<div class="shadow p-3 mb-5 bg-body-tertiary rounded " style="border-width:0;color:gray;background-color: #133b5c">
 <h3>Reviews</h3>
-
+<hr style="height:3px;border-width:0;color:gray;background-color:gray">
 {% for review in reviews %}
-  <p>by {{ review.user }} on {{ review.created_on|date }}</p>
+  <p>by {{ review.user }} on {{ review.created_on|date }} </p>
   
-  <p>{{ review.content }}</p>
+  <p>{{ review.comment }}</p>
   <p>Rating: {{ review.rating }}</p>
+<div>
+  {% for reply in replies %}
+                <div class="card mb-2 ml-3">
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-2 text-muted">{{ reply.replier }}</h6>
+                        <p class="card-text">{{ reply.comment }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+            <a href="{% url 'blogs:reply-create' review.id %}" class="card-link">Reply</a>
+        </div>
+  <hr>
   {% empty %}
     <p>No reviews yet.</p>
 
   {% endfor %}
 </div>
-  <hr>
-      
 
+<div class="shadow p-3 mb-5 bg-body-tertiary rounded section_color2 " >
     {% if user.is_authenticated %}
-    <h3>Add a review</h3>
+    <h3 class="text-white">Add a review</h3>
     <form method="POST" action="{% url 'blogs:review-create' pk=blog.pk %}" class="white">
         {% csrf_token %}
         {% bootstrap_form form %}
         {% buttons %}
-        <button type="submit" class="btn btnfont btnbg mx-2">Submit</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
         {% endbuttons %}
     </form>
   {% endif %}
+  </div>
 </div>
 </div>
+</section>
 
+{% include 'footer.html'%}
 {% endblock content %}

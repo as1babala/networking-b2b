@@ -8,7 +8,7 @@ app_name = "accounts"
 urlpatterns = [
     
     path("login/", auth_views.LoginView.as_view(template_name="accounts/login.html"),name='login'),
-    #path("login/", login, name="login"),
+    #path("login/", login_view, name="login"),
     path("logout/", auth_views.LogoutView.as_view(template_name="accounts/logout.html"), name="logout"),
     #### Password reset  ###
     path("reset_password/", auth_views.PasswordResetView.as_view(template_name="accounts/password_reset.html"), name="password_reset"),
@@ -22,8 +22,11 @@ urlpatterns = [
     path("change_complete/", auth_views.PasswordChangeDoneView.as_view(template_name="accounts/change-complete.html"), name="change-complete"),
     
     path("register/", SignUp, name="signup"),
+    
     path("", home, name="home"),
+    path("testing", testing, name="testing"),
     path("welcome", home_page, name="home-page"),
+    #path("welcome", HomePageView.as_view(), name="home-page"),
     path("aboutus/", aboutus, name="about-us"),
     path("contact/", contact, name="contact"),
     path("business/", home_business.as_view(), name="home-business"),
@@ -34,6 +37,22 @@ urlpatterns = [
     path("terms_and_conditions/", conditions, name="conditions"),
     path("services/", services, name="service"),
     path("packages/", packages, name="package"),
+    path("stats/", stats, name="stats"),
+    
+    ### Work Experience
+    path("work_experience/", WorkExperienceListView.as_view(), name="experience-list"),
+    path("work_experience/create/", WorkExperienceCreateView.as_view(), name="experience-create"),
+    
+    ### Exper Portfolio
+    path("expert_portfolio/", ExpertPortfolioListView.as_view(), name="portfolio-list"),
+    path("expert_portfolio/create/", ExpertPortfolioCreateView.as_view(), name="portfolio-create"),
+    
+    ### Work Experience
+    path("education/", EducationListView.as_view(), name="education-list"),
+    path("education/create/", EducationCreateView.as_view(), name="education-create"),
+    
+    
+    
 ]
     
     

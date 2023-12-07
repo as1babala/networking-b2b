@@ -1,10 +1,7 @@
-{% extends "base.html" %}
+{% extends "base_content.html" %}
 {% block title %}
-
 {% load static %}
-
 {% endblock title%}
-
 {% block content %}
 
     <section>
@@ -15,8 +12,6 @@
         <div class="col-md-6 white">
           <div class="card mb-4 box-shadow">
             
-            <!--img src="{% static 'images/user-solid.svg' %}" style="width:10 height=10"-->
-            <!--img class="card-img-top" src="{% static 'images/technic.jpeg' %}" alt="{{ consultant.user }}"-->
             <div class="card-body">
               <p class="list blog"><i>Title: </i> {{ blog.title }}</p>
               <p class="list blog"><span class="about"><i class="fa-solid fa-user"></span></i> {{ blog.author }} </p>

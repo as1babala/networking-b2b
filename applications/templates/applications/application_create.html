@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_content.html" %}
 
 {% block title%} {% endblock title%}
 
@@ -17,6 +17,7 @@
                 {% bootstrap_form form %}
                  {% buttons %}
                 <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-dark" onclick="location.href='{% url 'applications:application-user' %}'">Cancel</button>
                 {% endbuttons %}
             </form>
         </div>

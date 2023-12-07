@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 
 from django.views import generic
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, PermissionRequiredMixin
 from django.core.mail import send_mail
 from core.models import *
 from django.urls import reverse_lazy
@@ -17,13 +17,24 @@ from django.shortcuts import get_object_or_404
 from core.forms import *
 from django.db.models import Count
 
+
+
+class admin(UserPassesTestMixin):
+    
+    def test_func(self):
+        return self.request.user.is_admin
+    
+class employee(UserPassesTestMixin):
+    
+    def test_func(self):
+        return self.request.user.is_employee
 class TrainingListView( generic.ListView):
     template_name = "trainings/training_list.html"
     queryset = Trainings.objects.all() # not adding context here
     context_object_name = "trainings"
     paginate_by = 4
     
-class TrainingCreateView(LoginRequiredMixin, CreateView):
+class TrainingCreateView(admin, employee, CreateView):
     template_name = "trainings/training_create.html"
     form_class = TrainingForm
     

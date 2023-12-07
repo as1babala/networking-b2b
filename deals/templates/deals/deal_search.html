@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_content.html" %}
 {% block title %}
 
 {% load static %}
@@ -7,8 +7,9 @@
 
 {% block content %}
 
-    <section>
+    <section class="py-5">
     <div class="container">
+      <h3> Search Results</h3>
       <div class="row">
         {% if object_list %}
         {% for deal in object_list %}
@@ -20,7 +21,7 @@
             <div class="card-body">
               <p class="list"><i>Title:</i> {{ deal.deal_title }}</p>
               <p class="list"><span class="about"><i class="fa-sharp fa-solid fa-at"></i> {{ deal.email }} </p>
-              <p><span class="about"> </span> {{ deal.deal_type }}</p>
+              <p class="list"><span class="about"> </span> {{ deal.deal_type }}</p>
               
               <p class="list"><i></i> {{ deal.descriptions|truncatewords:'50' }}</p>
               <p>  <small class="text-muted"><i><span class="about">Date created: </i>{{ deal.created_on|date }}</span></small></p>
@@ -72,6 +73,6 @@
       {% endblock %}
         </div>
 
-        {% include 'footer.html' %}
+       
 
 {% endblock content %}

@@ -28,6 +28,54 @@ class ApplicationsListView(LoginRequiredMixin, generic.ListView):
     context_object_name = "applications"
     paginate_by = 2
 
+class ApplicationsListView2(LoginRequiredMixin, generic.ListView):
+    template_name = "applications/application_user_list.html"
+    context_object_name = "user_applications"
+    paginate_by = 2
+    
+    def get_queryset(self):
+        return JobApplication.objects.filter(user=self.request.user).order_by('-created_on')
+
+class ApplicationUpdateView(LoginRequiredMixin, generic.UpdateView):
+    template_name = "applications/application_update.html"
+    form_class = JobApplicationForm
+    queryset = JobApplication.objects.all()
+    
+    def get_success_url(self):
+        return reverse("applications:application-list") 
+    
+    def form_valid(self, form):
+        form.save()
+        messages.info(self.request, "You have successfully updated this lead")
+        return super(ApplicationUpdateView, self).form_valid(form)
+    
+def application_update(request, pk):
+    application = JobApplication.objects.get(id=pk)
+    form = JobApplicationForm(instance=application)
+    if request.method == "POST":
+        form = JobApplicationForm(request.POST, instance=application)
+        if form.is_valid():
+            form.save()
+            return redirect("applications/application_list")
+    context = {
+        "form": form,
+        "application": application,
+    }
+    return render(request, "applications/application_update.html", context)   
+
+ 
+class ApplicationDeleteView(LoginRequiredMixin, generic.DeleteView):
+    template_name = "applications/application_delete.html"
+    queryset = JobApplication.objects.all()
+    
+    def get_success_url(self):
+        return reverse("applications:application-list")
+class ApplicationDetailView(LoginRequiredMixin, generic.DetailView):
+    template_name = "applications/application_detail.html"
+    queryset = JobApplication.objects.all() # not adding context here
+    context_object_name = "applications"  
+    
+    
 @login_required
 def UserApplicationsListView(request):
     applications = JobApplication.objects.filter(user=request.user) # not adding context here
@@ -58,4 +106,11 @@ class JobSearchView(ListView):
             Q(job_qualifications_since_hired__icontains=query)
             
             )
-        return object_list    
+        return object_list   
+    
+class ApplicationDeleteView(LoginRequiredMixin, generic.DeleteView):
+    template_name = "applications/application_delete.html"
+    queryset = JobApplication.objects.all()
+    
+    def get_success_url(self):
+        return reverse("applications:application-list") 

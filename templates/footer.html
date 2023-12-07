@@ -1,58 +1,67 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bootstrap Footer</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
   <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
-
-  
 </head>
 <body>
-<footer class="text-gray-600 body-font">
-  <div class="container footer">
-    <div class="row my-5">
-      <hr/>
-        <div class="col-md-4 white"> <ul>
-          <li>link1 </li>
-          <li>link2 </li>
-          <li>link3 </li>
+  <style>
+    /* Customize the footer's background and text color */
+    .footer {
+        background-color: #333;
+        color: #fff;
+        padding: 20px 0;
+    }
+
+    /* Style the panels within the footer */
+    .footer-panel {
+        padding: 20px;
+    }
+
+    /* Add some spacing between the panels on smaller screens */
+    @media (max-width: 768px) {
+        .footer-panel {
+            margin-bottom: 20px;
+        }
+    }
+  </style>
+
+<footer class="bg-dark text-light footer rounded">
+  <hr/>
+  <div class="container-fluid mx-2">
+    <div class="row">
+      <div class="col-md-4 footer-panel">
+        <h4>About</h4>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">About</a></li>
+      </div>
+      <div class="col-md-4 footer-panel">
+        <h4>Contact</h4>
+        <p>Email: support@bootstrap.com</p>
+        <p>Phone: 123-456-7890</p>
+      </div>
+      <div class="col-md-4 footer-panel">
+        <h4>Importants Links</h4>
+        <ul>
+          <li><a href="#">Job Posting</a></li>
+          <li><a href="#">Blogs</a></li>
+          <li><a href="#">Request For Information</a></li>
+          <li><a href="#">Registered Companies</a></li>
+          <li><a href="#">Agriculture Forms</a></li>
+          <li><a href="#">Trainings Schedule</a></li>
         </ul>
-        </div>
-        <div class="col-md-4 white">
-          <ul>
-            <li>link1 </li>
-            <li>link2 </li>
-            <li>link3 </li>
-          </ul>
-        </div>
-        <div class="col-md-4 white">
-           <ul>
-          <li>link1 </li>
-          <li>link2 </li>
-          <li>link3 </li>
-        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 text-cente footer-panel">
+        <p>Copyright &copy; 2023 TAWASSI GROUP Inc.</p>
+      </div>
+    </div>
+  </div>
+</footer>
 
-
-        <div id="btn" class="text-center">
-          <button type="button" class="btn btn-primary btn-circle btn-sm"><span class="about"><i class="fa-brands fa-square-facebook"></i></span></button>
-          <button type="button" class="btn btn-danger btn-circle btn-sm"><span class="about"><i class="fa-brands fa-google"></i></span></button>
-          <button type="button" class="btn btn-info btn-circle btn-sm"><span class="about"><i class="fa-brands fa-twitter"></i></span></button>
-          </div>
-       
-        
-       </div>
-       <div>
-<hr/>
-        <br>
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12 col-sm-8">
-              <div style="color:#ffffff;" class="wow fadeInUp footer-copyright">
-                <p>Made in TOGO <br>
-                  Copyright &copy; 2023 Tawassi Group Consultancy Services Inc. </p>
-                  <hr>
-              </div>
-            </div>
-          </div>
-        </div>
-  </footer>
 </body>
+</html>

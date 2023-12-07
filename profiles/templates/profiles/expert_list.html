@@ -1,0 +1,89 @@
+{% extends "base_content.html" %}
+{% block title %}
+{% load static %}
+{% endblock title%}
+
+{% block content %}
+
+<head>
+  <link rel="stylesheet" href="{% static 'css/card_hover.css' %}">
+</head>
+<section>
+  <div class="p-3 mb-2 bg-info text-blue search-column" >
+    <h2 class="text-4xl text-gray800"></h2>
+    <form class="d-flex" role="search" action="{% url 'profiles:expert-profile-search' %}" method='GET' enctype="">
+        <input class="form-control me-2" name="q" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+      <hr class="border-primary border-3 opacity-75">
+    </div>
+</section>
+ 
+<section class="" style="width:100%">
+    <div class="container-fluid col-container">
+      <div class="row">
+        {% if expert_profiles %}
+        {% for expert in expert_profiles %}
+        <div class="col-md-6 col">
+          <div class="card mb-4 box-shadow">
+            
+            
+            <div class="card-body card-3">
+              <img src="{{expert.avatar.url}}" alt="Smiley face" width="100%" height="250" class="img-responsive">
+              <p class="list blog"><i>Name:</i> {{ expert.first_name }} {{ expert.last_name }}</br>
+              <span class="about"><i class="fa-solid fa-user"></span></i> {{ expert.company_name }} </br>
+              <span class="about"> <i class="fa-sharp fa-solid fa-at"></i></span> {{ expert.email }}<br/>
+              
+              
+              <i></i> {{ expert.bio|truncatewords:'50'|safe }}</p>
+              <small class="text-muted"><i><span class="about">Date created: </i>{{ expert.created_on|date }}</span></small></p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  {% if expert.user == request.user %} 
+                   {% endif %}
+              <p><button type="button" class="btn btn-secondary mx-2" onclick="location.href='{% url 'profiles:expert-profile-detail' expert.pk %}'"> Profile Details </p>
+              
+              {% if user.is_admin %}
+               <p><button type="button" class="btn btn-danger" onclick="location.href=' '"><i class="fa-sharp fa-solid fa-trash-can"></i> Delete Profile </p-->
+                {% endif %}
+
+               </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+        {% else %}
+        <p> No profiles available for the time being</p>
+        {% endif %}
+   </div>
+    </div>
+
+  </section>
+    {% block pagination %}
+      {% if is_paginated %}
+
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+          <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
+          <li class="page-item"><a class="page-link" href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Previous </a></li>
+          {% endif %}
+          <span class="page-current">
+            <li class="page-item"><a class="page-link" href="#">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a></li>
+        </span>
+        {% if page_obj.has_next %}
+          <li class="page-item"><a class="page-link" href="{{ request.path }}?page={{ page_obj.next_page_number }}">Next</a></li>
+          <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+        </ul>
+      </nav>
+      {% endif %}
+      {% endblock %}
+        </div>
+
+      
+
+
+{% endblock content %}

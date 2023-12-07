@@ -1,0 +1,23 @@
+{% extends "base_content.html" %}
+
+{% block title%}
+
+{% endblock title%}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+{% load bootstrap5 %}
+<section class="py-5">
+    <div class="py-5">
+
+<h2>Review Project: {{ project.title }}</h2>
+<form method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <button type="submit" class="btn btn-primary">Submit Review</button>
+</form>
+</div>
+</section>
+{% endblock %}

@@ -9,20 +9,38 @@ from django.http import Http404
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
-
 #from slick_reporting.views import SlickReportView
 #from slick_reporting.fields import SlickReportField
-
 from core.models import *
 from .forms import *
 from django.db.models import Count
-
 # Create your views here.
+from django.shortcuts import render, redirect
+#from .forms import CSVImportForm
+import csv
 
+def import_csv(request):
+    if request.method == 'POST':
+        form = CSVImportForm(request.POST, request.FILES)
+        if form.is_valid():
+            csv_file = request.FILES['csv_file'].read().decode('utf-8').splitlines()
+            csv_reader = csv.DictReader(csv_file)
+
+            for row in csv_reader:
+                Industry.objects.create(
+                    name=row["name"],
+                    description=row["description"]
+                   
+                )
+
+            return redirect('success_page')  # Redirect to a success page
+    else:
+        form = CSVImportForm()
+
+    return render(request, 'industries/import.html', {'form': form})
 
 class IndustryListView(LoginRequiredMixin, generic.ListView):
     template_name = "industries/industry_list.html"
@@ -223,7 +241,7 @@ class SectorsDeleteView(LoginRequiredMixin, generic.DeleteView):
     queryset = Sectors.objects.all()
     
     def get_success_url(self):
-        return reverse("industries:sectors-list")
+        return reverse("industries:sector-list")
 
 
 class SearchSectorView(ListView):
@@ -241,7 +259,7 @@ class SearchSectorView(ListView):
             )
         return object_list
         #return reverse( "enterprises: enterprise-update")
-
+'''
 @login_required
 def Sectors_update(request, pk):
     sectors = Sectors.objects.get(id=pk)
@@ -264,3 +282,19 @@ def detail(request, Sectors_id):
     except Sectors.DoesNotExist:
         raise Http404("Sectors does not exist does not exist")
     return render(request, 'industries/sector_detail.html', {'sectors': Sectors})
+'''
+def sector_list(request):
+    context = {'form': SectorsForm(), 'sectors': Sectors.objects.all()}
+    return render(request, "industries/sector_list.html", context)
+    
+    
+    
+def sector_create(request):
+    if request.method=="POST":
+        form = SectorsForm(request.POST or None)
+        if form.is_valid():
+            sector = form.save()
+            context = {'sector': sector}
+            return render(request, 'industries/partials/sector.html', context)
+    
+    return render(request, "industries/partials/sector_create.html", {'form':SectorsForm })

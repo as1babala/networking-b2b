@@ -1,0 +1,26 @@
+<form hx-post="{% url 'industries:sector-create' %}" hx-target="#sector-list" hx-swap="beforeend"
+hx-on="htmx:afterRequest: this.remove()">
+    {% csrf_token %}
+   
+    <div style="border-bottom: 0px solid white; color: #0d6efd;" class="row">
+        <div class="col-3 mb-2">
+
+    <label for="{{form.industry.id_for_label}}" class="form-label">{{form.industry.label}} </label><br>
+    {{form.industry}}
+        </div>
+        <div class="col-3 mb-2">
+
+    <label for="{{form.name.id_for_label}}">{{form.name.label}} </label><br>
+    {{form.name}}
+        </div>
+        
+            <div class="col-5 col-md-12"> 
+    <label for="{{form.description.id_for_label}}">{{form.description.label}}</label><br>
+    {{form.description}}
+
+        </div>
+        <div class='my-2'>
+        <button type="submit" class="btn btn-primary"> Submit</button>
+        </div></div>
+       
+</form>

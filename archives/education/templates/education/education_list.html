@@ -1,0 +1,87 @@
+{% extends "base_content.html" %}
+{% block title %}
+
+{% endblock title%}
+
+{% block content %}
+<section class="search-colum">
+  <div class="p-3 mb-2 bg-info text-blue search-column" >
+    <h2 class="text-4xl text-gray800"></h2>
+    <form class="d-flex" role="search" action="{% url 'education:education-search' %}" method='GET' enctype="">
+        <input class="form-control me-2" name="q" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+      <hr class="border-primary border-3 opacity-75">
+    </div>
+</section>
+<section class="">
+  {% if user.is_admin %}
+ <p> <a href="{% url 'education:education-create' %}">Enter new education </a><p>
+{% endif %}
+  <table class="table table-striped table-hover white">
+    <thead>
+      <tr>
+        <th scope="col">Indentifiyer</th>
+        <th scope="col">user</th>
+        <th scope="col">email address</th>
+        <th scope="col">institution Name</th>
+        <th scope="col">degree</th>
+        <th scope="col">Specialization</th>
+        <th scope="col">Minor</th>
+        <th scope="col">Start Date</th>
+        <th scope="col">End Date</th>
+        <th scope="col">Graduated</th>
+        <th scope="col">Note</th>
+        <th scope="col">Posted On</th>
+      </tr>
+    </thead>
+    <tbody class="white">
+       {% if object_list %} 
+    
+      {% for education in object_list %}
+          <tr>
+              
+              <td class="white"><a href="{% url 'education:education-detail' education.pk %}">{{education.slug}}</a></td>
+              <td class="white">{{education.user}}</td>
+              <td class="white">{{education.email}}</td>
+              <td class="white">{{education.institution_name}}</td>
+              <td class="white">{{education.degree}}</td>
+              <td class="white">{{education.specialization}}</td>
+              <td class="white">{{education.minor}}</td>
+              <td class="white">{{education.start_date|date}}</td>
+              <td class="white">{{education.end_date|date}}</td>
+              <td class="white">{{education.description}}</td>
+              <td class="white">{{education.graduated}}</td>
+              <td class="white">{{education.created_on|date}}</td>
+              
+              <!--td><button type="button" class="btn btn-secondary" onclick="location.href='{% url 'education:application-create' education.pk %}'">Apply</button></td-->
+          </tr>
+      {% endfor %}
+  {% endif %}
+    </tbody>
+  </table>
+
+  <div>
+    {% block pagination %}
+      {% if is_paginated %}
+
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+          <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
+          <li class="page-item"><a class="page-link" href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Previous </a></li>
+          {% endif %}
+          <span class="page-current">
+            <li class="page-item"><a class="page-link" href="#">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a></li>
+        </span>
+        {% if page_obj.has_next %}
+          <li class="page-item"><a class="page-link" href="{{ request.path }}?page={{ page_obj.next_page_number }}">Next</a></li>
+          <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+        </ul>
+      </nav>
+      {% endif %}
+      {% endblock %}
+        </div>
+      </section>
+{% endblock content %}

@@ -1,5 +1,5 @@
 
-{% extends "base.html" %}
+{% extends "base_content.html" %}
 
 {% block title%}
 
@@ -10,23 +10,23 @@
 {% load crispy_forms_tags %}
 
 {% load bootstrap5 %}
-
-<p><a href="{% url 'blogs:blog-list' %}"><i class="fa-solid fa-users"></i> Read our blogs</a></p> 
-<div class="container">
+<section style="width:100%" class=" py-3 rounded line-spacing-1-5 opacity-25">
+<p class="white"><a href="{% url 'blogs:blog-list' %}"><i class="fa-solid fa-users"></i> Read our blogs</a></p> 
+<div class="container white">
     <div class="row my-5">
         <div class="col-md-12 white">
-            <form method="post">
+            <form method="post"class="form" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{form.media}}
-                {{form.as_p}}
-              
-           
+                {% bootstrap_form form %}
+                {% buttons %}
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-dark" onclick="location.href='{% url 'blogs:blog-list' %}'">Cancel</button>
                
-                <button type="submit" class="btn btnfont btnbg mx-2">Submit</button>
-            
+                {% endbuttons %}
             </form>
         </div>
     </div>
 </div>
+</section>
 
     {% endblock %}

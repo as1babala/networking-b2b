@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_content.html" %}
 
 {% block title%}
 
@@ -10,18 +10,25 @@
 
 {% load bootstrap5 %}
 
+<section class="py-3">
 <div class="container">
+    
     <div class="row my-5">
         <div class="col-md-12">
             <form method="post" class="form white">
                 {% csrf_token %}
                 {% bootstrap_form form %}
+               
                 {% buttons %}
                 <button type="submit" class="btn btnfont btnbg mx-2">Submit</button>
+                <button type="button" class="btn btn-dark" onclick="location.href='{% url 'jobs:job-list' %}'">Cancel</button>  
                 {% endbuttons %}
+              
             </form>
+           
         </div>
+       
     </div>
 </div>
-
+</section>
     {% endblock %}

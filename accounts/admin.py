@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import *
+from core.models import *
 
 
 #class CustomUserAdmin(admin.ModelAdmin):
@@ -9,4 +9,8 @@ from .models import *
     #prepopulated_fields = {'slug': ('title',)}
     
 admin.site.register(CustomUser)
+admin.site.register(WorkExperience)
+admin.site.register(Education)
+admin.site.register(ExpertPortfolio)
+
 #admin.site.register(CustomUser, CustomUserAdmin)

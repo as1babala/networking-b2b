@@ -1,0 +1,17 @@
+{% extends "base_content.html" %}
+
+{% block content %}
+   <p><a href="{% url 'applications:application-list' %}">List of companies</a></p> 
+    <h1 class="white">Job: {{applications.job}}</h1><br/>
+    <p class="white">Candidate Name: {{applications.user}}<br/><br/>
+    Cover Letter: {{applications.cover_letter}}<br/><br/>
+    
+</p>
+    
+<hr />
+<button type="button" class="btn btn-secondary" onclick="location.href='{% url 'applications:application-update' fiches.pk %}'">Update</button>
+<button type="button" class="btn btn-danger" onclick="location.href='{% url 'fiches:fiche-delete' fiches.pk %}'">Delete</button>
+<button type="button" class="btn btn-dark" onclick="location.href='{% url 'fiches:fiche-list' %}'">Cancel</button>
+
+
+{% endblock %}

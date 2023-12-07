@@ -9,7 +9,8 @@ from accounts.models import *
 from core.models import *
 
 class BlogForm(forms.ModelForm):
-    content = forms.CharField(widget=TinyMCE(), label="blog content")
+    #content = forms.CharField(widget=TinyMCE(), label="Please leave a review for this blog")
+    
     class Meta:
         model = Blog
         exclude = ('id', 'slug', 'author', 'email')
@@ -18,9 +19,15 @@ class BlogForm(forms.ModelForm):
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
-        exclude = ('id', 'slug', 'user', 'email', 'blog', 'created_on')
+        exclude = ('id', 'slug', 'reviewer',  'blog', 'created_on')
 
 
+class ReplyToReviewForm(forms.ModelForm):
+    class Meta:
+        model = ReplyToReview
+        exclude= ('id', 'slug', 'replier',  'review', 'created_on')
+        
+        
 class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category

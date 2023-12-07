@@ -2,7 +2,7 @@ import django_filters
 from core.models import *
 
 class ProjectFilter(django_filters.FilterSet):
-    project_name = django_filters.CharFilter(lookup_expr='icontains')
+    project_category = django_filters.CharFilter(lookup_expr='icontains')
     company_name = django_filters.CharFilter(lookup_expr='icontains')
     #created_month = django_filters.NumberFilter(field_name='created_on', lookup_expr='month')
     #created_month__gt = django_filters.NumberFilter(field_name='created_on', lookup_expr='month__gt')
@@ -11,4 +11,4 @@ class ProjectFilter(django_filters.FilterSet):
     class Meta:
         model = Projects
         #fields = '__all__'
-        fields = ['project_name', 'company_name', 'reviewed', 'approved']
+        fields = ['project_category', 'company_name', 'reviewed', 'approved', 'approved_by']

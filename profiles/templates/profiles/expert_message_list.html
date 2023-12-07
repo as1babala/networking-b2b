@@ -1,0 +1,32 @@
+{% extends "base_content.html" %}
+
+{% block title%} {% endblock title%}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+{% load bootstrap5 %}
+
+
+
+
+<div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    {% for message in expert_message %}
+    <div class="toast-header">
+      <img src="..." class="rounded me-2" alt="...">
+      <strong class="me-auto">Bootstrap</strong>
+
+<small>{{ message.expert}}   </br> {{message.sender }}  </br>{{message.subject }} </small>
+    
+      <small> {{message.created_on}}</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+        {{message.subject }} 
+    </div>
+  </div>
+
+  {% endfor %}
+
+  {% endblock content %}

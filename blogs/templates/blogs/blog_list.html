@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_content.html" %}
 {% block title %}
 
 {% load static %}
@@ -6,7 +6,23 @@
 {% endblock title %}
 
 {% block content %}
-<section>
+<head>
+  <!--link rel="stylesheet" href="{% static 'css/card_hover.css' %}"-->
+  <style>
+    .card:hover{
+      transform: scale(1.02);
+      box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+  }
+
+  .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+  }
+  </style>
+</head>
+<section class="py-3">
   <div class="p-3 mb-2 bg-info text-blue search-column" >
     <h2 class="text-4xl text-gray800"></h2>
     <form class="d-flex" role="search" action="{% url 'blogs:blog-search' %}" method='GET' enctype="">
@@ -16,24 +32,23 @@
       <hr class="border-primary border-3 opacity-75">
     </div>
 </section>
- 
-    <div class="container col-container">
-      <div class="row">
+
+
+<section class="" style="width:100%">
+    <div class="container-fluid col-container container">
+      <div class="row ">
         {% if blogs %}
         {% for blog in blogs %}
-        <div class="col-md-6 white col">
+        <div class="col-md-6 col-sm-6">
           <div class="card mb-4 box-shadow">
-            
-            <!--img src="{% static 'images/user-solid.svg' %}" style="width:10 height=10"-->
-            <!--img class="card-img-top" src="{% static 'images/technic.jpeg' %}" alt="{{ consultant.user }}"-->
-            <div class="card-body">
-              <img src="{{blog.blog_image.url}}" alt="Smiley face" width="100%" height="250" class="blog-image">
-              <p class="list blog"><i>Title:</i> {{ blog.title }}</p>
-              <p class="list blog"><span class="about"><i class="fa-solid fa-user"></span></i> {{ blog.author }} </p>
-              <p class=" list blog"><span class="about"> <i class="fa-sharp fa-solid fa-at"></i></span> {{ blog.email }}</p>
-              
-              <p class="list"><i></i> {{ blog.content|truncatewords:'50'|safe }}</p>
-              <p>  <small class="text-muted"><i><span class="about">Date created: </i>{{ blog.created_on|date }}</span></small></p>
+            <div class="card-body card-3 ">
+             
+              <img src="{{ blog.blog_image.url}}" alt="testing"  class="img-responsive img-fluid rounded my-3 center" style="width: 400px; height: 150px;">
+              <p class="list blog"><i><b>Blog Category:</b></i> {{ blog.categories }}</br>
+                <b>Title:</b></i> {{ blog.title }} </br>
+              <span class="about"> <i class="fa-sharp fa-solid fa-at"></i></span> {{ blog.email }}</p>
+              <p class="list blog"> {{ blog.content|truncatewords:'20'|safe }}</p>
+              <small class="text-muted"><i>Date created: </i>{{ blog.created_on|date }}, {{blog.blog_length}} words</small></p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                   {% if blog.author == request.user %}
@@ -44,7 +59,7 @@
               {% if user.is_admin %}
                <p><button type="button" class="btn btn-danger" onclick="location.href='{% url 'blogs:blog-delete' blog.pk %}'"><i class="fa-sharp fa-solid fa-trash-can"></i> Delete blog </p-->
                 {% endif %}
-
+               
                </div>
                 </div>
             </div>
@@ -58,7 +73,7 @@
    </div>
     </div>
 
-
+  </section>
     {% block pagination %}
       {% if is_paginated %}
 
@@ -81,6 +96,6 @@
       {% endblock %}
         </div>
 
-        {% include 'footer.html' %}
+      
 
 {% endblock content %}

@@ -1,0 +1,79 @@
+
+<div class="hero">
+    {% extends "base.html" %}
+    
+    {% block title%}
+    
+    {% endblock title%}
+    
+    {% block content %}
+    
+    {% load crispy_forms_tags %}
+    
+    {% load bootstrap5 %}
+    {% load static%}
+    
+    <!--link rel="stylesheet" href="{% static 'css/style_main.css' %}"-->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <div class="container"  >
+        <div>
+           <h2 class="white text-center my-5" style=""><span class="about"> <i class="fa-solid fa-registered"></i></span> <span>Become One of Us Today</span> </h2>
+        </div>
+        <div class="row my-5">
+
+                <form method="post" class="form white">
+                    {% csrf_token %}
+                    <form method="post" class="form white" id="EnterprisesForm" data-sectors-url="{% url 'enterprises:ajax_load_sectors' %}">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+                        <div style="border-bottom: 0px solid white; color: #0d6efd;" class="row">
+                            <div class="col-2 mb-2">
+                                {{ form.salutations.errors }}
+                                <label for="{{ form.salutations.id_for_label }}">Civility:</label>
+                                {{ form.salutations }}
+                            </div>
+                        <div class="col-4 mb-2">
+                            {{ form.first_name.errors }}
+                            <label for="{{ form.first_name.id_for_label }}">First name:</label>
+                            {{ form.first_name }}
+                        </div>
+                        <div class="col-5 mb-2">
+                            {{ form.last_name.errors }}
+                            <label for="{{ form.last_name.id_for_label }}">Last name:</label>
+                            {{ form.last_name }}
+                       
+                    </div>
+                </div>
+                <div style="border-bottom: 0px solid white; color: #0d6efd;" class="row">
+                    <div class="col-2 mb-2">
+                        {{ form.username.errors }}
+                        <label for="{{ form.username.id_for_label }}">Username:</label>
+                        {{ form.username }}
+                    </div>
+                <div class="col-4 mb-2">
+                    {{ form.email.errors }}
+                    <label for="{{ form.email.id_for_label }}">Email address:</label>
+                    {{ form.email }}
+                </div>
+                <div class="col-5 mb-2">
+                    {{ form.last_name.errors }}
+                    <label for="{{ form.last_name.id_for_label }}">Last name:</label>
+                    {{ form.last_name }}
+               
+            </div>
+        </div>
+                    
+                    <button type="submit" class="btn btnfont btnbg">Submit</button>
+                   
+                </form>
+                
+            
+            <hr/>
+        </div>
+    </div>
+    
+    {% include 'footer.html' %} 
+        {% endblock %}
+    
+    </div>

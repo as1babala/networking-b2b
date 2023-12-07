@@ -10,6 +10,7 @@ USER_CHOICES = [
     ('P', 'Patient')
 ]
 
+#favorite_colors = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,choices=FAVORITE_COLORS_CHOICES,)
 
 #for contact us page
 class ContactusForm(forms.ModelForm):
@@ -37,11 +38,12 @@ class ExpertForm(forms.ModelForm):
         #self.fields['quantity'].widget.attrs.update({'class': 'textinput form-control', 'min': '0'})
         #self.fields['price'].widget.attrs.update({'class': 'textinput form-control', 'min': '0.0'})
      
-    class Meta:
+'''    
+class Meta:
         model = Experts
         exclude = ['id','slug', 'status']
         
-
+'''
 
 
 class EducationModelForm(forms.ModelForm):
@@ -89,3 +91,8 @@ class TrainingApplicationForm(forms.ModelForm):
     class Meta:
         model = TrainingApplication
         exclude = ['id', 'slug', 'created_on', 'updated_on']
+        widgets = {
+        #'password': forms.PasswordInput(),
+        #'email': forms.EmailField(required=True)
+        
+        }

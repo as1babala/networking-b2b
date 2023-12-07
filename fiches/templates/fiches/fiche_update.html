@@ -19,10 +19,14 @@
                 {% bootstrap_form form %}
                 {% buttons %}
                 <button type="submit" class="btn btn-primary">Submit</button>
-                {% endbuttons %}
+                <button type="button" class="btn btn-dark" onclick="location.href='{% url 'fiches:fiche-list' %}'">Cancel</button>
+               {% endbuttons %}
+               
             </form>
+            
         </div>
     </div>
 </div>
+{% include 'footer.html' %} 
 
     {% endblock %}

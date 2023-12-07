@@ -1,0 +1,106 @@
+{% extends "base_content.html" %}
+
+{% block content %}
+<head>
+    <style>
+    li {
+
+    }
+    .p {
+        color: #0A2647;
+        font-family: sans-serif;
+    }
+    </style>
+
+</head>
+
+
+<section class="py-3 " style="font-color">
+<div class="container-fluid col-container">
+<div class="row">
+<div class="col-md-3 col">
+<div class="card bg-primary text-wrap" style="width: 18rem;">
+    <h4>Blog Statistics</h4>
+    <p class="text-start">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item bg-primary">Draft Blogs: {{ data.blog_drafted }}</li>
+      <li class="list-group-item bg-secondary">Published Blogs: {{ data.blog_published }}</li>
+      <li class="list-group-item bg-success">Archived Blogs: {{ data.blog_archived }}</li>
+    </ul></p>
+  </div>
+</div>
+<div class="col-md-3 col">
+    <div class="card bg-secondary text-wrap" style="width: 18rem;">
+        <h4>Experts</h4>
+        <p class="text-start">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item bg-primary">Number of Experts: {{ data.experts }}</li>
+          <li class="list-group-item bg-secondary">Number of Companies: {{ data.enterprises }}</li>
+          <li class="list-group-item bg-success">Archived Blogs: {{ data.blog_archived }}</li>
+        </ul></p>
+      </div>
+    </div>
+
+    <div class="col-md-3 col">
+        <div class="card bg-success text-wrap" style="width: 18rem;">
+            <h4>companies</h4>
+            <p class="text-start">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item bg-primary">Draft Blogs: {{ data.blog_drafted }}</li>
+              <li class="list-group-item bg-secondary">Published Blogs: {{ data.blog_published }}</li>
+              <li class="list-group-item bg-success">Archived Blogs: {{ data.blog_archived }}</li>
+            </ul></p>
+          </div>
+        </div>
+        <div class="col-md-3 col">
+            <div class="card bg-primary text-wrap" style="width: 18rem;">
+                <h4>Other</h4>
+                <p class="text-start">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item bg-primary">Draft Blogs: {{ data.blog_drafted }}</li>
+                  <li class="list-group-item bg-secondary">Published Blogs: {{ data.blog_published }}</li>
+                  <li class="list-group-item bg-success">Archived Blogs: {{ data.blog_archived }}</li>
+                </ul></p>
+              </div>
+            </div>
+
+</div>
+</section>
+
+
+<section class=" " style="font-color">
+  <div class="container-fluid col-container">
+  <div class="row">
+  <div class="col-md-8 col">
+    <div class="card text-wrap" style="width: 18rem;">
+      <h4>Blogs with reviews and Ratings</h4>
+      <table class="table table-striped table-hover white">
+    <thead>
+      <tr>
+        <th scope="col" class="white">Blog Title</th>
+        <th scope="col" class="white">Number of Reviews</th>
+        <th scope="col" class="white">Average Rating</th>
+        
+      </tr>
+    </thead>
+    <tbody class="white">
+     
+   
+      {% for blog in data.blogs_with_review_counts %}
+         <tr>
+            
+             <td class="white"></a>{{blog.title}}</td>
+             <td class="white">{{blog.review_count}}</td>
+             <td class="white">{{blog.average_rating}}</td>
+
+            </tr>
+            {% endfor %}
+     
+          </tbody>
+        </table>
+      
+    </div>
+  </div>
+</div>
+</div>
+{% endblock %}

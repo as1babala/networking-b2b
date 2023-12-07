@@ -11,8 +11,10 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 import os
 
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'NETWORKING-B2B.settings')
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -48,6 +50,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.microsoft',
     'allauth.socialaccount.providers.facebook',
     ### third party libraries
+    'request',
     'rest_framework',
     'widget_tweaks',
     'chartjs',
@@ -57,15 +60,21 @@ INSTALLED_APPS = [
     'django_cascading_dropdown_widget',
     'django_tables2',
     'dynamic_forms',
+    'django_htmx',
+    'phonenumber_field',
+    'django.contrib.humanize',
+    'django_otp',
+    'django_otp.plugins.otp_totp',
+    
     
     ### System apps
     'core',
     'accounts',
-    'employees',
+    #'employees',
     'profiles',
-    'education',
+    
     'contacts',
-    'experts',
+    
     'industries',
     'fiches',
     'jobs',
@@ -73,6 +82,7 @@ INSTALLED_APPS = [
     'applications',
     'blogs',
     'deals',
+    'product_deals',
     'rfi',
     'projects',
     'enterprises',
@@ -80,6 +90,9 @@ INSTALLED_APPS = [
     'tinymce',
     'trainings',
     'trainingapplications',
+    'analytics.apps',
+    'discussions',
+    'products',
     
     
 ]
@@ -96,20 +109,34 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django_otp.middleware.OTPMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'request.middleware.RequestMiddleware',
 ]
 
-
+'''
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+        ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+    'rest_framework_simplejwt.authentication.JWTAuthentication',]
+       
+    
 }
 
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30), #lifetime of the access token
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1), # time lapse for refresh token
+    'AUTH_HEADER_TYPES': ('Bearer', 'Token'),
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',)
+}
+'''
 ROOT_URLCONF = 'networking.urls'
+#CSRF_TRUSTED_ORIGINS = ["127.0.0.1:8000"]
 
 TEMPLATES = [
     {
@@ -129,7 +156,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'networking.wsgi.application'
-AUTH_USER_MODEL = 'accounts.CustomUser'
+AUTH_USER_MODEL = 'core.CustomUser'
 ID_DIGITS_LENGTH = 12
 
 # Database
@@ -147,12 +174,16 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
-
+'''
 AUTHENTICATION_BACKENDS  = (
     'django.contrib.auth.backends.ModelBackend',
-   # 'allauth.account.auth_backends.AuthenticationBackend',
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+    
+   # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
 )
-
+'''
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -168,7 +199,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -179,7 +209,7 @@ USE_L10N = True
 USE_TZ = True
 
 #AUTH
-LOGIN_REDIRECT_URL = "accounts:home"
+LOGIN_REDIRECT_URL = "accounts:home-page"
 LOGOUT_REDIRECT_URL = "accounts:login"
 
 # Static files (CSS, JavaScript, Images)
@@ -204,7 +234,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'babala.assih@gmail.com' # this email will be used to send emails
-EMAIL_HOST_PASSWORD = 'xyz' # host email password required
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS') # host email password required
 # now sign in with your host gmail account in your browser
 # open following link and turn it ON
 # https://myaccount.google.com/lesssecureapps
@@ -227,7 +257,14 @@ ACCOUNT_EMAIL_VERIFICATION = ('optional')
 #STRIPE_SECRET_KEY = env("STRIPE_SECRET_KEY")
 #STRIPE_WEBHOOK_SECRET_KEY =
 STRIPE_PUBLIC_KEY = "pk_test_51MkX0vFnCvJSP7I78lJKqbRoMqngNtMld8FYQ4jwp8KAgFGtjKKdOYqhqb2fDjlvWptSb3ifI84BcLkk7V4v6ECc002wgUaHzr"
-#STRIPE_SECRET_KEY = "pk_test_51MkX0vFnCvJSP7I78lJKqbRoMqngNtMld8FYQ4jwp8KAgFGtjKKdOYqhqb2fDjlvWptSb3ifI84BcLkk7V4v6ECc002wgUaHzr"
+STRIPE_SECRET_KEY = "pk_test_51MkX0vFnCvJSP7I78lJKqbRoMqngNtMld8FYQ4jwp8KAgFGtjKKdOYqhqb2fDjlvWptSb3ifI84BcLkk7V4v6ECc002wgUaHzr"
 
 ##WYSIWYG###
-X_FRAME_OPTIONS = 'SAMEORIGIN'
+#X_FRAME_OPTIONS = 'SAMEORIGIN'
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 300,
+        'width': '100%',
+    },
+}

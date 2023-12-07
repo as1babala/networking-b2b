@@ -16,7 +16,7 @@ from django.urls import reverse_lazy
 #from slick_reporting.views import SlickReportView
 #from slick_reporting.fields import SlickReportField
 
-from core.models import Employee
+from core.models import *
 from .forms import *
 from django.db.models import Count
 

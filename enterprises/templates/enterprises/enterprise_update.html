@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_content.html" %}
 
 {% block title%}
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -11,174 +11,55 @@
 {% load crispy_forms_tags %}
 
 {% load bootstrap5 %}
+<head>
+  <style>
+    .line-spacing-1-5 {
+        line-height: 2.0;
+    }
 
-<div class="container">
-    <p><a href="{% url 'enterprises:enterprise-list' %}">Go Back to companies List</a></p> 
-    <form method="post" class="form white" id="EnterprisesForm" data-sectors-url="{% url 'enterprises:ajax_load_sectors' %}" novalidate>
+    .center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
+    }
+</style>
+</head>
+
+<section style="width:100%" class="section_color1 py-3 rounded line-spacing-1-5">
+<div class="container white">
+    <p><a href="{% url 'enterprises:enterprise-list' %}">Enterprises</a></p> 
+    <form method="post" id="enterpriseForm" data-sectors-url="{% url 'enterprises:ajax-load-sectors' %}">
         {% csrf_token %}
-        {{ form.non_field_errors }}
-        <div style="border-bottom: 0px solid white; color: #0d6efd;" class="row">
-        <div class="col-6 mb-2">
-            {{ form.first_name.errors }}
-            <label for="{{ form.first_name.id_for_label }}">First name:</label>
-            {{ form.first_name }}
-        </div>
-        <div class="col-6 mb-2">
-            {{ form.last_name.errors }}
-            <label for="{{ form.last_name.id_for_label }}">Last name:</label>
-            {{ form.last_name }}
-       
-    </div>
-</div>
-        
-
-        
-        <div style="border-bottom: 0px solid white; color: #0d6efd;" class="row mb-3 my-2">
-            
-            <div class="col-3 mb-2">
-                {{ form.company_name.errors }}
-                <label for="{{ form.company_name.id_for_label }}">Company name:</label>
-                {{ form.company_name }}
-            </div>
-            <div class="col-3 mb-2">
-                {{ form.company_type.errors }}
-                <label for="{{ form.company_type.id_for_label }}">Company type:</label>
-                {{ form.company_type }}
-        </div>
-        <div class="col-3 mb-2">
-            {{ form.registration_id.errors }}
-            <label for="{{ form.registration_id.id_for_label }}">Company registration ID:</label>
-            {{ form.registration_id }}
-        </div>
-        <div class="col-3 mb-2">
-            {{ form.registration_date.errors }}
-            <label for="{{ form.registration_date.id_for_label }}">Company registration date:</label>
-            {{ form.registration_date }}
-        </div>
-    </div>
-    <div style="border-bottom: 0px solid white; color: #0d6efd;" class="row mb-3 my-2">
-        <div class="col-5 mb-2">
-            {{ form.email.errors }}
-            <label for="{{ form.email.id_for_label }}">Email address:</label>
-            {{ form.email }}
-        </div>
-        <div class="col-2 mb-2">
-        {{ form.phnoe_code.errors }}
-        <label for="{{ form.phone_code.id_for_label }}">Country Code:</label>
-        {{ form.phone_code }}
-        </div>
-        <div class="col-5 mb-2">
-            {{ form.phnoe_number.errors }}
-            <label for="{{ form.phone_number.id_for_label }}">Phone number:</label>
-            {{ form.phone_number }}
-            </div>
-              
-            </div>
-
-    <div style="border-bottom: 0px solid white; color: #0d6efd;" class="row mb-3 my-2">
-        <div class="col-6 mb-2">
-            {{ form.company_email.errors }}
-            <label for="{{ form.company_email.id_for_label }}">Company email address:</label>
-            {{ form.company_email }}
-        </div>
-        <div class="col-6 mb-2">
-            {{ form.company_web.errors }}
-            <label for="{{ form.company_web.id_for_label }}">Company website address:</label>
-            {{ form.company_web }}
-       
-    </div>
-</div>
-
-<div style="border-bottom: 0px solid white; color: #0d6efd;" class="row mb-3 my-2">
-    <div class="col-5 mb-2">
-        {{ form.company_address.errors }}
-        <label for="{{ form.company_address.id_for_label }}">Company physical address:</label>
-        {{ form.company_address }}
-    </div>
-    <div class="col-2 mb-2">
-    {{ form.company_country.errors }}
-    <label for="{{ form.company_country.id_for_label }}">Company country:</label>
-    {{ form.company_country }}
-    </div>
-    <div class="col-5 mb-2">
-        {{ form.company_city.errors }}
-        <label for="{{ form.company_city.id_for_label }}">Company city:</label>
-        {{ form.company_city }}
-        </div>
-          
-        </div>
-    
-        <div style="border-bottom: 0px solid white; color: #0d6efd;" class="row mb-3 my-2">
-            <div class="col-5 mb-2">
-                {{ form.industry.errors }}
-                <label for="{{ form.industry.id_for_label }}">Company industry:</label>
-                {{ form.industry }}
-            </div>
-            <div class="col-4 mb-2">
-            {{ form.sector.errors }}
-            <label for="{{ form.sector.id_for_label }}">Sector of activities:</label>
-            {{ form.sector }}
-            </div>
-            <div class="col-3 mb-2">
-                {{ form.number_employees.errors }}
-                <label for="{{ form.number_employees.id_for_label }}">Number of employees:</label>
-                {{ form.number_employees }}
-                </div>
-                  
-                </div>
-                <div style="border-bottom: 0px solid white; color: #0d6efd;" class="row mb-3 my-2">
-                    <h4 style="text-center" >What type of partnership would you like to have with our organization?</h4>
-                    <div class="col-3 mb-2">
-                        {{ form.commercial.errors }}
-                        <label for="{{ form.commercial.id_for_label }}">Commercial partner:</label>
-                        {{ form.commercial }}
-                    </div>
-                    <div class="col-3 mb-2">
-                    {{ form.technical.errors }}
-                    <label for="{{ form.technical.id_for_label }}">Technical partner:</label>
-                    {{ form.technical }}
-                    </div>
-                    <div class="col-3 mb-2">
-                        {{ form.financial.errors }}
-                        <label for="{{ form.financial.id_for_label }}">Financial partner:</label>
-                        {{ form.financial }}
-                    </div>
-                    <div class="col-3 mb-2">
-                    {{ form.management.errors }}
-                    <label for="{{ form.management.id_for_label }}">Management partner:</label>
-                    {{ form.management }}
-                    </div>
-                   
-                </div>
-
-                <div style="border-bottom: 0px solid white; color: #0d6efd;" class="row mb-3 my-2">
-                    {{ form.activity_description.errors }}
-                    <label for="{{ form.activity_description.id_for_label }}">Company description:</label>
-                    {{ form.activity_description }}
-                    </div>
+        {% bootstrap_form form %}
         {% buttons %}
         <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="" class="btn btn-dark"> <a href="{% url 'enterprises:enterprise-list' %}">Back To Companies List</a></button>
+        
         {% endbuttons %}
+       
     </form>
 </div> 
+</section>
 
-
-<script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
     $("#id_industry").change(function () {
-      var url = $("#EnterprisesForm").attr("data-sectors-url");  
-      var industryId = $(this).val();  
+      var url = $("#enterpriseForm").attr("data-sectors-url");  // get the url of the `load_cities` view
+      var industryId = $(this).val();  // get the selected country ID from the HTML input
 
-      $.ajax({                      
-        url: url,                    
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
         data: {
-          'industry': industryId   
+          'industry': industryId       // add the country id to the GET parameters
         },
-        success: function (data) {  
-          $("#id_sector").html(data);  
+        success: function (data) {   // `data` is the return of the `load_cities` view function
+          $("#id_sector").html(data);  // replace the contents of the city input with the data that came from the server
         }
       });
 
     });
   </script>
+
 
 {% endblock %}

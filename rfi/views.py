@@ -29,10 +29,16 @@ class RfiListView(LoginRequiredMixin, generic.ListView):
     model = Rfi
     template_name = "rfi/rfi_list.html"
     queryset = Rfi.objects.all() # not adding context here
+    context_object_name = "user_rfi"
+    paginate_by = 2
+    
+class UserRfiListView(LoginRequiredMixin, generic.ListView):
+    template_name = "rfi/rfi_user_list.html"
     context_object_name = "rfi"
     paginate_by = 2
     
-    
+    def get_queryset(self):
+        return Rfi.objects.filter(client_name=self.request.user).order_by('-created_on')
     
 class RfiDetailView(LoginRequiredMixin, generic.DetailView):
     template_name = "rfi/rfi_detail.html"

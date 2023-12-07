@@ -1,0 +1,7 @@
+{% for education in education %}
+<ul>
+<li>
+{{education.slug }} {{ education.student }}   {{education.student_email  }} {{education.school_name  }} {{education.gpa}}
+
+</br>{% if education.graduated %} Graduated on {{education.end_date}} {% else %} Not graduated yet {% endif %} {{education.specialization}} </li> </ul>
+{% endfor %}

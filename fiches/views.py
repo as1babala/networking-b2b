@@ -4,11 +4,13 @@ from django.contrib import messages
 from django.shortcuts import render, redirect, reverse
 from django.views.generic import (
     TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView)
-from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required 
+from django.contrib.auth.decorators import login_required,user_passes_test
 from django.db.models import Q
 from django.http.response import HttpResponse
 from django.views import generic
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, PermissionRequiredMixin
 from django.core.mail import send_mail
 #from slick_reporting.views import SlickReportView
 #from slick_reporting.fields import SlickReportField
@@ -18,6 +20,15 @@ from django.db.models import Count
 
 # Create your views here.
 
+class admin(UserPassesTestMixin):
+    
+    def test_func(self):
+        return self.request.user.is_admin
+    
+class employee(UserPassesTestMixin):
+    
+    def test_func(self):
+        return self.request.user.is_employee
 class FicheTechnicListView(LoginRequiredMixin, generic.ListView):
     template_name = "fiches/fiche_list.html"
     queryset = FicheTechnic.objects.all() # not adding context here
@@ -27,16 +38,17 @@ class FicheTechnicListView(LoginRequiredMixin, generic.ListView):
 class FicheTechnicDetailView(LoginRequiredMixin, generic.DetailView):
     template_name = "fiches/fiche_detail.html"
     queryset = FicheTechnic.objects.all() # not adding context here
-    context_object_name = "fiches"  
-    
-class FicheTechnicCreateView(LoginRequiredMixin, CreateView):
+    context_object_name = "fiches" 
+     
+
+class FicheTechnicCreateView(admin, employee, CreateView):
     template_name = "fiches/fiche_create.html"
     form_class = FicheTechnicForm
     
     def get_success_url(self):
         return reverse("fiches:fiche-list")
 
-class FicheTechnicUpdateView(LoginRequiredMixin, generic.UpdateView):
+class FicheTechnicUpdateView( admin, generic.UpdateView):
     template_name = "fiches/fiche_update.html"
     form_class = FicheTechnicForm
     queryset = FicheTechnic.objects.all()
@@ -50,7 +62,7 @@ class FicheTechnicUpdateView(LoginRequiredMixin, generic.UpdateView):
         messages.info(self.request, "You have successfully updated this lead")
         return super(FicheTechnicUpdateView, self).form_valid(form)
     
-class FicheTechnicDeleteView(LoginRequiredMixin, generic.DeleteView):
+class FicheTechnicDeleteView(admin, generic.DeleteView):
     template_name = "fiches/fiche_delete.html"
     queryset = FicheTechnic.objects.all()
     

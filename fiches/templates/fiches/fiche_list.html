@@ -1,10 +1,10 @@
-{% extends "base.html" %}
+{% extends "base_content.html" %}
 {% block title %}
 
 {% endblock title%}
 
 {% block content %}
-<section class="search-colum">
+<section class="search-colum py-3">
   <div class="p-3 mb-2 bg-info text-blue search-column" >
     <h2 class="text-4xl text-gray800"></h2>
     <form class="d-flex" role="search" action="{% url 'fiches:fiche-search' %}" method='GET' enctype="">
@@ -15,8 +15,10 @@
     </div>
 </section>
 <section>
+  
+  {% if user.is_admin %}
  <p> <a href="{% url 'fiches:fiche-create' %}">Create technical form</a><p>
-
+{% endif %}
   <table class="table table-striped table-hover">
     <thead>
       <tr>
@@ -25,11 +27,9 @@
         <th scope="col">Category</th>
         <th scope="col">Description</th>
         <th scope="col">Principal risk </th>
-        <th scope="col">Seed </th>
-        <th scope="col">Seed supplier</th>
+        <th scope="col">Technical_factors </th>
+        <th scope="col">harvest_factors</th>
         <th scope="col">Created on</th>
-       
-       
       </tr>
     </thead>
     <tbody>
@@ -42,9 +42,9 @@
               <td class="white">{{fiche.name}}</td>
               <td class="white">{{fiche.category}}</td>
               <td class="white">{{fiche.description}}</td>
-              <td class="white">{{fiche.principal_risks}}</td>
-              <td class="white">{{fiche.seeds}}</td>
-              <td class="white">{{fiche.seed_supplier}}</td>
+              <td class="white">{{fiche.principal_risks|truncatewords:'20'}}</td>
+              <td class="white">{{fiche.Technical_factors|truncatewords:'20'}}</td>
+              <td class="white">{{fiche.harvest_factors|truncatewords:'20'}}</td>
               <td class="white">{{fiche.created_on|date}}</td> 
           </tr>
       {% endfor %}

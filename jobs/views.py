@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 
 from django.views import generic
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.mail import send_mail
 from core.models import *
 from django.urls import reverse_lazy
@@ -22,8 +22,12 @@ class JobListView( generic.ListView):
     queryset = Jobs.objects.all() # not adding context here
     context_object_name = "jobs"
     paginate_by = 2
-    
-class JobCreateView(LoginRequiredMixin, CreateView):
+
+class admin(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.is_admin or self.request.user.is_employee
+   
+class JobCreateView(admin, CreateView):
     template_name = "jobs/job_create.html"
     form_class = JobForm
     
@@ -41,7 +45,7 @@ class JobDetailView(LoginRequiredMixin, generic.DetailView):
     queryset = Jobs.objects.all() # not adding context here
     context_object_name = "jobs"
 
-class JobUpdateView(LoginRequiredMixin, generic.UpdateView):
+class JobUpdateView(admin, generic.UpdateView):
     template_name = "jobs/job_update.html"
     form_class = JobForm
     queryset = Jobs.objects.all()
@@ -128,6 +132,7 @@ class JobSearchView(ListView):
         
         
 ### create application###
+
 @login_required
 def apply_job(request, pk, format=None):
     job = Jobs.objects.get(id=pk)

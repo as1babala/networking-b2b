@@ -1,0 +1,32 @@
+{% extends "base_content.html" %}
+
+{% block title%}
+
+{% endblock title%}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+{% load bootstrap5 %}
+
+<div class="container">
+    <div class="row my-5">
+        <div class="col-md-12 white">
+            <p> <a href="{% url 'product_deals:product-deal-list' %}">List of deals</a><p>
+            <form method="post" class="form" enc>
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                {% buttons %}
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-dark" onclick="location.href='{% url 'product_deals:product-deal-list' %}'">Cancel</button>
+               
+                {% endbuttons %}
+            </form>
+        </div>
+    </div>
+</div>
+
+ 
+
+{% endblock %}

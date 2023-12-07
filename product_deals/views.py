@@ -1,0 +1,162 @@
+from itertools import count
+from django.shortcuts import render, get_object_or_404
+from django.contrib import messages
+from django.views.generic import (
+    TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
+)
+from django.http.response import HttpResponse, HttpResponseNotAllowed
+from django.shortcuts import get_object_or_404, redirect, render, reverse
+from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+from django.http.response import HttpResponse
+from django.urls import reverse_lazy
+from django.views import generic
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.mail import send_mail
+
+#from slick_reporting.views import SlickReportView
+#from slick_reporting.fields import SlickReportField
+
+from core.models import *
+from .forms import *
+from rfi.forms import *
+from django.db.models import Count
+
+
+class ProductDealsListView(LoginRequiredMixin, generic.ListView):
+    template_name = "product_deals/product_deals.html"
+    queryset = ProductDeals.objects.all() # for published blogs
+    #queryset = Blog.objects.all().filter(status=2)
+    #queryset = Blog.objects.all()
+    #queryset = CustomUser.objects.filter(user_type='blog') # not adding context here
+    #CustomUser.objects.
+    context_object_name = "product_deals"
+    paginate_by = 4
+
+class UserProductDealsListView(LoginRequiredMixin, generic.ListView):
+    template_name = "product_deals/product_deals_user.html"
+    context_object_name = "user_product_deals"
+    
+    def get_queryset(self):
+        return ProductDeals.objects.filter(dealer=self.request.user).order_by('-announcement_date')
+
+class ProductDealCreateView(LoginRequiredMixin, CreateView):
+    template_name = "product_deals/product_deals_create.html"
+    form_class = ProductDealsForm
+    success_url = reverse_lazy('product_deals:product-deal-list')
+    
+     
+    def form_valid(self, form):
+        form.instance.dealer = self.request.user
+        form.instance.email = self.request.user.email
+        form.instance.company_name = self.request.user.company_name
+        messages.success(self.request, f'Your account has been created! You are now able to log in')
+            
+        return super().form_valid(form)
+    
+def product_deal_detail(request, pk):
+    product_deal = ProductDeals.objects.get(pk=pk)
+    
+    form = ProductRFIForm()
+    if request.method == 'POST':
+        form = ProductRFIForm(request.POST)
+        if form.is_valid():
+            reviews = ProductRFI(
+                email=form.cleaned_data["email"],
+                company_name=form.cleaned_data["company_name"],
+                product_title=form.cleaned_data["deal_title"],
+                deal_type=form.cleaned_data["deal_type"],
+                descriptions=form.cleaned_data["descriptions"],
+                product_deal=product_deal
+            )
+            reviews.save()
+
+    product_rfi = ProductRFI.objects.filter(product_deal=product_deal)
+    context = {
+        "product_deal": product_deal,
+        "product_rfi": product_rfi,
+        "form": form,
+    }
+
+    return render(request, "product_deals/product_deals_detail.html", context)
+    
+
+class ProductDealUpdateView(LoginRequiredMixin, generic.UpdateView):
+    template_name = "product_deals/product_deals_update.html"
+    form_class = ProductDealsForm
+    queryset = ProductDeals.objects.all()
+    #context_object_name = "product_deals"
+    
+    def get_success_url(self):
+        return reverse("product_deals:product-deal-list")
+    
+    
+    def form_valid(self, form):
+        form.save()
+        messages.info(self.request, "You have successfully updated this lead")
+        return super(ProductDealUpdateView, self).form_valid(form)
+    
+
+  
+class ProductDealDeleteView(LoginRequiredMixin, generic.DeleteView):
+    template_name = "product_deals/product_deal_delete.html"
+    queryset = ProductDeals.objects.all()
+    
+    def get_success_url(self):
+        return reverse("product_deals:deal-list")
+    
+
+class ProductRFICreateView( LoginRequiredMixin, CreateView):
+    model = ProductRFI
+    fields = [ 'message']
+    template_name = "product_deals/product_rfi_create.html"
+    success_url = reverse_lazy('product_deals:product-deal-list')
+     
+    def form_valid(self, form):
+        form.instance.client_name = self.request.user
+        form.instance.client_email = self.request.user.email
+        form.instance.product_deal = ProductDeals.objects.get(pk=self.kwargs['pk'])
+        
+        return super().form_valid(form)
+    
+### Product RFI ###
+
+class ProductRFIListView(LoginRequiredMixin, generic.ListView):
+    model = ProductRFI
+    template_name = "product_deals/product_rfi_list.html"
+    queryset = Rfi.objects.all() # not adding context here
+    context_object_name = "product_rfi"
+    paginate_by = 2
+    
+class ProductUserRfiListView(LoginRequiredMixin, generic.ListView):
+    template_name = "product_deals/product_user_rfi_list.html"
+    context_object_name = "product_user_rfi"
+    paginate_by = 2
+    
+    def get_queryset(self):
+        return ProductRFI.objects.filter(client_name=self.request.user).order_by('-created_on')
+    
+class ProductRfiDetailView(LoginRequiredMixin, generic.DetailView):
+    template_name = "product_deals/product_rfi_detail.html"
+    queryset = ProductRFI.objects.all() # not adding context here
+    context_object_name = "product_rfi"
+
+class RfiUpdateView(LoginRequiredMixin, generic.UpdateView):
+    template_name = "product_deals/product_rfi_update.html"
+    form_class = RfiForm
+    queryset = Rfi.objects.all()
+    
+    def get_success_url(self):
+        return reverse("product_deals:product-rfi-list") 
+    
+    def form_valid(self, form):
+        form.save()
+        messages.info(self.request, "You have successfully updated this lead")
+        return super(RfiUpdateView, self).form_valid(form)
+    
+class RfiDeleteView(LoginRequiredMixin, generic.DeleteView):
+    template_name = "rfi/rfi_delete.html"
+    queryset = Rfi.objects.all()
+    
+    def get_success_url(self):
+        return reverse("rfi:rfi-list")

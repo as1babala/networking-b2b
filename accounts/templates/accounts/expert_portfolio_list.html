@@ -1,0 +1,7 @@
+{% for portfolio in expert_portfolios %}
+<ul>
+<li>{{ portfolio.consultant}}   {{portfolio.consultant_email }} {{portfolio.project_title }} 
+
+</br>{{ portfolio.client_name }} {{portfolio.description}} {{portfolio.created_on}}</li> </ul>
+{% endfor %}
+

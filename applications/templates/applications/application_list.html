@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_content.html" %}
 {% block title %}
 
 {% endblock title%}
@@ -34,8 +34,8 @@
     
       {% for application in applications %}
           <tr>
-              <td class="white">{{application.id}}</a></td>
-              <td class="white">{{application.job}}</a></td>
+              <td class="white"><a href="{% url 'applications:application-detail' application.pk %}">{{application.id}}</a></td>
+              <td class="white">{{application.job}}</td>
               <td class="white">{{application.user}}</td>
               <td class="white">{{application.email}}</td>
               <td class="white">{{application.resume}}</td>

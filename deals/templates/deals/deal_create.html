@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_content.html" %}
 
 {% block title%}
 
@@ -14,15 +14,59 @@
     <div class="row my-5">
         <div class="col-md-12 white">
             <p> <a href="{% url 'deals:deal-list' %}">List of deals</a><p>
-            <form method="post" class="form" enc>
-                {% csrf_token %}
+            <form method="post" class="form" enctype="multipart/form-data">
+               <!-- {% csrf_token %}
+                {{form.service_category.label_tag}}
+                {{form.service_category}}
+        
+                        <br><br>
+                        
+                        {{form.deal_title.label_tag}}
+                        {{form.deal_title}}
+                        <br><br>
+                        {{form.deal_country.label_tag}}
+                        {{form.deal_country}}
+                        <br><br>
+                        {{form.deal_city.label_tag}}
+                        {{form.deal_city}}
+                        <br><br>
+                        {{form.deal_type.label_tag}}
+                        {{form.deal_type}}
+                        <br><br>
+                        {{form.descriptions.label_tag}}
+                        {{form.descriptions}}
+                        <br><br>
+                        {{form.active.label_tag}}
+                        {{form.active}}
+                        <br><br>
+                  {{form2.image.label_tag}}
+                    {{form2.image}}
+                        <br><br>
+
+
+                    <input type="submit" name="" id=""-->
+    <!--the original form
+               {% csrf_token %}
                 {% bootstrap_form form %}
                 {% buttons %}
                 <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-dark" onclick="location.href='{% url 'deals:deal-list' %}'">Cancel</button>
+                {% endbuttons %}-->
+                {% csrf_token %}
+
+                {% bootstrap_form form %}
+                <label for="id_image">Images:</label>
+                <input type="file" name="image" multiple></br></br>
+                {% buttons %}
+                <button type="submit" class="btn btn-primary">Create a New Deal</button>
+                <button type="button" class="btn btn-dark" onclick="location.href='{% url 'deals:deal-list' %}'">Cancel</button>
                 {% endbuttons %}
+                  
             </form>
         </div>
     </div>
 </div>
+
+ 
 
 {% endblock %}

@@ -4,15 +4,15 @@
    <p><a href="{% url 'rfi:rfi-list' %}"> <i class="fa-solid fa-users"></i> List of request for information</a></p> 
     <section>
         <h3><u>{{rfi.opportunity}} details:</u></h3>
-    <p><i>Requester:</i> {{rfi.name}}</p>
-    <p><i>email:</i> {{rfi.email}}</p>
+    <p><i>Requester:</i> {{rfi.client_name}}</p>
+    <p><i>email:</i> {{rfi.client_email}}</p>
     <p><i>Message:</i> {{rfi.message}}</p>
     <p><i>created on:</i> {{rfi.created_on|date}}</p>
     
     
     
 <hr />
-<button type="button" class="btn btn-secondary" onclick="location.href='{% url 'rfi:rfi-create' rfi.slug %}'"> <i class="fa-sharp fa-solid fa-pen-to-square" alt="Update"></i> Education</button>
+
 <button type="button" class="btn btn-secondary" onclick="location.href='{% url 'rfi:rfi-update' rfi.slug %}'"><i class="fa-sharp fa-solid fa-pen-to-square"></i></button>
 <button type="button" class="btn btn-danger" onclick="location.href='{% url 'rfi:rfi-delete' rfi.slug %}'"><i class="fa-sharp fa-solid fa-trash-can"></i></button>
 <button type="button" class="btn btn-dark" onclick="location.href='{% url 'rfi:rfi-list' %}'">Cancel</button>

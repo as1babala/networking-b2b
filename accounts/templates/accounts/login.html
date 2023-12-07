@@ -7,8 +7,6 @@ login
 {% endblock title %}
 {% load bootstrap5 %}
 
-
-
 {% block content %}
 <style>
     .background-image {
@@ -33,9 +31,7 @@ login
 {% endif %}
 
 
-
-
-<div class=" rounded col-container ">
+<div class=" rounded col-container py-5">
     <div class="row">
         <div class="col-6 shadow p-3 mb-5 border mx-2 ">
            
@@ -60,17 +56,12 @@ login
                 
                 <button class="btn btnfont btnbg mb-1 mx-2 my-4" onclick="location.href='{% url 'accounts:signup' %}'"> <span class="about "><i class="fa-sharp fa-solid fa-address-card"></i></span> Join Our Netwrok! </button>
                 <br/>
-                <h4 class="white text-center my-5">For any issues or concerns / information </h4><br/>  
+                <h4 class="text-white text-center my-5">For any issues or concerns / information </h4><br/>  
                 <button class="btn btnfont btnbg mb-1 mx-2 my-4" onclick="location.href='{% url 'contacts:contact-create' %}'"> <span class="about"><i class="fa-solid fa-envelope"></i></span> Contact us </button>
-        
         </div>
-
     </div>
-  
 </div>
 
-{% include 'footer.html' %} 
-
-
+{% include 'footer.html' %}
 
 {% endblock content %}

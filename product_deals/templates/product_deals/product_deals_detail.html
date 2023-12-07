@@ -1,0 +1,67 @@
+{% extends "base_content.html" %}
+{% block title %}
+
+{% load static %}
+{% load bootstrap5 %}
+
+{% endblock title%}
+
+{% block content %}
+<head>
+  
+</head>
+<section class="text-white py-3 " style="width:100%">
+  <div class="shadow p-3 mb-5 bg-body-tertiary rounded" style="border-width:0;color:#0a2647;background-color: ">
+<p><span class="about"><a href="{% url 'product_deals:product-deal-list' %}">Product Announcement list</a></span></p> 
+
+<h3>Product Announcement: {{product_deal.product_name}} - {{product_deal.opportunity_type}}</h3>
+<p><b>Announce From:</b> {{product_deal.dealer}}  <b>From:</b> {{product_deal.company_name}} <br>  <b>Contact via:</b> <i>{{product_deal.email}} </i></br>
+<b>Product Category:</b> {{product_deal.product_category}} </br> <b>Announcement Location:</b> {{product_deal.country}}  {{product_deal.city}}</br>
+<b> Announcement Description:</b>
+<p>{{product_deal.product_description}}</p>
+<p>{{product_deal.stock_quantity}} {{product_deal.quantity_unit}} at {{product_deal.price}} {{product_deal.currency}} per unit</p>
+<p> Discount: {{product_deal.discount }} 
+<p> special Note: {{product_deal.notes}}
+
+<p><small>Created On: {{product_deal.announcement_date|date}}</small></p>
+<hr style="height:2px;border-width:0;color:gray;background-color:#0a2647; width:100%">
+        </div>
+        </section>
+
+<section class="text-white " style="border-width:0;color:gray">
+<div class="shadow p-3 mb-5 bg-body-tertiary rounded" style="border-width:0;color:#0a2647;background-color: ">
+<h3>Request For Proposals</h3>
+<hr style="height:3px;border-width:0;color:gray;background-color:gray">
+{% for product_rfi in product_rfi %}
+  <p>Message from: {{ product_rfi.client_email }} </p>
+  
+  <p>{{ product_rfi.message }}</p>
+
+  <p><small> Create on: {{ product_rfi.created_on|date }}</small></p>
+  <hr style="height:2px;border-width:0;color:#0a2647;background-color:gray">
+  {% empty %}
+    <p>No reviews yet.</p>
+
+  {% endfor %}
+
+</div> 
+</section>
+<section class=""> 
+<div class="shadow p-3 mb-5 bg-body-tertiary rounded" style="border-width:0;color:#0a2647;background-color: "> 
+    {% if user.is_authenticated %}
+    <!--h3>Submit your request</h3-->
+    <form method="POST" action="{% url 'product_deals:product-rfi-create' pk=product_deal.pk %}">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a href="{% url 'product_deals:product-deal-list' %}" class="btn btn-dark">Cancel</a>
+        {% endbuttons %}
+    </form>
+  {% endif %}
+  </div>
+</div>
+</div>
+</section>
+  
+{% endblock content %}

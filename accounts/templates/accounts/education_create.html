@@ -1,0 +1,28 @@
+{% extends "base_content.html" %}
+
+{% block title%} {% endblock title%}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+{% load bootstrap5 %}
+
+<section style="width:100%" class=" rounded line-spacing-1-5 opacity-25">
+<div class="container white">
+    <div class="row my-5">
+        <div class="col-md-12">
+            <!--h1>Apply to "{{ object_list.job_title }}"</h1-->
+            <form  method="post" class="form" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                 {% buttons %}
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-dark" onclick="location.href='{% url 'accounts:education-list' %}'">Cancel</button>
+                {% endbuttons %}
+            </form>
+        </div>
+    </div>
+</div>
+</section>
+    {% endblock %}

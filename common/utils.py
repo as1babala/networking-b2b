@@ -962,9 +962,9 @@ EMP_NUMBER = [('1','Less than 10 employees'),
               ('2','11 - 25 employees'), ('3', '26 - 50 employees'), ('4', '51 - 100 employees'), 
           ('5', '101 - 250 employees '),('6','More than 250 employees')]
 
-REVENUE = [('1','Less than 150 000 000 CFA'),
-              ('2','150 000 000 CFA -  500 000 000 CFA'), ('3', '500 000 001 CFA - 1 000 000 000 CFA'), 
-          ('4', 'More 1 000 000 000 CFA ')]
+REVENUE = [('1','Less than 150 000 000'),
+              ('2','150 000 000 -  500 000 000'), ('3', '500 000 001 - 1 000 000 000'), 
+          ('4', 'More 1 000 000 000 ')]
 
 PARTNERSHIP_TYPE = (('PARTENAIRE COMMERCIAL', 'PARTENAIRE COMMERCIAL'),
                      ('PARTENAIRE TECHNIQUE', 'PARTENAIRE TECHNIQUE'),
@@ -979,10 +979,10 @@ EXPERTISE_LEVEL = (('No Expertise needed', 'No Expertise Needed'),('Minimum Leve
 
 JOB_TYPE = (("FT", "Full Time"), ("PT", "Part Time"), ("IN", "Intern"))
 
-BLOG_STATUS = ((0, "Draft"), (1, "Approved"))
+BLOG_STATUS = (("DRAFT", "DRAFT"), ("PUBLISHED", "PUBLISHED"), ("ARCHIVED", "ARCHIVED"),)
 
       
-OPPORTUNITY_TYPES = (('Looking for Financing', 'Looking for Financing'),
+OPPORTUNITY_TYPES = (('Looking for Financing', 'Looking for Financing'),('Looking for Services Provider','Looking for Services Provider'),
                      ('Offering for Financing', 'Offering Financing'),
                      ('Looking for a Buyer', 'Looking for a Buyer'),
                      ('Looking for a Seller', 'Looking for a Seller'),
@@ -997,7 +997,7 @@ OPP_CAT = (('Services', 'Services'), ('Products','Products'))
 
 REVIEWERS = (('Blessing','Blessing'), ('Babala','Bbala'))
 APPROVERS = (('Hannah','Hannah'), ('Elizam','Elizam'))
-APPROVED = (('NO', 'NO'), ('YES', 'YES'), ('Rejected', 'Rejected'),)
+PROJECT_DECISION = (('APPROVED', 'APPROVED'), ('REJECTED', 'REJECTED'),)
 
 APPLICATION_STATUS_CHOICES = (
         ('Applied', 'Applied'),
@@ -1030,6 +1030,7 @@ DEGREE_CHOICES = (("BS", 'Bachelors Science'),
                  ("M", 'Masters'),
                  ("HS", 'High School'),
                   ("PhD", 'Doctorate'),
+                  ("CR", "CERTIFICATE"),
 )
 
 
@@ -1122,3 +1123,176 @@ TRAININGS_DURATION = [("0:30 PER DAY","0:30 PER DAY"), ("0:45 PER DAY","0:45 PER
               ("2:30 PER DAY","2:30 PER DAY"), ("2:45 PER DAY","2:45 PER DAY"), ("3:00 PER DAY","3:00 PER DAY")]
 
 TRAININGS_MODE = [("ONLINE", "ONLINE"), ("IN PERSON", "IN PERSON"), ("HYBRID", "HYBRID")]
+
+PROJECT_CATEGORY = [("Industrial", "Industrial"), ("Fishing","Fishing"), ("Manufacturing", "Manufacturing")]
+
+BLOG_CATEGORIES = [("Finance","Finance"), ("Entrepreneurship", "Entrepreneurship")]
+
+SERVICES_CATEGORIES = [
+  ('Healthcare Services', 'Healthcare Services'),
+('Educational Services:', 'Educational Services:'),
+('Professional Consulting', 'Professional Consulting'),
+('Financial Services', 'Financial Services'),
+('Information Technology (IT) Services', 'Information Technology (IT) Services'),
+('Real Estate Services', 'Real Estate Services'),
+('Hospitality Services', 'Hospitality Services'),
+('Transportation Services', 'Transportation Services'),
+('Entertainment Services', 'Entertainment Services'),
+('Marketing & Advertising Services:', 'Marketing & Advertising Services:'),
+('Home Maintenance and Repair', 'Home Maintenance and Repair'),
+('Beauty & Personal Care Services', 'Beauty & Personal Care Services'),
+('Legal Services', 'Legal Services'),
+('Creative Services', 'Creative Services'),
+('Retail & E-commerce Services', 'Retail & E-commerce Services'),
+('Environmental Services', 'Environmental Services'),
+('Agricultural Services', 'Agricultural Services'),
+('Human Resources (HR) & Recruitment', 'Human Resources (HR) & Recruitment'),
+('Construction & Architecture', 'Construction & Architecture'),
+('Security Services:', 'Security Services:')
+]
+
+PRODUCTS_CATEGORIES = [
+    ('Electronics', 'Electronics'),
+('Fashion & Apparel', 'Fashion & Apparel'),
+('Home & Furniture', 'Home & Furniture'),
+('Beauty & Personal Care', 'Beauty & Personal Care'),
+('Automobiles & Vehicles', 'Automobiles & Vehicles'),
+('Books & Stationery', 'Books & Stationery'),
+('Food & Beverages', 'Food & Beverages'),
+('Health & Wellness', 'Health & Wellness'),
+('Toys & Games', 'Toys & Games'),
+('Home Appliances', 'Home Appliances'),
+('Sports & Outdoors:', 'Sports & Outdoors:'),
+('Gardening & Landscaping', 'Gardening & Landscaping'),
+('DIY & Home Improvement', 'DIY & Home Improvement'),
+('Music & Entertainment', 'Music & Entertainment'),
+('Pet Supplies & Products', 'Pet Supplies & Products'),
+('Software & Apps', 'Software & Apps'),
+('Industrial & B2B Products', 'Industrial & B2B Products'),
+('Art & Crafts', 'Art & Crafts'),
+('Travel & Leisure Products', 'Travel & Leisure Products'),
+('Real Estate:', 'Real Estate:'),
+('Agriculture Products','Agriculture Products')
+    
+]
+
+PRODUCTS_OPPORTUNITIES = [
+    ('Looking for a seller', 'Looking for a Seller'),
+    ('Looking for a Buyer', 'Looking for a Buyer'),
+]
+
+MEASUREMENT_UNIT = [
+    ('Unit', 'Unit'),
+   ('Meter (m) - length','Meter (m) - length'),
+('foot (ft) - length ','foot (ft) - length '),
+('yard (yd) - length ','yard (yd) - length '),
+('mile (mi) - length ','mile (mi) - length '),
+('Inch (in) - length  ','Inch (in) - length  '),
+('Kilogram (kg) - weight/mass','Kilogram (kg) - weight/mass'),
+('Tonne (t) - weight/mass','Tonne (t) - weight/mass'),
+('Pound (lb) - weight/mass','Pound (lb) - weight/mass'),
+('ounce (oz) - weight/mass','ounce (oz) - weight/mass'),
+('ounce (oz) - volume ','ounce (oz) - volume '),
+('Square inches (in²) - area','Square inches (in²) - area'),
+('Square meter (m²) - area','Square meter (m²) - area'),
+('hectares - area','hectares - area'),
+('acres - area','acres - area'),
+('square feet (ft²) - area','square feet (ft²) - area'),
+('Gallon (gal) - volume ','Gallon (gal) - volume '),
+('Liter (L) - volume','Liter (L) - volume'),
+('pint (pt) - volume ','pint (pt) - volume '),
+]
+
+CURRENCIES_SYMBOLS = [
+    ('AED (United Arab Emirates Dirham) - د.إ','AED (United Arab Emirates Dirham) - د.إ'),
+('Algerian Dinar (DZD) - د.ج','Algerian Dinar (DZD) - د.ج'),
+('Angolan Kwanza (AOA) - Kz','Angolan Kwanza (AOA) - Kz'),
+('ARS (Argentine Peso) - $','ARS (Argentine Peso) - $'),
+('AUD (Australian Dollar) - A$','AUD (Australian Dollar) - A$'),
+('BDT (Bangladeshi Taka) - ৳','BDT (Bangladeshi Taka) - ৳'),
+('Botswana Pula (BWP) - P','Botswana Pula (BWP) - P'),
+('BRL (Brazilian Real) - R$','BRL (Brazilian Real) - R$'),
+('Burundian Franc (BIF)','Burundian Franc (BIF)'),
+('CAD (Canadian Dollar) - C$','CAD (Canadian Dollar) - C$'),
+('Cape Verdean Escudo (CVE) - $ or Esc','Cape Verdean Escudo (CVE) - $ or Esc'),
+('Central African CFA Franc (XAF) - FCFA','Central African CFA Franc (XAF) - FCFA'),
+('CHF (Swiss Franc) - CHF','CHF (Swiss Franc) - CHF'),
+('CLP (Chilean Peso) - $','CLP (Chilean Peso) - $'),
+('CNY (Chinese Yuan Renminbi) - ¥ or 元','CNY (Chinese Yuan Renminbi) - ¥ or 元'),
+('Comorian Franc (KMF)','Comorian Franc (KMF)'),
+('Congolese Franc (CDF) - FC','Congolese Franc (CDF) - FC'),
+('COP (Colombian Peso) - $','COP (Colombian Peso) - $'),
+('CZK (Czech Koruna) - Kč','CZK (Czech Koruna) - Kč'),
+('Djiboutian Franc (DJF)','Djiboutian Franc (DJF)'),
+('DKK (Danish Krone) - kr','DKK (Danish Krone) - kr'),
+('EGP (Egyptian Pound) - £ or ج.م','EGP (Egyptian Pound) - £ or ج.م'),
+('Egyptian Pound (EGP) - £ or ج.م','Egyptian Pound (EGP) - £ or ج.م'),
+('Eritrean Nakfa (ERN) - Nfk','Eritrean Nakfa (ERN) - Nfk'),
+('Ethiopian Birr (ETB) - Br','Ethiopian Birr (ETB) - Br'),
+('EUR (Euro) - €','EUR (Euro) - €'),
+('Gambian Dalasi (GMD) - D','Gambian Dalasi (GMD) - D'),
+('GBP (British Pound Sterling) - £','GBP (British Pound Sterling) - £'),
+('Ghanaian Cedi (GHS) - GH₵','Ghanaian Cedi (GHS) - GH₵'),
+('Guinean Franc (GNF) - GFr','Guinean Franc (GNF) - GFr'),
+('HKD (Hong Kong Dollar) - HK$','HKD (Hong Kong Dollar) - HK$'),
+('HUF (Hungarian Forint) - Ft','HUF (Hungarian Forint) - Ft'),
+('IDR (Indonesian Rupiah) - Rp','IDR (Indonesian Rupiah) - Rp'),
+('ILS (Israeli New Shekel) - ₪','ILS (Israeli New Shekel) - ₪'),
+('INR (Indian Rupee) - ₹','INR (Indian Rupee) - ₹'),
+('IQD (Iraqi Dinar) - ع.د','IQD (Iraqi Dinar) - ع.د'),
+('JPY (Japanese Yen) - ¥','JPY (Japanese Yen) - ¥'),
+('Kenyan Shilling (KES) - KSh','Kenyan Shilling (KES) - KSh'),
+('KRW (South Korean Won) - ₩','KRW (South Korean Won) - ₩'),
+('Lesotho Loti (LSL) - L','Lesotho Loti (LSL) - L'),
+('Liberian Dollar (LRD) - $','Liberian Dollar (LRD) - $'),
+('Libyan Dinar (LYD) - ل.د','Libyan Dinar (LYD) - ل.د'),
+('Malagasy Ariary (MGA)','Malagasy Ariary (MGA)'),
+('Malawian Kwacha (MWK) - MK','Malawian Kwacha (MWK) - MK'),
+('Mauritanian Ouguiya (MRU) - UM','Mauritanian Ouguiya (MRU) - UM'),
+('Mauritian Rupee (MUR) - ₨','Mauritian Rupee (MUR) - ₨'),
+('Moroccan Dirham (MAD) - د.م.','Moroccan Dirham (MAD) - د.م.'),
+('Mozambican Metical (MZN) - MT','Mozambican Metical (MZN) - MT'),
+('MXN (Mexican Peso) - $','MXN (Mexican Peso) - $'),
+('MYR (Malaysian Ringgit) - RM','MYR (Malaysian Ringgit) - RM'),
+('Namibian Dollar (NAD) - $','Namibian Dollar (NAD) - $'),
+('NGN (Nigerian Naira) - ₦','NGN (Nigerian Naira) - ₦'),
+('NOK (Norwegian Krone) - kr','NOK (Norwegian Krone) - kr'),
+('NZD (New Zealand Dollar) - NZ$','NZD (New Zealand Dollar) - NZ$'),
+('PHP (Philippine Peso) - ₱','PHP (Philippine Peso) - ₱'),
+('PKR (Pakistani Rupee) - ₨','PKR (Pakistani Rupee) - ₨'),
+('PLN (Polish Zloty) - zł','PLN (Polish Zloty) - zł'),
+('RON (Romanian Leu) - lei','RON (Romanian Leu) - lei'),
+('RUB (Russian Ruble) - ₽','RUB (Russian Ruble) - ₽'),
+('Rwandan Franc (RWF)','Rwandan Franc (RWF)'),
+('São Tomé and Príncipe Dobra (STN) - Db','São Tomé and Príncipe Dobra (STN) - Db'),
+('SAR (Saudi Riyal) - ﷼','SAR (Saudi Riyal) - ﷼'),
+('SEK (Swedish Krona) - kr','SEK (Swedish Krona) - kr'),
+('Seychellois Rupee (SCR) - ₨','Seychellois Rupee (SCR) - ₨'),
+('SGD (Singapore Dollar) - S$','SGD (Singapore Dollar) - S$'),
+('Sierra Leonean Leone (SLL) - Le','Sierra Leonean Leone (SLL) - Le'),
+('Somali Shilling (SOS) - Sh.So.','Somali Shilling (SOS) - Sh.So.'),
+('South African Rand (ZAR) - R','South African Rand (ZAR) - R'),
+('South Sudanese Pound (SSP)','South Sudanese Pound (SSP)'),
+('Sudanese Pound (SDG) - ج.س','Sudanese Pound (SDG) - ج.س'),
+('Swazi Lilangeni (SZL) - L','Swazi Lilangeni (SZL) - L'),
+('SYP (Syrian Pound) - £ or ل.س','SYP (Syrian Pound) - £ or ل.س'),
+('Tanzanian Shilling (TZS) - Sh','Tanzanian Shilling (TZS) - Sh'),
+('THB (Thai Baht) - ฿','THB (Thai Baht) - ฿'),
+('TRY (Turkish Lira) - ₺','TRY (Turkish Lira) - ₺'),
+('Tunisian Dinar (TND) - د.ت','Tunisian Dinar (TND) - د.ت'),
+('TWD (New Taiwan Dollar) - NT$','TWD (New Taiwan Dollar) - NT$'),
+('Ugandan Shilling (UGX) - USh','Ugandan Shilling (UGX) - USh'),
+('USD (United States Dollar) - $','USD (United States Dollar) - $'),
+('West African CFA Franc (XOF) - CFA','West African CFA Franc (XOF) - CFA'),
+('Zambian Kwacha (ZMW) - ZK','Zambian Kwacha (ZMW) - ZK'),
+('ZAR (South African Rand) - R','ZAR (South African Rand) - R'),
+('Zimbabwean Dollar (ZWL) - $','Zimbabwean Dollar (ZWL) - $'),
+]
+
+DISCOUNTS = [
+    ('5%','5%'),
+    ('10%','10%'),
+    ('15%','15%'),
+    ('20%','20%'),
+   
+]

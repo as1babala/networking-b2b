@@ -1,0 +1,77 @@
+{% extends "base_content.html" %}
+
+{% block content %}
+
+<section class="">
+  <div class="container-fluid row" > 
+    
+   <p class="white"><a href="{% url 'profiles:expert-profile-list' %}">profiles list</a></p> 
+
+    <h3 class="white">User: {{profiles.user}}</h3>
+    <img src="{{profiles.avatar.url}}" alt="Smiley face" width="250" height="250" class="img-responsive">
+    <hr>
+    
+    <div class="card-body">
+        <p class="white"><i><b>Full Name:</b></i> {{ profiles.first_name}} {{ profiles.last_name}} </p>
+      <p class="white"><i><b>Contact Information:</b></i> ({{ profiles.phone_code}}) - {{ profiles.phone_number}}  {{ profiles.email}}</p>
+      <p class="white"><i><b> Residency</i></b> {{ profiles.street_number  }} {{ profiles.city }}  {{profiles.country}}
+      <p class="white"><i><b>Expert Biography:</br></i></b> {{ profiles.bio }}
+     
+  <p class="white"><i><b> Expert domain of interest and activities:</i></b>
+    {% if profiles.commercial %} Commercial partner, {% endif %}</br>
+    {% if profiles.technical %} Technical partner, {% endif %}</br>
+    {% if profiles.financial %} Financial partner, {% endif %}</br>
+    {% if profiles.management %} Management partner, {% endif %}</br>
+
+<hr>
+<h3> Education History</h3>
+{% for education in education %}
+<ul>
+  <li><b>Institution:</b> {{education.institution_name }} <b> Specialization: </b>{{ education.specialization}} <b>Minor: </b>{{education.minor}} </br> <b>Start Date:</b> {{education.start_date|date}} <b>End Date:</b> {{education.end_date|date}}
+
+  {% if education.graduated %} Graduated on {{education.end_date}} {% else %} Not graduated yet {% endif %} </br> <b><u>Comment: </u></br></b>{{ education.description}}
+</li> </ul>
+  {% endfor %}
+
+ 
+  <hr>
+  <h3> Work Experience</h3>
+  {% for work in work_experience %}
+  <ul>
+<li><b>Comapny Name:</b> {{ work.company_name}}   <b>Location:</b> {{work.work_city}},  {{work.work_country}} <b>From:</b> {{work.start_date}} <b>To:</b> {{work.end_date}}</br>
+<b>Position:</b> {{work.position}}  <b>Title:</b> {{work.job_title}}</br> <b>Position Description:</b>{{work.description}}
+
+     </li> </ul>
+    {% endfor %} 
+
+    <hr>
+    <h3> Project Portfolios </h3>
+    {% for portfolio in expert_portfolio %}
+    <ul>
+  <li><b>Client Name:</b>{{portfolio.client_name }} <b> Reference Contact:</b>{{portfolio.reference_email}} <b>Project title: </b>{{ portfolio.project_title}}, {{Portfolio.project_type}} <b>Location:</b>{{portfolio.project_city}}, {{portfolio.project_country}} <b>From:</b> {{portfolio.start_date}} <b>To:</b>{{portfolio.end_date}}</br> <b>Technologies:</b>{{portfolio.technologies_used}}</br><b>Project Description:</b>{{portfolio.description}} 
+
+      {% endfor %}
+
+    <p class="white"><small><i><b>Member since : </i></b>{{ profiles.created_on|date }}  </small></p>
+
+<hr />
+<p>
+    {% if profiles.user == request.user %}
+<button type="button" class="btn btn-secondary mx-2" onclick="location.href='{% url 'profiles:expert-profile-update' profiles.slug %}'">Edit Your Profile</button>
+{% endif %}
+ 
+    {% if profiles.user != request.user %}
+<button type="button" class="btn btn-secondary mx-2" onclick="location.href='{% url 'profiles:expert-message-create' profiles.pk %} '"> contact expert</button>
+{% endif %}
+  
+<button type="button" class="btn btn-dark" onclick="location.href='{% url 'profiles:expert-profile-list' %}'">Cancel</button>
+  
+{% if user.is_admin or user.is_employee %}
+<button type="button" class="btn btn-danger mx-2" onclick="location.href='{% url 'profiles:expert-profile-delete' profiles.pk %}'">Delete</button></p>
+  
+{% endif %}
+
+</div>
+
+
+{% endblock content %}

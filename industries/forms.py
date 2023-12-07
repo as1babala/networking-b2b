@@ -5,6 +5,10 @@ from django.contrib.auth import get_user_model
 from core.models import *
 
 
+class CSVImportForm(forms.Form):
+    csv_file = forms.FileField()
+    
+    
 class IndustryForm(forms.ModelForm):
         
     class Meta:
@@ -24,5 +28,9 @@ class SectorsForm(forms.ModelForm):
             'name',
             'description'
         )
-        
+        widgets = {
+            'Industry': forms.TextInput(attrs={'readonly': True}),
+            'name': forms.TextInput(attrs={'readonly': False}),
+            'description': forms.Textarea(attrs={'placeholder': 'Place the sector description'})
+        }
      

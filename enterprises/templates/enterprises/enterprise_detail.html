@@ -1,25 +1,41 @@
-{% extends "base.html" %}
+{% extends "base_content.html" %}
 
 {% block content %}
+<section class=" py-5">
+    <div class="container-fluid" >
+        <div class="row ">
+        <div class="col-md-1 white text-justify ">
+        </div>
+        <div class="col-md-8 white text-justify ">
    <p class="white"><a href="{% url 'enterprises:enterprise-list' %}">List of companies</a></p> 
     <h3 class="white">{{enterprises.company_name}} details:</h3>
-<p class="white">Contact name: {{enterprises.first_name}} {{enterprises.last_name}}
-        <br/><br/>Contact email: {{enterprises.email}}  Contact Telephone: {{enterprises.phone_code}} {{enterprises.phone_number}}
+<p class="white">Contact name: {{enterprises.user}}
+        <br/><br/>Contact Information: {{enterprises.company_email}}  |  | {{enterprises.phone_code}} {{enterprises.phone_number}}
         <br/><br/>Company type: {{enterprises.company_type}} 
-        <br/><br/>Company industry: {{enterprises.industry}}
-        <br/><br/>Company country: {{enterprises.company_country}}
+        <br/><br/>Company industry & Sector: {{enterprises.industry}} |  | {{enterprises.sector}}
+        <br/><br/>Company location: {{enterprises.company_city}}, {{enterprises.company_country}} 
         <br/><br/>Company email: {{enterprises.company_email}}
         <br/><br/>partenership:  {% if enterprises.commercial %} Commercial, {% endif %}
                                 {% if enterprises.financial %} Financial,  {% endif %}
                                 {% if enterprises.technical %} Technical, {% endif %}
                                 {% if enterprises.management %} Managerial <br/> {% endif %}
-        
+</br></br> Activities Description:</br>   {{enterprises.activity_description}}
     </p>
     
 <hr />
+{% if enterprises.user == request.user or user.is_admin or user.is_employee %}
 <button type="button" class="btn btn-secondary" onclick="location.href='{% url 'enterprises:enterprise-update' enterprises.slug %}'">Update</button>
+{% endif %}
+{% if user.is_admin %}
 <button type="button" class="btn btn-danger" onclick="location.href='{% url 'enterprises:enterprise-delete' enterprises.slug %}'">Delete</button>
+{% endif %}
+{% if enterprises.user != request.user %}
+<button type="button" class="btn btn-dark" onclick="location.href='  '">Contact The Company</button>
+{% endif %}
 <button type="button" class="btn btn-dark" onclick="location.href='{% url 'enterprises:enterprise-list' %}'">Cancel</button>
-
+</div>
+<div class="col-md-2 white text-justify "></div>
+</div></div>
+</section>
 
 {% endblock %}

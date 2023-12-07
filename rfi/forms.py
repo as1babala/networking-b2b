@@ -6,8 +6,10 @@ from django.forms import formset_factory, inlineformset_factory, modelform_facto
 from employees.models import *
 from accounts.models import *
 from core.models import *
+from tinymce.widgets import TinyMCE
 
 class RfiForm(forms.ModelForm):
+    message = forms.CharField(widget=TinyMCE(), label="send a request to the owner of this advertisement")
     class Meta:
         model = Rfi
         fields = [ 'message']

@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from .models import *
+from core.models import *
 #from employees.models import *
 
 USER_CHOICES = [
@@ -24,13 +24,15 @@ class UserCreateForm(UserCreationForm):
         model = CustomUser
         fields = [
            
-            'first_name','last_name', 'username', 'email', 'is_company', 'is_expert' ,'company_name',
-            'commercial', 'technical', 'financial', 'management'
+            'salutations','first_name','last_name', 'username', 'email', 'is_expert' ,'company_name',
+            'commercial', 'technical', 'financial', 'management', 'agreement'
             ]
         widgets = {
         'password': forms.PasswordInput()
-        }
+        #'email': forms.EmailField()
         
+        }
+
 #for contact us page
 class ContactusForm(forms.Form):
     Name = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'placeholder': "Your Name"}))
@@ -42,3 +44,41 @@ class ContactusForm(forms.Form):
     class Meta:
         model = ContactUs
         fields = ('email','phone_ind','phone_number','message')
+        
+class WorkExperienceForm(forms.ModelForm):
+    start_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    end_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    class Meta:
+        model = WorkExperience
+        exclude = ('id', 'user', 'created_on', 'email')
+        
+class ProjectPortfolioForm(forms.ModelForm):
+    start_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    end_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    class Meta:
+        model = WorkExperience
+        exclude = ('id', 'consultant', 'created_on', 'consultant_email')
+        
+        widgets = {
+            'start_date': forms.DateInput(attrs={'type': 'date'}),
+            'end_date': forms.DateInput(attrs={'type': 'date'}),
+           
+        }
+        
+class EducationModelForm(forms.ModelForm):
+    #end_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    start_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    description= forms.CharField(widget=forms.Textarea(attrs={"rows":3, "cols":20}))
+    
+    def __init__(self, *args, **kwargs):                                                        # used to set css classes to the various fields
+        super().__init__(*args, **kwargs)
+        self.fields['institution_name'].widget.attrs.update({'class': 'textinput form-control'})
+    widgets = {
+            'start_date': forms.DateInput(attrs={'type': 'date'}),
+            'end_date': forms.TimeInput(attrs={'type': 'date'}),
+            'description': forms.Textarea(attrs={'cols': 3, 'rows': 1}),
+        }
+    class Meta:
+        model = Education
+        exclude = ['id','user', 'slug']
+

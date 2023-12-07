@@ -1,0 +1,72 @@
+{% extends "base_content.html" %}
+{% block title %}
+
+{% endblock title%}
+
+{% block content %}
+<section class="py-5">
+<div class="p-3 mb-2 bg-info text-dark" >
+  <h2 class="text-4xl text-gray800">Request for information List</h2>
+  <hr class="text-danger border-2 opacity-50">
+ 
+  <form class="d-flex" role="search" action='/search/' method='GET' enctype="">
+      <input class="form-control me-2" name="q" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+    <hr class="border-primary border-3 opacity-75">
+  </div>
+  <br>
+
+
+  <table class="table table-striped table-hover white">
+    <thead>
+      <tr>
+        <th scope="col" >Action</th>
+        <th scope="col">Deal ID</th>
+        <th scope="col">User</th>
+        <th scope="col">Email</th>
+        <th scope="col">Message</th>
+        <th scope="col">Create on</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      {% for product_rfi in object_list %}
+          <tr>
+              <td class="white"><a href="{% url 'product_deals:product-rfi-detail' product_rfi.pk %}">Go to detail</a></td>
+              <td class="white">{{product_rfi.id}}</td>
+              <td class="white">{{product_rfi.client_name}}</td>
+              <td class="white">{{product_rfi.client_email}}</td>
+              <td class="white">{{product_rfi.message}}</td>
+              <td class="white">{{product_rfi.created_on|date}}</td>
+             
+          </tr>
+      {% endfor %}
+  
+    </tbody>
+  </table>
+</section>
+  <div>
+    {% block pagination %}
+      {% if is_paginated %}
+
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+          <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
+          <li class="page-item"><a class="page-link" href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Previous </a></li>
+          {% endif %}
+          <span class="page-current">
+            <li class="page-item"><a class="page-link" href="#">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a></li>
+        </span>
+        {% if page_obj.has_next %}
+          <li class="page-item"><a class="page-link" href="{{ request.path }}?page={{ page_obj.next_page_number }}">Next</a></li>
+          <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+        </ul>
+      </nav>
+      {% endif %}
+      {% endblock %}
+        </div>
+
+{% endblock content %}

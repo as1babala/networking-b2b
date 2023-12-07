@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_content.html" %}
 
 {% block title%} {% endblock title%}
 
@@ -9,9 +9,9 @@
 {% load bootstrap5 %}
 
 <div class="container">
-    <div class="row my-5">
+    <div class="row my-5 py-3">
         <div class="col-md-12">
-            <!--h1>Apply to "{{ object_list.job_title }}"</h1-->
+            <h1>Apply to {{ training.job_title }}</h1>
             <form  method="post" class="form white" enctype="multipart/form-data">
                 {% csrf_token %}
                 {% bootstrap_form form %}
@@ -22,5 +22,5 @@
         </div>
     </div>
 </div>
-{% include 'footer.html' %} 
+ 
     {% endblock %}
