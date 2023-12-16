@@ -13,12 +13,18 @@
    <p><a href="{% url 'deals:deal-list' %}">Go Back to Industry list</a></p>
 
     <h1>Update for {{deals.opportunity_title}}</h1><br>
-    <form method="post" >  
+    <form method="post" class="form" enctype="multipart/form-data">
+            
         {% csrf_token %}
 
         {% bootstrap_form form %}
-        <button class="btn btn-primary"> Submit</button>
-        <a href="{% url 'deals:deal-list' %}" class="btn btn-dark">Cancel</a>
+        <label for="id_image">Images:</label>
+        <input type="file" name="image" multiple></br></br>
+        {% buttons %}
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <button type="button" class="btn btn-dark" onclick="location.href='{% url 'deals:deal-list' %}'">Cancel</button>
+        {% endbuttons %}
+          
     </form>
 </section>
     {% endblock %}

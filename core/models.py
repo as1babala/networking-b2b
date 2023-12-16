@@ -861,9 +861,12 @@ class Blog(RandomIDModel):
     @property 
     def blog_length(self):
         blog_length = len(self.content)
-        
-       
         return blog_length
+        
+    @property 
+    def blog_time(self):
+        blog_time = round((len(self.content)/200),0)
+        return blog_time
      
     def get_average_rating(self):
         reviews = self.review_set.all()
@@ -1144,7 +1147,7 @@ class ProductDeals(RandomIDModel):
     product_name = models.CharField(max_length=255)
     product_category= models.CharField('Enter Your Product Category',max_length=100, choices=PRODUCTS_CATEGORIES, )
     product_description = models.TextField()
-    product_image = models.ImageField(upload_to='products/images/', default='deals/deals.jpeg')
+    #product_image = models.ImageField(upload_to='products/images/', default='deals/deals.jpeg')
     city = models.CharField(max_length=100, default='')
     country = models.CharField(max_length=100, choices=COUNTRIES)
     availability_date = models.DateField()
@@ -1171,6 +1174,10 @@ def pre_save_product_deals(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = slugify(f"{instance.product_name} {instance.id}")
 
+class ProductDealImages(models.Model):
+    deal = models.ForeignKey(ProductDeals, on_delete=models.CASCADE)
+    image = models.FileField("Supporting Documents", upload_to='deals/', default='deals/deals.jpeg')
+    
 class ProductRFI (RandomIDModel):
     slug = models.SlugField(max_length = 120, unique=True)
     product_deal = models.ForeignKey(ProductDeals, on_delete=models.CASCADE)
@@ -1332,7 +1339,6 @@ class Forum(RandomIDModel):
 def pre_save_forum(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = slugify(f"{instance.topic} {instance.id}")
-
  
 #child model
 class Discussion(models.Model):
@@ -1360,7 +1366,6 @@ def pre_save_discussion(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = slugify(f"{instance.discussion_creator} {instance.id}")
 
-    
 pre_save.connect(pre_save_forum, sender=Forum)
 pre_save.connect(pre_save_discussion, sender=Discussion)  
 #post_save.connect(post_save_user, sender=Subscription )

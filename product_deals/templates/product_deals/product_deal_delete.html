@@ -1,0 +1,25 @@
+{% extends "base_content.html" %}
+
+
+{% block title %} Delete Information {% endblock title %}
+
+{% block content %}
+
+<section class="py-5 ">
+    <form method="post">
+        
+        {% csrf_token %}
+        
+        <fieldset class="form-group">
+            <div style="color:#ea2088; font-style: bold; font-size: 2rem; border-bottom: 1px solid white;">Delete {{object.slug}}  from list</div> <br>
+            <h3>Are you sure you want to delete "{{ object.product_category }}"?</h3>
+        </fieldset>
+
+        <div class="form-group">  
+            <button type="submit" class="btn btn-danger mx-2" >Yes, Delete</button>
+            <button type="button" class="btn btn-dark" onclick="location.href='{% url 'product_deals:product-deal-detail' object.pk %}'">Cancel</button>
+        </div>
+        
+    </form>
+</section>
+{% endblock content %}

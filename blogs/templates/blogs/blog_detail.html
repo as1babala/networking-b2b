@@ -57,15 +57,22 @@
     <span class="visually-hidden"></span>
   </span>
 </button>
+
+<button type="button" class="btn btn-primary position-relative mx-4">
+  Reading Time
+  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary about">
+    {{ blog.blog_time}} minutes
+    <span class="visually-hidden"></span>
+  </span>
+</button>
+
 </p>
 <hr>
-<p class="white" style="text-justify">{{blog.content|safe}}</p></
+<p class="white" style="text-justify">{{blog.content|safe}}</p>
 <p>
 
 </p>
-<p><small> </br><i><u>Number of words:</u></i> {{  blog.blog_length}} </br>
-  <i><u>Reviews count:</u>   </i>{{review_count}} </br><i><u>Average Rating:</u>   
-  </i>{{average_rating}} </br> Created On: {{blog.created_on |date}} </small></p>
+<p><small> Created On: <i>{{blog.created_on |date}} </i></small></p>
 </section>
 
 <section style="width:100%" class=" my-2 rounded">

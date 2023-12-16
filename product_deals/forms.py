@@ -16,7 +16,13 @@ class ProductDealsForm(forms.ModelForm):
         
         def clean__FIELD_NAME(self):
             data = self.cleaned_data.get(('FIELD_NAME'))
-            
+
+class ProductDealImagesForm(forms.Form):
+    image = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
+
+    
+    model = ProductDealImages
+    fields = ('image',)           
 class ProductRFIForm(forms.ModelForm):
     class Meta:
         model = ProductRFI

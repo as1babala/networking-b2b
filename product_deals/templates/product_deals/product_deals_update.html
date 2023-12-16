@@ -12,11 +12,19 @@
    <p><a href="{% url 'product_deals:product-deal-list' %}">Go Back Product Announcement</a></p>
 
     <h1>Update for {{Product_deals.product_category}}</h1><br>
-    <form method="post" >  
+    
+    <form method="post" class="form" enctype="multipart/form-data">
+            
         {% csrf_token %}
 
         {% bootstrap_form form %}
-        <button class="btn btn-primary"> Submit</button>
+        <label for="id_image">Images:</label>
+        <input type="file" name="image" multiple></br></br>
+        {% buttons %}
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <button type="button" class="btn btn-dark" onclick="location.href='{% url 'product_deals:product-deal-list' %}'">Cancel</button>
+        {% endbuttons %}
+          
     </form>
 
 </section>

@@ -17,6 +17,7 @@ urlpatterns = [
     path('product_rfi/', ProductRFIListView.as_view(), name='product-rfi-list'),# for review
     path('product_rfi/users/', ProductUserRfiListView.as_view(), name='product-user-rfi-list'),# for review
     path('product_rfi/<int:pk>/', ProductRfiDetailView.as_view(), name='product-rfi-detail'),
+    path('search/', ProductDealsSearchView.as_view(), name='product-deal-search'),
     
     
 ]

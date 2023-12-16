@@ -16,22 +16,32 @@ from django.core.mail import send_mail
 
 #from slick_reporting.views import SlickReportView
 #from slick_reporting.fields import SlickReportField
-
 from core.models import *
 from .forms import *
 from rfi.forms import *
 from django.db.models import Count
+from .filters import *
 
-
-class ProductDealsListView(LoginRequiredMixin, generic.ListView):
-    template_name = "product_deals/product_deals.html"
-    queryset = ProductDeals.objects.all() # for published blogs
-    #queryset = Blog.objects.all().filter(status=2)
-    #queryset = Blog.objects.all()
-    #queryset = CustomUser.objects.filter(user_type='blog') # not adding context here
-    #CustomUser.objects.
-    context_object_name = "product_deals"
+class ProductDealsListView(ListView):
+    model = ProductDeals
+    template_name = 'product_deals/product_deals.html'
+    context_object_name = 'deals'
     paginate_by = 4
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        deals_with_images = []
+        for deal in context['deals']:
+            images = ProductDealImages.objects.filter(deal=deal)
+            if images.exists():
+                deal.image_url = images.first().image.url
+            else:
+                deal.image_url = None  # Placeholder if no image exists
+            deals_with_images.append(deal)
+        context['deals'] = deals_with_images
+        context['filter'] = ProductDealsFilter(self.request.GET, queryset=self.get_queryset())
+        return context
+    
 
 class UserProductDealsListView(LoginRequiredMixin, generic.ListView):
     template_name = "product_deals/product_deals_user.html"
@@ -53,7 +63,28 @@ class ProductDealCreateView(LoginRequiredMixin, CreateView):
         messages.success(self.request, f'Your account has been created! You are now able to log in')
             
         return super().form_valid(form)
+class ProductDealCreateView(LoginRequiredMixin, CreateView):
+    model = ProductDeals
+    form_class = ProductDealsForm
+    template_name = 'product_deals/product_deals_create.html'
+    success_url = reverse_lazy('product_deals:product-deal-list')  # Replace 'thanks' with your success URL name
+
+    def form_valid(self, form):
+        # Deal instance
+        self.object = form.save(commit=False)
+        self.object.dealer = self.request.user
+        self.object.email = self.request.user.email
+        self.object.company_name = self.request.user.company_name
+        self.object.save()
+
+        # DealImages instances
+        images = self.request.FILES.getlist('image')
+        for image in images:
+            ProductDealImages.objects.create(deal=self.object, image=image)
+
+        return redirect(self.get_success_url())
     
+      
 def product_deal_detail(request, pk):
     product_deal = ProductDeals.objects.get(pk=pk)
     
@@ -72,10 +103,12 @@ def product_deal_detail(request, pk):
             reviews.save()
 
     product_rfi = ProductRFI.objects.filter(product_deal=product_deal)
+    deal_images = ProductDealImages.objects.filter(deal=product_deal)
     context = {
         "product_deal": product_deal,
         "product_rfi": product_rfi,
         "form": form,
+        "deal_images": deal_images,
     }
 
     return render(request, "product_deals/product_deals_detail.html", context)
@@ -97,13 +130,12 @@ class ProductDealUpdateView(LoginRequiredMixin, generic.UpdateView):
         return super(ProductDealUpdateView, self).form_valid(form)
     
 
-  
 class ProductDealDeleteView(LoginRequiredMixin, generic.DeleteView):
     template_name = "product_deals/product_deal_delete.html"
     queryset = ProductDeals.objects.all()
     
     def get_success_url(self):
-        return reverse("product_deals:deal-list")
+        return reverse("product_deals:product-deal-list")
     
 
 class ProductRFICreateView( LoginRequiredMixin, CreateView):
@@ -160,3 +192,22 @@ class RfiDeleteView(LoginRequiredMixin, generic.DeleteView):
     
     def get_success_url(self):
         return reverse("rfi:rfi-list")
+
+class ProductDealsSearchView(ListView):
+    model = ProductDeals
+    template_name = "product_deals/product_deal_search.html"
+
+    def get_queryset(self):  # new
+        query = self.request.GET.get("q")
+        object_list = ProductDeals.objects.filter(
+            
+            Q(dealer__icontains=query)| 
+            Q(email__icontains=query) |
+            Q(company_name__icontains=query)|
+            Q(product_name__icontains=query) |
+            Q(product_category__icontains=query) |
+            Q(city__icontains=query)|
+            Q(country__icontains=query) 
+           
+        )
+        return object_list   

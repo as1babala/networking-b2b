@@ -23,6 +23,7 @@ admin.site.register(Deals)#services related deals
 admin.site.register(DealImages)
 admin.site.register(Rfi)
 admin.site.register(ProductDeals)
+admin.site.register(ProductDealImages)
 admin.site.register(ProductRFI)
 #admin.site.register(Experts)
 admin.site.register(Enterprises)

@@ -123,37 +123,6 @@ def blog_detail(request, pk):
     }
 
     return render(request, "blogs/blog_detail.html", context)
-'''
-def blog_detail1(request, pk):
-    blog = get_object_or_404(Blog, pk=pk)
-    reviews = blog.reviews.prefetch_related('replies')
-    review_form = ReviewForm()
-    reply_form = ReplyToReviewForm()  # Create an instance of the reply form
-
-    if request.method == 'POST':
-        if 'submit_review' in request.POST:
-            review_form = ReviewForm(request.POST)
-            if review_form.is_valid():
-                # Existing code to handle posting a new review
-                # ...
-        elif 'submit_reply' in request.POST:
-            reply_form = ReplyToReviewForm(request.POST)
-            if reply_form.is_valid():
-                new_reply = reply_form.save(commit=False)
-                new_reply.author = request.user
-                # Assuming the review ID is passed in the form as a hidden field
-                review_id = request.POST.get('review_id')
-                new_reply.review = Review.objects.get(id=review_id)
-                new_reply.save()
-                # Redirect to the same blog page
-
-    return render(request, 'blog_detail.html', {
-        'blog': blog, 
-        'reviews': reviews, 
-        'review_form': review_form, 
-        'reply_form': reply_form
-    })
-'''
 
 class BlogDetailView(LoginRequiredMixin, generic.DetailView):
     template_name = "blogs/blog_detail.html"
@@ -285,5 +254,3 @@ class BlogsSearchView(ListView):
             Q(created_on__icontains=query)
         )
         return object_list   
-
- 

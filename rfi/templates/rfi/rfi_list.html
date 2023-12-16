@@ -35,8 +35,8 @@
           <tr>
               <td class="white"><a href="{% url 'rfi:rfi-detail' rfi.slug %}">Go to detail</a></td>
               <td class="white">{{rfi.id}}</td>
-              <td class="white">{{rfi.name}}</td>
-              <td class="white">{{rfi.email}}</td>
+              <td class="white">{{rfi.client_name}}</td>
+              <td class="white">{{rfi.client_email}}</td>
               <td class="white">{{rfi.message}}</td>
               <td class="white">{{rfi.created_on|date}}</td>
              

@@ -15,28 +15,37 @@
   }
   </style>
 </head>
-<section class="py-3">
-  <div class="p-3 mb-2 bg-info text-blue search-column" >
-    <h2 class="text-4xl text-gray800"></h2>
-    <form class="d-flex" role="search" action="{% url 'blogs:blog-search' %}" method='GET' enctype="">
+<section class="" style="width:100%">
+  <div class="p-3 mb-2 bg-info text-blue " >
+    <!--h2 class="text-4xl text-gray800"></h2-->
+    <form class="d-flex" role="search" action="{% url 'product_deals:product-deal-search' %}" method='GET' enctype="">
         <input class="form-control me-2" name="q" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
       <hr class="border-primary border-3 opacity-75">
     </div>
-</section>
+</section >
 
-
-<section class="py-5" style="width:100%">
+<section class="py-3" style="width:100%">
     <div class="container-fluid col-container">
       <div class="row">
-        {% if product_deals %}
-        {% for product_deal in product_deals %}
+        <div class="">
+      </div>
+        {% if object_list %}
+        {% for product_deal in object_list %}
+
         <div class="col-md-6 col">
           <div class="card mb-4 box-shadow">
             <div class="card-body card-3 ">
-             
-              <img src="{{ product_deal.product_image.url}}" alt="testing"  class="img-responsive img-fluid rounded my-3" style="width: 90%; height: 150px;">
+
+
+            {% if product_deal.image_url %}
+            <img src="{{ product_deal.image_url }}" class="card-img-top rounded" alt="{{ product_deal.deal_title }}" style="width: 90%; height: 200px;">
+                {% else %}
+                    <img src="{% static 'deals/deal.jpeg' %}" class="card-img-top" alt="Default Image" style="width: 90%; height: 150px;">
+                {% endif %}<br>
+
+
               <p class="list blog"><span class="about"></span><b>Product Category:</b> {{ product_deal.product_category }} </br>
                 <b>Deal:</b> {{ product_deal.product_name }} - <span class="about">{{product_deal.opportunity_type}}</span></br>
               

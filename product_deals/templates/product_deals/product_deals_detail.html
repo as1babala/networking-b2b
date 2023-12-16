@@ -11,8 +11,28 @@
   
 </head>
 <section class="text-white py-3 " style="width:100%">
+  <p><span class="about"><a href="{% url 'product_deals:product-deal-list' %}">Product Announcement list</a></span></p> 
   <div class="shadow p-3 mb-5 bg-body-tertiary rounded" style="border-width:0;color:#0a2647;background-color: ">
-<p><span class="about"><a href="{% url 'product_deals:product-deal-list' %}">Product Announcement list</a></span></p> 
+
+    <div id="dealImagesCarousel" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        {% for image in deal_images %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+          <img src="{{ image.image.url }}" class="d-block w-100 align-center" alt="..." style="width: 80%; height: 400px;">
+        </div>
+        {% endfor %}
+      </div>
+      <a class="carousel-control-prev" href="#dealImagesCarousel" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#dealImagesCarousel" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+    <div class="my-2">
+
 
 <h3>Product Announcement: {{product_deal.product_name}} - {{product_deal.opportunity_type}}</h3>
 <p><b>Announce From:</b> {{product_deal.dealer}}  <b>From:</b> {{product_deal.company_name}} <br>  <b>Contact via:</b> <i>{{product_deal.email}} </i></br>
@@ -24,13 +44,14 @@
 <p> special Note: {{product_deal.notes}}
 
 <p><small>Created On: {{product_deal.announcement_date|date}}</small></p>
+</div>
 <hr style="height:2px;border-width:0;color:gray;background-color:#0a2647; width:100%">
         </div>
         </section>
 
 <section class="text-white " style="border-width:0;color:gray">
 <div class="shadow p-3 mb-5 bg-body-tertiary rounded" style="border-width:0;color:#0a2647;background-color: ">
-<h3>Request For Proposals</h3>
+<h3>Request For Information</h3>
 <hr style="height:3px;border-width:0;color:gray;background-color:gray">
 {% for product_rfi in product_rfi %}
   <p>Message from: {{ product_rfi.client_email }} </p>
@@ -54,7 +75,7 @@
         {% csrf_token %}
         {% bootstrap_form form %}
         {% buttons %}
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Send Request For Information</button>
         <a href="{% url 'product_deals:product-deal-list' %}" class="btn btn-dark">Cancel</a>
         {% endbuttons %}
     </form>
