@@ -50,7 +50,7 @@ class UserProductDealsListView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         return ProductDeals.objects.filter(dealer=self.request.user).order_by('-announcement_date')
 
-class ProductDealCreateView(LoginRequiredMixin, CreateView):
+class ProductDealCreateView1(LoginRequiredMixin, CreateView):
     template_name = "product_deals/product_deals_create.html"
     form_class = ProductDealsForm
     success_url = reverse_lazy('product_deals:product-deal-list')
@@ -81,7 +81,7 @@ class ProductDealCreateView(LoginRequiredMixin, CreateView):
         images = self.request.FILES.getlist('image')
         for image in images:
             ProductDealImages.objects.create(deal=self.object, image=image)
-
+        messages.success(self.request, f'Your announcement has been created! Stay tune to make sure you track all requests for a quick reply to your announcement')
         return redirect(self.get_success_url())
     
       

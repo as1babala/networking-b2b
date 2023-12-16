@@ -26,17 +26,9 @@
                     <button type="submit" class="btn btn-primary">Create a New Deal</button>
                     <button type="button" class="btn btn-dark" onclick="location.href='{% url 'product_deals:product-deal-list' %}'">Cancel</button>
                     {% endbuttons %}
-                      
+                   
                 </form>
-            <!--form method="post" class="form" enc>
-                {% csrf_token %}
-                {% bootstrap_form form %}
-                {% buttons %}
-                <button type="submit" class="btn btn-primary">Submit</button>
-                <button type="button" class="btn btn-dark" onclick="location.href='{% url 'product_deals:product-deal-list' %}'">Cancel</button>
-               
-                {% endbuttons %}
-            </form-->
+                {% include 'messages.html' %}
         </div>
     </div>
 </div>

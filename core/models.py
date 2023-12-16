@@ -4,6 +4,7 @@ from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 from django.dispatch import receiver
 from common.utils import *
+import re
 from django.utils.text import slugify
 #from accounts.models import CustomUser
 from django.contrib.auth import get_user_model
@@ -861,11 +862,12 @@ class Blog(RandomIDModel):
     @property 
     def blog_length(self):
         blog_length = len(self.content)
+        blog_length = len(re.findall(r'\w+', self.content))
         return blog_length
         
     @property 
     def blog_time(self):
-        blog_time = round((len(self.content)/200),0)
+        blog_time = round((len(re.findall(r'\w+', self.content))/200),0)
         return blog_time
      
     def get_average_rating(self):
