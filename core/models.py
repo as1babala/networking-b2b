@@ -66,53 +66,7 @@ class CustomUser(AbstractUser):
     class Meta:
         ordering = ('id',)   
         
-        '''
-class UserManager(BaseUserManager):
-    def create_user(self, email, password=None, **extra_fields):
-        if not email:
-            raise ValueError('The Email field must be set')
-        email = self.normalize_email(email)
-        user = self.model(email=email, **extra_fields)
-        user.set_password(password)
-        user.save(using=self._db)
-        return user
 
-    def create_superuser(self, email, password=None, **extra_fields):
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
-        return self.create_user(email, password, **extra_fields)
-     
-class CustomUser(AbstractBaseUser, PermissionsMixin):
-    USER_TYPE_CHOICES = (
-        ('C', 'Company'),
-        ('E', 'Expert'),
-        ('P', 'Employee'),
-        ('A', 'Admin'),
-    )
-    email = models.EmailField(unique=True)
-    user_type = models.CharField(max_length=1, choices=USER_TYPE_CHOICES)
-    is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
-    date_joined = models.DateTimeField(auto_now_add=True)
-
-    objects = UserManager()
-
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['user_type']
-
-    def __str__(self):
-        return self.email
-
-    def get_full_name(self):
-        return self.email
-
-    def get_short_name(self):
-        return self.email
-
-    class Meta:
-        verbose_name = 'User'
-        verbose_name_plural = 'Users'
-        '''
 class ContactUs(models.Model):
 
     name = models.CharField(max_length=50)
@@ -143,10 +97,10 @@ class Pricing(models.Model):
 
 class Subscription(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    pricing = models.ForeignKey(Pricing, on_delete=models.CASCADE, related_name='subscriptions', null=True, blank=True)# query = Pricing.subcriptions.all()
-    created = models.DateTimeField(auto_now_add=True)
+    pricing = models.ForeignKey(Pricing, on_delete=models.CASCADE, related_name='subscriptions', null=True, blank=True)# query = P
     stripe_subscription_id = models.CharField(max_length=50, default="")
-    status = models.CharField(max_length=100)
+    status = models.BooleanField(default=True)
+    created_on = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
         return self.user.email

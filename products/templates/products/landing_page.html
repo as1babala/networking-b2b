@@ -1,131 +1,87 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Buy cool new product</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://js.stripe.com/v3/"></script>
-  </head>
-  <body>
-    <section>
-      <div class="product">
-        <img src="https://i.imgur.com/EHyR2nP.png" alt="The cover of Stubborn Attachments" />
-        <div class="description">
-          <h3>Stubborn Attachments</h3>
-          <h5>$20.00</h5>
+{% extends "base_content.html" %}
+{% block content %}
+{% load static %}
+
+<script class="lazy" src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+<script class="lazy" src="https://js.stripe.com/v3/"></script>
+
+<!--Pricing-->
+    <div class="container p-lg-5 p-3">
+    	<h1 class="cta text-center">Pricing</span></h1>
+      <h5 class="text-muted lead my-3 text-center">Don't run away from your finances. Jump right in.</h5>
+      <div class="row p-lg-5 p-3">
+
+
+        {% for s in subscription %}
+        <div class="col-lg-4 col-md-12 mb-4">
+          <div class="card h-100 shadow-lg text-center mx-auto sub-cards" style="max-width:20rem">
+          	 <div class="card-header sub-header">
+			    <h4>{{s.name}}</h4>
+			  </div>
+            <div class="card-body">    
+               <h1>${{s.amount}}<span class="text-muted" style="font-weight: 300">/mo</span></h1>
+            
+        	<p class="my-3">
+             {{s.description|safe|linebreaks}}
+          </p>
+            
+            <div class="d-grid">
+
+              {% if user.is_authenticated %}
+            	<button class="btn btn-outline-primary btn-block btn-lg sub-button" onclick="selectPlan('{{s.stripe_api_id}}')">Select</button>
+              {% else %}
+              <a class="btn btn-outline-primary btn-block btn-lg sub-button" href="/register">Select</a>
+              {% endif %}
+            </div>
+          </div>
+          </div>
         </div>
+        {% endfor %}
+
+
       </div>
-      <form action="products:create-checkout-session" method="POST">
-        <button type="submit" id="checkout-button">Checkout</button>
-      </form>
-    </section>
-    <script>
-var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-var stripe = Stripe("{{ STRIPE_PUBLIC_KEY }}");
-document.querySelector("button").disabled = true;
-var elements = stripe.elements();
-var style = {
-    base: {
-    color: "#32325d",
-    fontFamily: 'Arial, sans-serif',
-    fontSmoothing: "antialiased",
-    fontSize: "16px",
-    "::placeholder": {
-        color: "#32325d"
-    }
-    },
-    invalid: {
-    fontFamily: 'Arial, sans-serif',
-    color: "#fa755a",
-    iconColor: "#fa755a"
-    }
-};
-var card = elements.create("card", { style: style });
-// Stripe injects an iframe into the DOM
-card.mount("#card-element");
-card.on("change", function (event) {
-    // Disable the Pay button if there are no card details in the Element
-    document.querySelector("button").disabled = event.empty;
-    document.querySelector("#card-error").textContent = event.error ? event.error.message : "";
-});
-var form = document.getElementById("payment-form");
-form.addEventListener("submit", function(event) {
-    event.preventDefault();
-    var selectedPrice = document.getElementById("prices").value
-    // Complete payment when the submit button is clicked
-    fetch(`/create-payment-intent/${selectedPrice}/`, {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json",
-        'X-CSRFToken': csrftoken
-    },
-    body: JSON.stringify({
-        email: document.getElementById('email').value
-    })
-    })
-    .then(function(result) {
-        return result.json();
-    })
-    .then(function(data) {
-        payWithCard(stripe, card, data.clientSecret);
-    });
-});
- 
-// Calls stripe.confirmCardPayment
-// If the card requires authentication Stripe shows a pop-up modal to
-// prompt the user to enter authentication details without leaving your page.
-var payWithCard = function(stripe, card, clientSecret) {
-    loading(true);
-    stripe
-    .confirmCardPayment(clientSecret, {
-        payment_method: {
-        card: card
-        }
-    })
-    .then(function(result) {
-        if (result.error) {
-        // Show error to your customer
-        showError(result.error.message);
-        } else {
-        // The payment succeeded!
-        orderComplete(result.paymentIntent.id);
-        }
-    });
-};
-/* ------- UI helpers ------- */
-// Shows a success message when the payment is complete
-var orderComplete = function(paymentIntentId) {
-    loading(false);
-    document
-    .querySelector(".result-message a")
-    .setAttribute(
-        "href",
-        "https://dashboard.stripe.com/test/payments/" + paymentIntentId
-    );
-    document.querySelector(".result-message").classList.remove("hidden");
-    document.querySelector("button").disabled = true;
-};
-// Show the customer the error from Stripe if their card fails to charge
-var showError = function(errorMsgText) {
-    loading(false);
-    var errorMsg = document.querySelector("#card-error");
-    errorMsg.textContent = errorMsgText;
-    setTimeout(function() {
-    errorMsg.textContent = "";
-    }, 4000);
-};
-// Show a spinner on payment submission
-var loading = function(isLoading) {
-    if (isLoading) {
-    // Disable the button and show a spinner
-    document.querySelector("button").disabled = true;
-    document.querySelector("#spinner").classList.remove("hidden");
-    document.querySelector("#button-text").classList.add("hidden");
-    } else {
-    document.querySelector("button").disabled = false;
-    document.querySelector("#spinner").classList.add("hidden");
-    document.querySelector("#button-text").classList.remove("hidden");
-    }
-};
-</script>
-  </body>
-</html>
+    </div>
+
+    <script type="text/javascript">
+
+    //grabs csrftoken
+    let cookie = document.cookie
+    let cookies = cookie.substring(cookie.indexOf('csrftoken=') + 10)
+    let csrfToken = cookies.split(";")[0]
+
+    // Create an instance of the Stripe object with your publishable API key
+    var stripe = Stripe("pk_test"); //replace with your Stripe API key
+
+    function selectPlan(pid) {
+      fetch("/create-checkout-session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": csrfToken, 
+        },
+        body: JSON.stringify({
+          product_id: pid
+        })
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (session) {
+          return stripe.redirectToCheckout({ sessionId: session.id });
+        })
+        .then(function (result) {
+          // If redirectToCheckout fails due to a browser or network
+          // error, you should display the localized error message to your
+          // customer using error.message.
+          if (result.error) {
+            alert(result.error.message);
+          }
+        })
+        .catch(function (error) {
+          console.error("Error:", error);
+        });
+    } 
+    </script>
+<!--End Pricing-->
+
+{% endblock %}

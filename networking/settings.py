@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django_otp',
     'django_otp.plugins.otp_totp',
+    #'djstripe',
     
     
     ### System apps
@@ -73,9 +74,7 @@ INSTALLED_APPS = [
     'accounts',
     #'employees',
     'profiles',
-    
     'contacts',
-    
     'industries',
     'fiches',
     'jobs',
@@ -259,6 +258,7 @@ ACCOUNT_EMAIL_VERIFICATION = ('optional')
 #STRIPE_WEBHOOK_SECRET_KEY =
 STRIPE_PUBLIC_KEY = "pk_test_51MkX0vFnCvJSP7I78lJKqbRoMqngNtMld8FYQ4jwp8KAgFGtjKKdOYqhqb2fDjlvWptSb3ifI84BcLkk7V4v6ECc002wgUaHzr"
 STRIPE_SECRET_KEY = "pk_test_51MkX0vFnCvJSP7I78lJKqbRoMqngNtMld8FYQ4jwp8KAgFGtjKKdOYqhqb2fDjlvWptSb3ifI84BcLkk7V4v6ECc002wgUaHzr"
+
 
 ##WYSIWYG###
 #X_FRAME_OPTIONS = 'SAMEORIGIN'

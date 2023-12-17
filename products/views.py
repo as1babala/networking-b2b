@@ -18,6 +18,8 @@ from django.conf import settings
 from django.views import generic
 from core.models import *
 from .forms import *
+import json
+import stripe
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -85,3 +87,37 @@ class ProductLandingPageView(TemplateView):
 def product_home(request):
     return render(request, 'products/first_stripe.html')
 
+def create_checkout_session(request):
+	if request.method == "POST":
+		YOUR_DOMAIN = 'http://127.0.0.1:8000'
+		stripe.api_key = 'sk_test' #replace with your Stripe API key
+		data = json.loads(request.body)
+
+		customer = stripe.Customer.create(
+			email=request.user.email)
+		try:
+			checkout_session = stripe.checkout.Session.create(
+				payment_method_types=['card'],
+				line_items=[
+					{
+						'price': data["product_id"],
+						'quantity': 1,
+					}
+				],
+				mode='subscription',
+				success_url=YOUR_DOMAIN + '/success',
+				cancel_url=YOUR_DOMAIN + '/cancel',
+				customer_email = customer.email,
+				)
+			return JsonResponse({'id': checkout_session.id})
+		except Exception as e:
+			return JsonResponse({'error': (e.args[0])}, status =400)
+	return JsonResponse({'error':'No GET request allowed.'})
+
+def success_request(request):
+	messages.info(request, "You have successfully subscribed.") 
+	return redirect("main:dashboard")
+
+def cancel_request(request):
+	messages.info(request, "Payment Failed. Please try again.") 
+	return redirect("main:pricing")
