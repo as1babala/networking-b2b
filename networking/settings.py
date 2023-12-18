@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.facebook',
     ### third party libraries
     
-    #'request',
+    'request',
     'rest_framework',
     'widget_tweaks',
     'chartjs',
