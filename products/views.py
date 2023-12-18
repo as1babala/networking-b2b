@@ -20,17 +20,25 @@ from core.models import *
 from .forms import *
 import json
 import stripe
+from django.conf import settings
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 # Create your views here.
-
-class ProductListView(LoginRequiredMixin, generic.ListView):
+class admin(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.is_admin or self.request.user.is_employee
+    
+class ProductListView( generic.ListView):
     model = Product
     template_name = "products/product_list.html"
     queryset = Product.objects.all() # not adding context here
     context_object_name = "products"
-    paginate_by = 2
+    paginate_by = 3
     
 class ProductCreateView(LoginRequiredMixin, CreateView):
     template_name = "products/product_create.html"
@@ -38,86 +46,116 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     
     def get_success_url(self):
         return reverse("products:product-list")
+
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'products/product_detail.html'
     
-    
-class CreateCheckoutSessionView(CreateView):
-    YOUR_DOMAIN = "http://127.0.0.1:8000"
-    
-    def post(self, request, **args):
+class CreateCheckoutSessionView(TemplateView):
+    def post(self, request, *args, **kwargs):
+        product_id = self.kwargs.get('pk')
+        product = Product.objects.get(id=product_id)
+        try:
             checkout_session = stripe.checkout.Session.create(
-                payment_method_types = ['card'],
+                payment_method_types=['card'],
                 line_items=[
                     {
-                        # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
                         'price_data': {
-                    'currency': 'usd',
-                    'unit_amount': 20000,
-                    'product_data': {
-                        'name': 'produce',
-                        #'images': ['https://i.imgur.com/EHyR2nP.png']
-                    },  
-                  },
+                            'currency': 'usd',
+                            'product_data': {
+                                'name': product.name,
+                            },
+                            'unit_amount': int(product.price * 100),
+                        },
                         'quantity': 1,
                     },
                 ],
                 mode='payment',
-                success_url=YOUR_DOMAIN + '/success',
-                cancel_url=YOUR_DOMAIN + '/cancel',
+                success_url=request.build_absolute_uri('/success/'),
+                cancel_url=request.build_absolute_uri('/cancel/'),
             )
-       
-            return JsonResponse({
-                'id': checkout_session.id
-                
-            })
+            return redirect(checkout_session.url, code=303)
+        except Exception as e:
+            return str(e)
 
-class ProductLandingPageView(TemplateView):
-    template_name='products/landing_page.html'
+def create_subscription(request, product_id):
+    product = Product.objects.get(id=product_id)
+    # Create a Stripe Checkout session
+    session = stripe.checkout.Session.create(
+        payment_method_types=['card'],
+        line_items=[{
+            'price_data': {
+                'currency': 'usd',
+                'product_data': {
+                    'name': product.name,
+                },
+                'unit_amount': int(product.price * 100),
+            },
+            'quantity': 1,
+        }],
+        mode='payment',
+        success_url=request.build_absolute_uri('/') + '?success=true',
+        cancel_url=request.build_absolute_uri('/') + '?cancel=true',
+        )
+    return redirect(session.url, code=303)
+
+
+class SuccessView(TemplateView):
+    def get(self, request, *args, **kwargs):
+        # Handle successful payment, e.g., create a subscription
+        return HttpResponse("Success!")
+
+class CancelView(TemplateView):
+    def get(self, request, *args, **kwargs):
+        return HttpResponse("Cancelled.")
+
+@require_POST
+@csrf_exempt
+def stripe_webhook(request):
+    payload = request.body
+    sig_header = request.META['HTTP_STRIPE_SIGNATURE']
+    event = None
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, settings.STRIPE_WEBHOOK_SECRET
+        )
+    except ValueError as e:
+        # Invalid payload
+        return HttpResponse(status=400)
+    except stripe.error.SignatureVerificationError as e:
+        # Invalid signature
+        return HttpResponse(status=400)
+
+    # Handle the event
+    if event['type'] == 'checkout.session.completed':
+        session = event['data']['object']
+
+        # Perform some action based on the session data
+        handle_successful_payment(session)
+
+    return HttpResponse(status=200)
+
+def handle_successful_payment(session):
+    # Logic to handle successful payment
+    pass
+
+class ProductUpdateView(admin, generic.UpdateView):
+    template_name = "products/product_update.html"
+    form_class = ProductForm
+    queryset = Product.objects.all()
     
-    def get_context_data(self, **kwargs):
-        product = Product.objects.get(name = 'testing product')
-        context = super(ProductLandingPageView, self).get_context_data(**kwargs)
-        context.update({
-            'product': product,
-            "STRIPE_PUBLIC_KEY": settings.STRIPE_PUBLIC_KEY,
-            
-        })
-        return super().get_context_data(**kwargs)
+    def get_success_url(self):
+        return reverse("products:product-list")
+     
+    def form_valid(self, form):
+        form.save()
+        messages.info(self.request, "You have successfully updated this lead")
+        return super(ProductUpdateView, self).form_valid(form)
     
-           
-def product_home(request):
-    return render(request, 'products/first_stripe.html')
-
-def create_checkout_session(request):
-	if request.method == "POST":
-		YOUR_DOMAIN = 'http://127.0.0.1:8000'
-		stripe.api_key = 'sk_test' #replace with your Stripe API key
-		data = json.loads(request.body)
-
-		customer = stripe.Customer.create(
-			email=request.user.email)
-		try:
-			checkout_session = stripe.checkout.Session.create(
-				payment_method_types=['card'],
-				line_items=[
-					{
-						'price': data["product_id"],
-						'quantity': 1,
-					}
-				],
-				mode='subscription',
-				success_url=YOUR_DOMAIN + '/success',
-				cancel_url=YOUR_DOMAIN + '/cancel',
-				customer_email = customer.email,
-				)
-			return JsonResponse({'id': checkout_session.id})
-		except Exception as e:
-			return JsonResponse({'error': (e.args[0])}, status =400)
-	return JsonResponse({'error':'No GET request allowed.'})
-
-def success_request(request):
-	messages.info(request, "You have successfully subscribed.") 
-	return redirect("main:dashboard")
-
-def cancel_request(request):
-	messages.info(request, "Payment Failed. Please try again.") 
-	return redirect("main:pricing")
+class ProductDeleteView(LoginRequiredMixin, generic.DeleteView):
+    template_name = "products/product_delete.html"
+    queryset = Product.objects.all()
+    
+    def get_success_url(self):
+        return reverse("products:product-list")

@@ -1,0 +1,16 @@
+{% extends 'base_content.html' %}
+
+{% block content %}
+
+  <h2>{{ object.name }}</h2>
+  <p>{{ object.description }}</p>
+  <p><strong>Price:</strong> ${{ object.price }}</p>
+
+  <form action="{% url 'products:create-checkout-session' object.id %}" method="post">
+    {% csrf_token %}
+
+    <a href="https://buy.stripe.com/test_aEU5kwfQAbXge3ueUV" class="btn btn-primary">Subscribe</a>
+    
+    <a href="{% url 'products:product-detail' product.id %}" class="btn btn-primary">Subscribe</a>
+  </form>
+{% endblock %}

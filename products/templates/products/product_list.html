@@ -1,0 +1,41 @@
+{% extends 'base_content.html' %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product List</title>
+    
+</head>
+<body>
+    <div class="container mt-4">
+        <h2>Our Products</h2>
+        <div class="row">
+            {% for product in products %}
+            <div class="col-md-4 mt-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title white">{{ product.name }}</h5>
+                        <p class="card-text white">{{ product.description }}</p>
+                        <p class="card-text white"><strong>Monthly Price:</strong> ${{ product.monthly_price|floatformat:2 }}</p>
+                        <p class="card-text white"><strong>Yearly Price:</strong> ${{ product.yearly_price|floatformat:2 }}</p>
+                        
+                        <a href="{{ product.monthly_link }}" class="btn btn-primary">Monthly </a>
+                        <a href="{{ product.yearly_link }}" class="btn btn-primary">yearly </a>  
+                        {% if user.is_admin%}
+                        <a href="{% url 'products:product-update' product.id %}" class="btn btn-primary">Edit</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.9/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+{% endblock content %}

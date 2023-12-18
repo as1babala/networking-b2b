@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.urls import path, include
 from django.conf.urls.static import static
-from products.views import CreateCheckoutSessionView
+#from products.views import CreateCheckoutSessionView
 from core.models import *
 #### MFA #######
 from django_otp.admin import OTPAdminSite
@@ -23,7 +23,7 @@ admin_site.register(TOTPDevice, TOTPDeviceAdmin)
 
 urlpatterns = [
     #path('api-auth/', include('rest_framework.urls')),
-    path('create-checkout-session',CreateCheckoutSessionView.as_view(),name = 'create-checkout-session'),
+    #path('create-checkout-session',CreateCheckoutSessionView.as_view(),name = 'create-checkout-session'),
     path('accounts/', include('allauth.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('manage/', admin.site.urls),

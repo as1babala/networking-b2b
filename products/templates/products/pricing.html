@@ -1,0 +1,87 @@
+{% extends "base_content.html" %}
+{% block content %}
+{% load static %}
+
+<script class="lazy" src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+<script class="lazy" src="https://js.stripe.com/v3/"></script>
+
+<!--Pricing-->
+    <div class="container p-lg-5 p-3">
+    	<h1 class="cta text-center">Pricing</span></h1>
+      <h5 class="text-muted lead my-3 text-center">Don't run away from your finances. Jump right in.</h5>
+      <div class="row p-lg-5 p-3">
+
+
+        {% for s in subscription %}
+        <div class="col-lg-4 col-md-12 mb-4">
+          <div class="card h-100 shadow-lg text-center mx-auto sub-cards" style="max-width:20rem">
+          	 <div class="card-header sub-header">
+			    <h4>{{s.name}}</h4>
+			  </div>
+            <div class="card-body">    
+               <h1>${{s.amount}}<span class="text-muted" style="font-weight: 300">/mo</span></h1>
+            
+        	<p class="my-3">
+             {{s.description|safe|linebreaks}}
+          </p>
+            
+            <div class="d-grid">
+
+              {% if is_authenticated %}
+            	<button class="btn btn-outline-primary btn-block btn-lg sub-button" onclick="selectPlan('{{s.stripe_api_id}}')">Select</button>
+              {% else %}
+              <a class="btn btn-outline-primary btn-block btn-lg sub-button" href="/register">Select</a>
+              {% endif %}
+            </div>
+          </div>
+          </div>
+        </div>
+        {% endfor %}
+
+
+      </div>
+    </div>
+
+    <script type="text/javascript">
+
+    //grabs csrftoken
+    let cookie = document.cookie
+    let cookies = cookie.substring(cookie.indexOf('csrftoken=') + 10)
+    let csrfToken = cookies.split(";")[0]
+
+    // Create an instance of the Stripe object with your publishable API key
+    var stripe = Stripe("pk_test"); //replace with your Stripe API key
+
+    function selectPlan(pid) {
+      fetch("/create-checkout-session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": csrfToken, 
+        },
+        body: JSON.stringify({
+          product_id: pid
+        })
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (session) {
+          return stripe.redirectToCheckout({ sessionId: session.id });
+        })
+        .then(function (result) {
+          // If redirectToCheckout fails due to a browser or network
+          // error, you should display the localized error message to your
+          // customer using error.message.
+          if (result.error) {
+            alert(result.error.message);
+          }
+        })
+        .catch(function (error) {
+          console.error("Error:", error);
+        });
+    } 
+    </script>
+<!--End Pricing-->
+
+{% endblock %}

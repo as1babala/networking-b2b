@@ -27,7 +27,7 @@
             
             <div class="d-grid">
 
-              {% if user.is_authenticated %}
+              {% if is_authenticated %}
             	<button class="btn btn-outline-primary btn-block btn-lg sub-button" onclick="selectPlan('{{s.stripe_api_id}}')">Select</button>
               {% else %}
               <a class="btn btn-outline-primary btn-block btn-lg sub-button" href="/register">Select</a>

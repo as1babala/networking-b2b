@@ -99,7 +99,7 @@ class Subscription(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     amount = models.DecimalField(decimal_places=2, max_digits=5)
     #pricing = models.ForeignKey(Pricing, on_delete=models.CASCADE, related_name='subscriptions', null=True, blank=True)# query = P
-    stripe_subscription_id = models.CharField(max_length=50, default="")
+    stripe_product_id = models.CharField(max_length=50, default="")
     status = models.BooleanField(default=True)
     created_on = models.DateTimeField(auto_now_add=True)
     
@@ -132,11 +132,14 @@ class Product(RandomIDModel):
     category = models.CharField(max_length=100, default="")
     description = models.CharField(max_length=255, default="")
     product_features = models.CharField(max_length=255, default="")
-    price = models.PositiveIntegerField(default=0) # cents 1000 = $10.00 while in stripe
+    monthly_price = models.PositiveIntegerField(default=0) # cents 1000 = $10.00 while in stripe
+    yearly_price = models.PositiveIntegerField(default=0) # cents 1000 = $10.00 while in stripe 
+    monthly_link = models.URLField(default='')
+    yearly_link = models.URLField(default='')
     created_on = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return self.id
+        return self.name
     
     
     def get_display_price(self):

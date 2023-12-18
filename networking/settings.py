@@ -213,7 +213,7 @@ USE_TZ = True
 
 #AUTH
 LOGIN_REDIRECT_URL = "accounts:home-page"
-LOGOUT_REDIRECT_URL = "accounts:login"
+LOGOUT_REDIRECT_URL = "accounts:home-page"
 REQUEST_BASE_URL = ""
 
 # Static files (CSS, JavaScript, Images)
