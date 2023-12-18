@@ -97,7 +97,8 @@ class Pricing(models.Model):
 
 class Subscription(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    pricing = models.ForeignKey(Pricing, on_delete=models.CASCADE, related_name='subscriptions', null=True, blank=True)# query = P
+    amount = models.DecimalField(decimal_places=2, max_digits=5)
+    #pricing = models.ForeignKey(Pricing, on_delete=models.CASCADE, related_name='subscriptions', null=True, blank=True)# query = P
     stripe_subscription_id = models.CharField(max_length=50, default="")
     status = models.BooleanField(default=True)
     created_on = models.DateTimeField(auto_now_add=True)

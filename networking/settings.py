@@ -15,6 +15,7 @@ from datetime import timedelta
 import os
 
 
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'NETWORKING-B2B.settings')
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.microsoft',
     'allauth.socialaccount.providers.facebook',
     ### third party libraries
+    
     'request',
     'rest_framework',
     'widget_tweaks',
@@ -109,10 +111,11 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'request.middleware.RequestMiddleware',
     'django_otp.middleware.OTPMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'request.middleware.RequestMiddleware',
+    
 ]
 
 '''
@@ -211,6 +214,7 @@ USE_TZ = True
 #AUTH
 LOGIN_REDIRECT_URL = "accounts:home-page"
 LOGOUT_REDIRECT_URL = "accounts:login"
+REQUEST_BASE_URL = ""
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
@@ -270,3 +274,12 @@ CKEDITOR_CONFIGS = {
     },
 }
 
+'''
+MESSAGE_TAGS = {
+        messages.DEBUG: 'alert-secondary',
+        messages.INFO: 'alert-info',
+        messages.SUCCESS: 'alert-success',
+        messages.WARNING: 'alert-warning',
+        messages.ERROR: 'alert-danger',
+ }
+ '''
