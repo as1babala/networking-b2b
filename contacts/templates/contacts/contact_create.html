@@ -11,20 +11,20 @@
   
 <section class="text-gray-600 body-font relative">
   </section >
-  <section class="text-gray-600 mx-2 bg-gray py-5" style="width:100%">
+  <section class="text-gray-600 bg-gray py-3" style="width:100%">
     <div class="row my-2">
-        <div class="col-md-5 rounded section_color2 mx-1">
+        <div class="col-md-5 rounded section_color2">
           <h2 class="white text-center"> <span>Leave Us a Message</span></h2>
           <form method="post" class="form white">
             {% csrf_token %}
             {% bootstrap_form form %}
             {% buttons %}
-            <button type="submit" class="bg-primary my-2"> Submit </button>
+            <button type="submit" class="btn bg-primary my-2"> Submit </button>
             {% endbuttons %}
         </form>
         </div>
-        <div class="col-md-6 rounded section_color22">
-          <h4 class="white text-center mx-4 my-4"><span>New York - USA</span></h1>
+        <div class="col-md-6 rounded mx-1 section_color22">
+          <h4 class="white text-center  my-4"><span>New York - USA</span></h1>
           <br>
           <p class="white text-center">
               Address - 13473 Bedell Street <br><br>

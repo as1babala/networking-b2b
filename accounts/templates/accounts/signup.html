@@ -1,5 +1,4 @@
 
-<div class="hero">
     {% extends "base.html" %}
     
     {% block title%}
@@ -15,26 +14,26 @@
     
     <!--link rel="stylesheet" href="{% static 'css/style_main.css' %}"-->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
-    <div class="container py-5"  >
-        <div>
-           <h2 class="white text-center my-5" style=""><span class="about"> <i class="fa-solid fa-registered"></i></span> <span>Become One of Us Today</span> </h2>
-        </div>
-      
-
+    <section class="text-gray-600 bg-gray py-5" style="width:100%">
+        <div class="row">
+            <div class="col-md-2 rounded">
+            </div>
+        <div class="col-md-7 rounded py-3">
                 <form method="post" class="form white">
                     {% csrf_token %}
     
                     {% bootstrap_form form %}
                     
-                    <button type="submit" class="btn btnfont btnbg">Submit</button>
+                    <button type="submit" class="btn btn-primary btnbg">Submit</button>
                    
                 </form>
                 
         </div>
     </div>
     
+</section>
 
+{% include 'footer.html' %}
         {% endblock %}
     
-    </div>
+    
