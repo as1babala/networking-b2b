@@ -92,8 +92,6 @@ class Pricing(models.Model):
     def __str__(self):
         return self.name
     
-    
-    
 
 class Subscription(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
@@ -137,6 +135,11 @@ class Product(RandomIDModel):
     monthly_link = models.URLField(default='')
     yearly_link = models.URLField(default='')
     created_on = models.DateTimeField(auto_now_add=True)
+    
+    class Meta: 
+        verbose_name = "Product"
+        verbose_name_plural = "Products"
+        ordering = ('monthly_price',)
     
     def __str__(self):
         return self.name
@@ -662,15 +665,15 @@ class FicheTechnic(RandomIDModel):
     slug = models.SlugField(max_length = 20, unique=True)
     name = models.CharField(max_length=100)
     fiche_avatar = models.ImageField(upload_to='document/', default='document/maze_field.jpeg')
-    description = models.TextField(max_length = 768)
+    description = models.TextField(max_length = 4500)
     category = models.CharField(max_length = 100, choices = FICHE_CAT)
     Expertise_level = models.CharField(max_length=100, choices=EXPERTISE_LEVEL)
-    Technical_factors = models.TextField("This include climate,season, soil preparation,seeds, semis, care, conditions, and protection",max_length=1000, null=True, blank=True)
-    principal_risks = models.TextField(max_length=368, null=True, blank=True)
-    harvest_factors = models.TextField("Include how to harvest, post harvest conditioning, yield", max_length=500, null=True, blank=True)
-    marketing_factor = models.TextField("include seed supplier, equipment cost, storage requirements, average price per unit (acre, kilo, tone...), average cost ", max_length=500, null=True, blank=True)
-    industrialization_factors = models.TextField("what to consider if industrializing", max_length=500, null=True, blank=True) 
-    other_factors = models.TextField("Import Export opportunities, main producers, main consumers...", max_length=200, null=True, blank=True)
+    Technical_factors = models.TextField("This include climate,season, soil preparation,seeds, semis, care, conditions, and protection",max_length=4500, null=True, blank=True)
+    principal_risks = models.TextField(max_length=3368, null=True, blank=True)
+    harvest_factors = models.TextField("Include how to harvest, post harvest conditioning, yield", max_length=4500, null=True, blank=True)
+    marketing_factor = models.TextField("include seed supplier, equipment cost, storage requirements, average price per unit (acre, kilo, tone...), average cost ", max_length=4500, null=True, blank=True)
+    industrialization_factors = models.TextField("what to consider if industrializing", max_length=4500, null=True, blank=True) 
+    other_factors = models.TextField("Import Export opportunities, main producers, main consumers...", max_length=5100, null=True, blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
     class Meta:
