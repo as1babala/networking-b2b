@@ -34,24 +34,25 @@
     <div class="row">
       <div class="col-md-4 footer-panel">
         <h4>About</h4>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Contact</a></li>
-        <li><a href="#">About</a></li>
+        <li><a href="{% url 'accounts:home-page' %}">Home</a></li>
+        <li><a href="{% url 'contacts:contact-create' %}">Contact</a></li>
+        <li><a href="{% url 'accounts:about-us' %}">About</a></li>
       </div>
       <div class="col-md-4 footer-panel">
         <h4>Contact</h4>
-        <p>Email: support@bootstrap.com</p>
-        <p>Phone: 123-456-7890</p>
+        <p>Email: babala.assih@gmail.com</p>
+        <p>Phone: 929-391-6710</p>
       </div>
       <div class="col-md-4 footer-panel">
         <h4>Importants Links</h4>
         <ul>
-          <li><a href="#">Job Posting</a></li>
-          <li><a href="#">Blogs</a></li>
-          <li><a href="#">Request For Information</a></li>
-          <li><a href="#">Registered Companies</a></li>
-          <li><a href="#">Agriculture Forms</a></li>
-          <li><a href="#">Trainings Schedule</a></li>
+          <li><a href="{% url 'jobs:job-list' %}">Job Posting</a></li>
+          <li><a href="{% url 'blogs:blog-list' %}">Blogs</a></li>
+          <li><a href="{% url 'product_deals:product-deal-list' %}">Product Announcements</a></li>
+          <li><a href="{% url 'deals:deal-list' %}">Services Announcements</a></li>
+          <li><a href="{% url 'enterprises:enterprise-list' %}">Registered Companies</a></li>
+          <li><a href="{% url 'fiches:fiche-list' %}">Agriculture Forms</a></li>
+          <li><a href="{% url 'trainings:training-list' %}">Trainings Schedule</a></li>
         </ul>
       </div>
     </div>

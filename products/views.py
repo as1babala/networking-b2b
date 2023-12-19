@@ -159,3 +159,6 @@ class ProductDeleteView(LoginRequiredMixin, generic.DeleteView):
     
     def get_success_url(self):
         return reverse("products:product-list")
+
+class ServicesView(TemplateView):
+    template_name = "products/services.html"

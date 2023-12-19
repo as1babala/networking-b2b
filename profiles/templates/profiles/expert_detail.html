@@ -1,6 +1,36 @@
 {% extends "base_content.html" %}
 
 {% block content %}
+<head>
+  <style type="text/css">
+    /* Style the button that is used to open and close the collapsible content */
+.collapsible {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active, .collapsible:hover {
+  background-color: #ccc;
+}
+
+/* Style the collapsible content. Note: hidden by default */
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+</style>
+
+</head>
 
 <section class="">
   <div class="container-fluid row" > 
@@ -8,7 +38,7 @@
    <p class="white"><a href="{% url 'profiles:expert-profile-list' %}">profiles list</a></p> 
 
     <h3 class="white">User: {{profiles.user}}</h3>
-    <img src="{{profiles.avatar.url}}" alt="Smiley face" width="250" height="250" class="img-responsive">
+    <img src="{{profiles.avatar.url}}" alt="Smiley face" width="250" height="250" class="img-responsive flot-start">
     <hr>
     
     <div class="card-body">
@@ -24,34 +54,42 @@
     {% if profiles.management %} Management partner, {% endif %}</br>
 
 <hr>
-<h3> Education History</h3>
-{% for education in education %}
-<ul>
-  <li><b>Institution:</b> {{education.institution_name }} <b> Specialization: </b>{{ education.specialization}} <b>Minor: </b>{{education.minor}} </br> <b>Start Date:</b> {{education.start_date|date}} <b>End Date:</b> {{education.end_date|date}}
+<button type="button" class="collapsible"><h4>Education History</h4></button>
+<div class="content">
 
-  {% if education.graduated %} Graduated on {{education.end_date}} {% else %} Not graduated yet {% endif %} </br> <b><u>Comment: </u></br></b>{{ education.description}}
-</li> </ul>
-  {% endfor %}
+  {% for education in education %}
+  <ul class="white">
+    <li><b>Institution:</b> {{education.institution_name }} <b> Specialization: </b>{{ education.specialization}} <b>Minor: </b>{{education.minor}} </br> <b>Start Date:</b> {{education.start_date|date}} <b>End Date:</b> {{education.end_date|date}}
+  
+    {% if education.graduated %} Graduated on {{education.end_date}} {% else %} Not graduated yet {% endif %} </br> <b><u>Comment: </u></br></b>{{ education.description}}
+  </li> </ul>
+    {% endfor %}
+</div>
 
- 
   <hr>
-  <h3> Work Experience</h3>
+  
+  <button type="button" class="collapsible"><h4>Work Experience</h4></button>
+  <div class="content">
+
   {% for work in work_experience %}
-  <ul>
+  <ul class="white">
 <li><b>Comapny Name:</b> {{ work.company_name}}   <b>Location:</b> {{work.work_city}},  {{work.work_country}} <b>From:</b> {{work.start_date}} <b>To:</b> {{work.end_date}}</br>
 <b>Position:</b> {{work.position}}  <b>Title:</b> {{work.job_title}}</br> <b>Position Description:</b>{{work.description}}
-
-     </li> </ul>
+ </li> </ul>
     {% endfor %} 
-
+</div>
     <hr>
-    <h3> Project Portfolios </h3>
-    {% for portfolio in expert_portfolio %}
+    <button type="button" class="collapsible"><h4>Project Portfolios</h4></button>
+  <div class="content white">
+      
+      {% for portfolio in expert_portfolio %}
     <ul>
-  <li><b>Client Name:</b>{{portfolio.client_name }} <b> Reference Contact:</b>{{portfolio.reference_email}} <b>Project title: </b>{{ portfolio.project_title}}, {{Portfolio.project_type}} <b>Location:</b>{{portfolio.project_city}}, {{portfolio.project_country}} <b>From:</b> {{portfolio.start_date}} <b>To:</b>{{portfolio.end_date}}</br> <b>Technologies:</b>{{portfolio.technologies_used}}</br><b>Project Description:</b>{{portfolio.description}} 
+  <li><b>Client Name:</b>{{ portfolio.client_name }} <b>  Reference Contact:</b>{{portfolio.reference_email}} </br><b>Project title: </b>{{ portfolio.project_title}}, {{Portfolio.project_type}} <b>Location:</b>{{ portfolio.project_city}}, {{ portfolio.project_country}}</br> <b>From:</b> {{ portfolio.start_date}} <b>To:</b> {% if portfolio.end_date %}{{portfolio.end_date}} {% else %} Present {% endif %}</br> <b>Technologies:</b>{{ portfolio.technologies_used}}</br></br><b>Project Description:</b></br>{{portfolio.description}} 
 
       {% endfor %}
-
+    </div>
+  </br></br>
+ 
     <p class="white"><small><i><b>Member since : </i></b>{{ profiles.created_on|date }}  </small></p>
 
 <hr />
@@ -73,5 +111,32 @@
 
 </div>
 
+<!--script>
+  function myFunction() {
+    var x = document.getElementById("myDIV");
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+  }
+</script-->
+
+<script type="text/javascript">
+  var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+</script>
 
 {% endblock content %}
