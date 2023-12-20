@@ -91,6 +91,10 @@ class CategoryCreateView(admin, employee, CreateView):
       
 def blog_detail(request, pk):
     blog = Blog.objects.get(pk=pk)
+    user = request.user
+    # Check if the user has already read this blog post
+    if not BlogRead.objects.filter(reader=user, blog_post=blog).exists():
+        BlogRead.objects.create(reader=user, blog_post=blog)
     form = ReviewForm()
     if request.method == 'POST':
         form = ReviewForm(request.POST)
@@ -108,7 +112,6 @@ def blog_detail(request, pk):
     sum_rating = Review.objects.filter(blog=blog).aggregate(Sum("rating")) 
     average_rating = Review.objects.filter(blog=blog).aggregate(Avg("rating"))
     #replies = ReplyToReview.objects.filter(blog=blog, review=reviews)
-    #replies = ReplyToReview.objects.filter(review=reviews) 
     average_rating = average_rating.get('rating__avg')# format the average rating
     average_rating = round(average_rating)# the whole number
    
@@ -239,6 +242,11 @@ class ReplyToReviewDeleteView(DeleteView):
 
     def get_success_url(self):
         return reverse_lazy('review_detail', kwargs={'pk': self.object.review_id})
+    
+def read_history(request):
+    # Assuming you have the user object available
+    return render(request, 'blogs/read_history.html', {'reader': request.user})
+
 class BlogsSearchView(ListView):
     model = Blog
     template_name = "blogs/blog_search.html"

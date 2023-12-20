@@ -24,4 +24,5 @@ urlpatterns = [
     #path('review/<int:review_id>/reply/new/', ReplyToReviewCreateView.as_view(), name='reply-create'),
     path('reply/<int:pk>/edit/', ReplyToReviewUpdateView.as_view(), name='reply-update'),
     path('reply/<int:pk>/delete/', ReplyToReviewDeleteView.as_view(), name='reply-delete'),
+    path('read-history/', read_history, name='read-history'),
 ]

@@ -35,6 +35,7 @@ class BlogAdmin(admin.ModelAdmin):
      list_display=['categories','title','author', 'status', 'created_on']
    
 admin.site.register(Blog, BlogAdmin)
+admin.site.register(BlogRead)
 admin.site.register(Review)
 admin.site.register(ReplyToReview)
 

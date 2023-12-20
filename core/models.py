@@ -828,7 +828,7 @@ class Blog(RandomIDModel):
         
     @property 
     def blog_time(self):
-        blog_time = round((len(re.findall(r'\w+', self.content))/200),0)
+        blog_time = round((len(re.findall(r'\w+', self.content))/200),2)
         return blog_time
      
     def get_average_rating(self):
@@ -844,6 +844,18 @@ def pre_save_blog(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = slugify(f"{instance.title} {instance.id}")
 
+
+class BlogRead(models.Model):
+    reader = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    blog_post = models.ForeignKey(Blog, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('reader', 'blog_post')
+        
+    def __str__(self):
+       return f"{self.reader} - {self.blog_post}"
+        
 class Review(RandomIDModel):
 #class Review(models.Model):
     slug = models.SlugField(max_length = 200, unique=True)
