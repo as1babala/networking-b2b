@@ -696,6 +696,16 @@ def pre_save_fiche(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = slugify(f"{instance.name} {instance.id}")
         
+class FicheRead(models.Model):
+    reader = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    fiche_read = models.ForeignKey(FicheTechnic, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('reader', 'fiche_read')
+        
+    def __str__(self):
+       return f"{self.reader} - {self.fiche_read}" 
 class Jobs(RandomIDModel):
 #class Jobs(models.Model):
     slug = models.SlugField(unique=True)
@@ -726,7 +736,17 @@ class Jobs(RandomIDModel):
     def __str__(self):
         return f'{self.job_title}-{self.id}'
         
-        
+class JobRead(models.Model):
+    reader = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    job_read = models.ForeignKey(Jobs, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('reader', 'job_read')
+        ordering = ('-timestamp',) 
+    def __str__(self):
+       return f"{self.reader} - {self.job_read}" 
+     
 def pre_save_job(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = slugify(f"{instance.job_title} {instance.pk}")
@@ -852,6 +872,7 @@ class BlogRead(models.Model):
 
     class Meta:
         unique_together = ('reader', 'blog_post')
+        ordering = ('-timestamp',)
         
     def __str__(self):
        return f"{self.reader} - {self.blog_post}"
@@ -932,13 +953,13 @@ class Deals(RandomIDModel):
     slug = models.SlugField(max_length = 200)
     dealer = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="deals", null=True, blank=True)
     service_category= models.CharField(max_length=100, choices=SERVICES_CATEGORIES, default='')
+    deal_type = models.CharField(max_length=50, choices = OPPORTUNITY_TYPES, default='')
     email = models.EmailField(null=True)
     company_name = models.CharField(max_length=50)
     #deal_category = models.CharField(max_length = 50, choices = SERVICES_CATEGORIES, default='')
     deal_title = models.CharField(max_length = 100)
     deal_country = models.CharField(choices=COUNTRIES, max_length =2, default='')
     deal_city = models.CharField(max_length=100, default='')
-    deal_type = models.CharField(max_length=50, choices = OPPORTUNITY_TYPES, default='')
     descriptions = models.TextField(max_length=750) 
     active = models.BooleanField(default=True)
     created_on = models.DateTimeField(auto_now_add = True)
@@ -967,6 +988,17 @@ class DealImages(models.Model):
     deal = models.ForeignKey(Deals, on_delete=models.CASCADE)
     image = models.FileField("Supporting Documents", upload_to='deals/', default='deals/deals.jpeg')
     
+class DealRead(models.Model):
+    reader = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    deal_read = models.ForeignKey(Deals, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('reader', 'deal_read')
+        ordering = ('-timestamp',)
+        
+    def __str__(self):
+       return f"{self.reader} - {self.deal_read}"
     
 class Rfi(RandomIDModel):
     slug = models.SlugField(max_length = 120, unique=True)
@@ -1118,6 +1150,8 @@ class ProductDeals(RandomIDModel):
     slug = models.SlugField(max_length = 120, unique=True)
     email = models.EmailField(null=True)
     dealer = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="product_deals", null=True, blank=True)
+    product_deal_title = models.CharField(max_length = 100)
+    opportunity_type = models.CharField(max_length=50, choices=PRODUCTS_OPPORTUNITIES)
     company_name = models.CharField(max_length=50, default='')
     product_name = models.CharField(max_length=255)
     product_category= models.CharField('Enter Your Product Category',max_length=100, choices=PRODUCTS_CATEGORIES, )
@@ -1126,7 +1160,7 @@ class ProductDeals(RandomIDModel):
     city = models.CharField(max_length=100, default='')
     country = models.CharField(max_length=100, choices=COUNTRIES)
     availability_date = models.DateField()
-    opportunity_type = models.CharField(max_length=50, choices=PRODUCTS_OPPORTUNITIES)
+   
     stock_quantity = models.PositiveIntegerField(null=True, blank=True)
     quantity_unit = models.CharField(max_length=100, choices=MEASUREMENT_UNIT, default='')
     is_available = models.BooleanField(default=True)
@@ -1143,7 +1177,7 @@ class ProductDeals(RandomIDModel):
         ordering = ('-announcement_date',)
         
     def __str__(self):
-        return self.product_name
+        return self.product_deal_title
 
 def pre_save_product_deals(sender, instance, *args, **kwargs):
     if not instance.slug:
@@ -1152,7 +1186,19 @@ def pre_save_product_deals(sender, instance, *args, **kwargs):
 class ProductDealImages(models.Model):
     deal = models.ForeignKey(ProductDeals, on_delete=models.CASCADE)
     image = models.FileField("Supporting Documents", upload_to='deals/', default='deals/deals.jpeg')
-    
+
+
+class ProductDealRead(models.Model):
+    reader = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    product_deal_read = models.ForeignKey(ProductDeals, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('reader', 'product_deal_read')
+        ordering = ('-timestamp',)
+        
+    def __str__(self):
+       return f"{self.reader} - {self.product_deal_read}" 
 class ProductRFI (RandomIDModel):
     slug = models.SlugField(max_length = 120, unique=True)
     product_deal = models.ForeignKey(ProductDeals, on_delete=models.CASCADE)

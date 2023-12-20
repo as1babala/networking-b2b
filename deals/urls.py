@@ -15,4 +15,5 @@ urlpatterns = [
     path('<int:pk>/rfi/', RfiCreateView.as_view(), name='rfi-create'),# for review
     path('users/', UserDealsListView.as_view(), name='deal-user'),
     path('search/', DealsSearchView.as_view(), name='deal-search'),
+    path('deal-read-history/', deal_read_history, name='deal-read-history'),
 ]

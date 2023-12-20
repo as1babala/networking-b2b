@@ -45,7 +45,21 @@ class ProductDealsListView(ListView):
 
 class UserProductDealsListView(LoginRequiredMixin, generic.ListView):
     template_name = "product_deals/product_deals_user.html"
-    context_object_name = "user_product_deals"
+    context_object_name = "deals"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        deals_with_images = []
+        for deal in context['deals']:
+            images = ProductDealImages.objects.filter(deal=deal)
+            if images.exists():
+                deal.image_url = images.first().image.url
+            else:
+                deal.image_url = None  # Placeholder if no image exists
+            deals_with_images.append(deal)
+        context['deals'] = deals_with_images
+        context['filter'] = ProductDealsFilter(self.request.GET, queryset=self.get_queryset())
+        return context
     
     def get_queryset(self):
         return ProductDeals.objects.filter(dealer=self.request.user).order_by('-announcement_date')
@@ -87,7 +101,9 @@ class ProductDealCreateView(LoginRequiredMixin, CreateView):
       
 def product_deal_detail(request, pk):
     product_deal = ProductDeals.objects.get(pk=pk)
-    
+    user = request.user
+    if not ProductDealRead.objects.filter(reader=user, product_deal_read=product_deal).exists():
+        ProductDealRead.objects.create(reader=user, product_deal_read=product_deal) 
     form = ProductRFIForm()
     if request.method == 'POST':
         form = ProductRFIForm(request.POST)
@@ -112,7 +128,10 @@ def product_deal_detail(request, pk):
     }
 
     return render(request, "product_deals/product_deals_detail.html", context)
-    
+
+def product_deal_read_history(request):
+    # Assuming you have the user object available
+    return render(request, 'product_deals/product_deal_read_history.html', {'reader': request.user})
 
 class ProductDealUpdateView(LoginRequiredMixin, generic.UpdateView):
     template_name = "product_deals/product_deals_update.html"

@@ -38,7 +38,9 @@ class FicheTechnicListView(LoginRequiredMixin, generic.ListView):
 class FicheTechnicDetailView(LoginRequiredMixin, generic.DetailView):
     template_name = "fiches/fiche_detail.html"
     queryset = FicheTechnic.objects.all() # not adding context here
-    context_object_name = "fiches" 
+    context_object_name = "fiches"
+         
+     
      
 
 class FicheTechnicCreateView(admin, employee, CreateView):
@@ -118,3 +120,20 @@ class FicheTechnicSearchView(ListView):
             )
         return object_list
 # Create your views here.
+
+def fiche_detail(request, slug):
+    fiches = FicheTechnic.objects.get(slug=slug)
+    ### Creating the deal viewing history
+    user = request.user
+    if not FicheRead.objects.filter(reader=user, fiche_read=fiches).exists():
+        FicheRead.objects.create(reader=user, fiche_read=fiches)
+    
+    context ={
+        "fiches": fiches,
+    }
+        
+    return render(request, "fiches/fiche_detail.html", context)
+
+def fiche_read_history(request):
+    # Assuming you have the user object available
+    return render(request, 'fiches/fiche_read_history.html', {'reader': request.user})

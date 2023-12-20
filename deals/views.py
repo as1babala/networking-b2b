@@ -51,8 +51,21 @@ class DealsListView(ListView):
 
 class UserDealsListView(LoginRequiredMixin, generic.ListView):
     template_name = "deals/deal_user_list.html"
-    context_object_name = "user_deals"
-    
+    context_object_name = "deals"
+   
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        deals_with_images = []
+        for deal in context['deals']:
+            images = DealImages.objects.filter(deal=deal)
+            if images.exists():
+                deal.image_url = images.first().image.url
+            else:
+                deal.image_url = None  # Placeholder if no image exists
+            deals_with_images.append(deal)
+        context['deals'] = deals_with_images
+        return context
+     
     def get_queryset(self):
         return Deals.objects.filter(dealer=self.request.user).order_by('-created_on')
 
@@ -95,7 +108,11 @@ class DealCreateView(LoginRequiredMixin, CreateView):
     
 def deal_detail(request, pk):
     deal = Deals.objects.get(pk=pk)
-    
+    ### Creating the deal viewing history
+    user = request.user
+    if not DealRead.objects.filter(reader=user, deal_read=deal).exists():
+        DealRead.objects.create(reader=user, deal_read=deal)
+        
     form = RfiForm()
     if request.method == 'POST':
         form = RfiForm(request.POST)
@@ -137,14 +154,19 @@ class DealDetailView(DetailView):
         context['deal_images'] = DealImages.objects.filter(deal=self.object)
         return context
       
-def deal_detail_view(request, slug):
-    deal = get_object_or_404(Deals, slug=slug)
+def deal_detail_view(request, pk):
+    deal = get_object_or_404(Deals, pk=pk)
     deal_images = DealImages.objects.filter(deal=deal)
+    
     context = {
         'deal': deal,
         'deal_images': deal_images,
     }
     return render(request, 'deals/deal_detail.html', context)
+
+def deal_read_history(request):
+    # Assuming you have the user object available
+    return render(request, 'deals/deal_read_history.html', {'reader': request.user})
 
 
 class DealUpdateView(LoginRequiredMixin, generic.UpdateView):

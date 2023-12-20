@@ -13,9 +13,15 @@ class BlogForm(forms.ModelForm):
     
     class Meta:
         model = Blog
+        exclude = ('id', 'slug', 'author', 'email', 'status')
+
+class BlogFormUpdate(forms.ModelForm):
+    #content = forms.CharField(widget=TinyMCE(), label="Please leave a review for this blog")
+    
+    class Meta:
+        model = Blog
         exclude = ('id', 'slug', 'author', 'email')
-
-
+        
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review

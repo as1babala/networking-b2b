@@ -982,14 +982,16 @@ JOB_TYPE = (("FT", "Full Time"), ("PT", "Part Time"), ("IN", "Intern"))
 BLOG_STATUS = (("DRAFT", "DRAFT"), ("PUBLISHED", "PUBLISHED"), ("ARCHIVED", "ARCHIVED"),)
 
       
-OPPORTUNITY_TYPES = (('Looking for Financing', 'Looking for Financing'),('Looking for Services Provider','Looking for Services Provider'),
-                     ('Offering for Financing', 'Offering Financing'),
-                     ('Looking for a Buyer', 'Looking for a Buyer'),
-                     ('Looking for a Seller', 'Looking for a Seller'),
+OPPORTUNITY_TYPES = (('Looking for Financing Provider', 'Looking for Financing Provider'),
+                    ('Offering Services','Offering Services'),
+                    ('In Search of Services Provider','In Search of Services Provider'),
+                     ('Offering Financing', 'Offering Financing'),
+                     #('Looking for a Buyer', 'Looking for a Buyer'),
+                     #('Looking for a Seller', 'Looking for a Seller'),
                      ('Offering Leadership Services', 'Offering Leadership Services'),
-                     ('In Search of Leadership Services', 'In Search of Leadership Services'),
+                     ('In Search of Leadership Services Provider', 'In Search of Leadership Services Provider'),
                      ('Offering Management Services', 'Offering Management Services'),
-                     ('In Search of Management Services', 'In Search of Management Services'),
+                     ('In Search of Management Services Provider', 'In Search of Management Services Provider'),
                      ('In Search of Technical Partner', 'In Search of Technical Partner'),
                     ('Offering Technical Services', 'Offering Technical Services'), 
 )

@@ -128,6 +128,11 @@ def blog_detail(request, pk):
 
     return render(request, "blogs/blog_detail.html", context)
 
+
+def read_history(request):
+    # Assuming you have the user object available
+    return render(request, 'blogs/read_history.html', {'reader': request.user})
+
 class BlogDetailView(LoginRequiredMixin, generic.DetailView):
     template_name = "blogs/blog_detail.html"
     queryset = Blog.objects.all() # not adding context here
@@ -135,7 +140,7 @@ class BlogDetailView(LoginRequiredMixin, generic.DetailView):
 
 class BlogUpdateView(admin, employee, generic.UpdateView):
     template_name = "blogs/blog_update.html"
-    form_class = BlogForm
+    form_class = BlogFormUpdate
     queryset = Blog.objects.all()
     
     def get_success_url(self):
@@ -242,10 +247,7 @@ class ReplyToReviewDeleteView(DeleteView):
 
     def get_success_url(self):
         return reverse_lazy('review_detail', kwargs={'pk': self.object.review_id})
-    
-def read_history(request):
-    # Assuming you have the user object available
-    return render(request, 'blogs/read_history.html', {'reader': request.user})
+   
 
 class BlogsSearchView(ListView):
     model = Blog

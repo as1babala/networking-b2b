@@ -41,9 +41,19 @@ class JobCreateView(admin, CreateView):
         return reverse("jobs:job-list")
 
 class JobDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Jobs
     template_name = "jobs/job_detail.html"
-    queryset = Jobs.objects.all() # not adding context here
+    #queryset = Jobs.objects.all() # not adding context here
     context_object_name = "jobs"
+    
+    def get_object(self):
+        # You can override the get_object method to provide additional logic
+        jobs = super().get_object()
+        # Creating the deal viewing history
+        user = self.request.user
+        if not JobRead.objects.filter(reader=user, job_read=jobs).exists():
+            JobRead.objects.create(reader=user, job_read=jobs)
+        return jobs
 
 class JobUpdateView(admin, generic.UpdateView):
     template_name = "jobs/job_update.html"
@@ -77,8 +87,7 @@ class ApplicationCreateView( LoginRequiredMixin, CreateView):
         form.instance.email = self.request.user.email
         form.instance.job = Jobs.objects.get(pk=self.kwargs['pk'])
         return super().form_valid(form)
-
-    
+ 
 class ApplicationResumeUploadView(generic.View):
     def get(self, request, pk):
         application = get_object_or_404(JobApplication, pk=pk)
@@ -107,6 +116,10 @@ class ApplicationDeleteView(LoginRequiredMixin, CreateView):
         application.delete()
         return redirect('job_detail', pk=job_pk)
 
+
+def job_read_history(request):
+    # Assuming you have the user object available
+    return render(request, 'jobs/job_read_history.html', {'reader': request.user})
      
 class JobSearchView(ListView):
     model = Jobs

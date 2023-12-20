@@ -1,0 +1,21 @@
+{% extends "base_content.html" %}
+
+{% block content %}
+<section class="white py-3">
+  <h3>Product Adds Viewed History</h3>
+  <hr>
+  <ul>
+    {% for deal in user.productdealread_set.all %}
+     <p> <li>
+        <a href="{% url 'product_deals:product-deal-detail' deal.product_deal_read.id %}">
+          {{ deal.product_deal_read.product_deal_title }}
+        </a>
+         - {{ deal.timestamp|date:"F j, Y, g:i a" }}-
+      </li></p>
+    {% empty %}
+      <li>No blog posts have been marked as read.</li>
+  {% endfor %}
+    
+</ul>
+</section>
+{% endblock %}
