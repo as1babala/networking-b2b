@@ -51,7 +51,7 @@
       </style>
   </head> 
   
-  <section  style="width:100%" class="rounded my-3">
+  <section  style="width:100%" class="rounded ">
     <div class="row bottom-section">
       <div class="col-md-12 ">
         <div class="bottom-image home-image">
@@ -68,7 +68,7 @@
   </section>
 
 
-  <section style="width:100%" class="section_color1 py-5 my-2 rounded text-white">
+  <section style="width:100%" class="section_color1 py-3 my-2 rounded text-white">
     <div class="container-fluid" >
       <h3 style="align-center"> Our Available Services Deals </h3>
       <div class="row">
@@ -78,7 +78,7 @@
           <div class="card mb-4 box-shadow">
             <div class="card-body card-3  ">
               <!--p class="list"><img src="{% static 'images/forest.jpeg' %}" alt="Smiley face" width="90%" height="250" class="float-start"-->
-               <img src="{{ deal.deal_picture.url}}" alt="testing"  class="img-responsive img-fluid rounded my-3 center" style="width: 95%; height: 150px;">
+               <!--img src="{{ deal.deal_picture.url}}" alt="testing"  class="img-responsive img-fluid rounded my-3 center" style="width: 95%; height: 150px;"-->
               <p class="list"><i><b>Deal Category:</b></i> {{ deal.deal_category }}<br>
                <i><b>Dealer Type:</b></i> <span class="about"> </span> {{ deal.deal_type }} <br> 
                 <i><b>Location:</b></i>  {{ deal.deal_country }}, {{deal.deal_city }} 
@@ -112,7 +112,7 @@
   </section>
 
 
-  <section style="width:100%" class="section_color4 py-5 my-2 rounded text-white">
+  <section style="width:100%" class="section_color4 py-3 my-2 rounded text-white">
     <div class="container-fluid" >
       <h3 style="align-center"> Our Available Products Deals </h3>
       <div class="row">
@@ -122,7 +122,7 @@
           <div class="card mb-4 box-shadow">
             <div class="card-body card-3  ">
               <!--p class="list"><img src="{% static 'images/forest.jpeg' %}" alt="Smiley face" width="90%" height="250" class="float-start"-->
-               <img src="{{ deal.product_image.url}}" alt="testing"  class="img-responsive img-fluid rounded my-3 center" style="width: 95%; height: 150px;">
+               <!--img src="{{ deal.product_image.url}}" alt="testing"  class="img-responsive img-fluid rounded my-3 center" style="width: 95%; height: 150px;"-->
               <p class="list"><i>Title:</i> {{ deal.product_name }}<br>
                <i>Dealer name:</i> <span class="about"> </span> {{ deal.dealer }} <br> 
                 <i>Dealer email:</i> <span class="about"><i class="fa-sharp fa-solid fa-at"></i></span> {{ deal.email }} 
@@ -156,7 +156,7 @@
   </section>
 
 
-  <section style="width:100%" class="section_color2 py-5 rounded">
+  <section style="width:100%" class="section_color2 py-3 rounded">
     <div class="container-fluid">
       <h3 style="align-center" class="text-white"> Blogs </h3>
       <div class="row">
@@ -167,7 +167,7 @@
             <div class="card-body card-3 ">
               <p class="img-fluid rounded-start"><img src="{{blog.blog_image.url}}" alt="Smiley face" class="img-responsive img-fluid rounded my-3 center" style="width: 95%; height: 150px;">
               <h4 class="list blog">{{ blog.categories }} </br> {{ blog.title|truncatewords:'4' }}</h4>
-              <p class=" list blog">{{ blog.content|truncatewords:'25'|safe }}</p>
+              <p class=" list blog">{{ blog.content|truncatewords:'20'|safe }}</p>
               <p>  <small class="text-muted"><i>Date created: </i>{{ blog.created_on|date }}</small></p>
             </div>
           </div>
@@ -199,7 +199,7 @@
   </section>
 
 
-  <section style="width:100%" class="section_color3 py-5 my-2">
+  <section style="width:100%" class="section_color3 py-3 my-2">
     <div class="container-fluid">
       <h4 style="align-center" class="text-white"> Training Schedule </h4>
       <div class="row">
@@ -244,7 +244,7 @@
     </div>
   </section>
 
-  <section style="width:100%" class="section_color2 py-5 rounded">
+  <section style="width:100%" class="section_color2 py-3 rounded">
     <div class="container-fluid">
       <h4 style="align-center" class="text-white"> Farming Technical Forms </h4>
       <div class="row">
@@ -287,14 +287,14 @@
   <section class=" py-3">
     <div class="card bg-dark text-white" style="width:100% height:250">
       <img src="{% static 'images/soybeans_green.jpeg' %}" class="card-img" alt="Soybeans"/>
-      <div class="card-img-overlay mx-5 my-3 text-center">
+      <div class="card-img-overlay text-center">
         <h2 class="card-title">Site Statistics:</h2>
-        <span class="about"><h3 class=""><b>{{experts_count}}</b></h3></br><p class=""> Number of Experts  </P></span>
+        <span class="about2"><h3 class=""><b>{{experts_count}}</b></h3></br><p class=""> Experts Registered  </P></span>
 
-          <span class="about"><h3 class="">{{companies_count}}</h3></br><p class=""> Number of Registered Companies  </P></span>
+          <span class="about2"><h3 class="">{{companies_count}}</h3></br><p class=""> Registered Companies  </P></span>
         
-            <span class="about"><h3 class=""><b>{{deals_count}}</b></h3></br><p class="">Number of Services Deals  </P></span>
-              <span class="about"><h3 class=""><b>{{product_deals_count}}</b></h3><p class="">Number of Products Deals  </P> </span>
+            <span class="about2"><h3 class=""><b>{{deals_count}}</b></h3></br><p class="">Services Deals Announcements  </P></span>
+              <span class="about2"><h3 class=""><b>{{product_deals_count}}</b></h3><p class="">Products Deals Announcements  </P> </span>
         
       </div>
     </div>
