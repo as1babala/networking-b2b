@@ -18,7 +18,7 @@ urlpatterns = [
     path('<slug>/', ExpertProfileDetailView.as_view(), name='expert-profile-detail'),
     path('<slug>/update/', ExpertProfileUpdateView.as_view(), name='expert-profile-update'),
     #path('<slug>/delete/', ExpertProfileDeleteView.as_view(), name='expert-profile-delete'),
-    path('expert/search/', ExpertProfileDeleteView.as_view(), name='expert-profile-search'),
+    path('expert/search/', ExpertProfileSearchView.as_view(), name='expert-profile-search'),
     #path('<slug>/', ExpertProfileDetailView.as_view(), name='expert-portfolio-detail'),
     #path('<int:pk>/', profile_info, name='expert-profile-detail'),
     #path('expert/message/create/', ExpertMessagingCreateView.as_view(), name='expert-message-create'),
@@ -27,6 +27,8 @@ urlpatterns = [
     path('expert/messages/', ExpertMessageListView.as_view(), name='expert-message-list'),
     path('expert/messages/received', ExpertMessageReceivedListView.as_view(), name='expert-received-message-list'),
     path('expert/messages/sent', ExpertMessageSentListView.as_view(), name='expert-sent-message-list'),
+    
+    path('admin-profile-list/' , AdminProfileListView.as_view(), name='admin-profile-list'),
     
 ]
 

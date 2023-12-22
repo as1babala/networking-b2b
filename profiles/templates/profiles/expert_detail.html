@@ -34,12 +34,15 @@
 
 <section class="">
   <div class="container-fluid row" > 
-    
+
+    <div class="col-md-1 col">
+    </div>
+    <div class="col-md-10 col">
    <p class="white"><a href="{% url 'profiles:expert-profile-list' %}">profiles list</a></p> 
 
     <h3 class="white">User: {{profiles.user}}</h3>
-    <img src="{{profiles.avatar.url}}" alt="Smiley face" width="250" height="250" class="img-responsive flot-start">
-    <hr>
+    <img src="{{profiles.avatar.url}}" alt="Smiley face" width="250" height="250" class="img-responsive flot-start social-circle">
+    <hr >
     
     <div class="card-body">
         <p class="white"><i><b>Full Name:</b></i> {{ profiles.first_name}} {{ profiles.last_name}} </p>
@@ -59,9 +62,9 @@
 
   {% for education in education %}
   <ul class="white">
-    <li><b>Institution:</b> {{education.institution_name }} <b> Specialization: </b>{{ education.specialization}} <b>Minor: </b>{{education.minor}} </br> <b>Start Date:</b> {{education.start_date|date}} <b>End Date:</b> {{education.end_date|date}}
+    <li><b>Institution:</b> {{education.institution_name }} <br><b> Specialization: </b>{{ education.specialization}}<br> <b>Minor: </b>{{education.minor}} </br> <b>From: </b> {{education.start_date|date}} <b>To: </b> {{education.end_date|date}}
   
-    {% if education.graduated %} Graduated on {{education.end_date}} {% else %} Not graduated yet {% endif %} </br> <b><u>Comment: </u></br></b>{{ education.description}}
+    {% if education.graduated %} Graduated on {{education.end_date}} {% else %} Not graduated yet {% endif %} </br><br> <b><u>Comment: </u></br></b>{{ education.description}}
   </li> </ul>
     {% endfor %}
 </div>
@@ -73,8 +76,8 @@
 
   {% for work in work_experience %}
   <ul class="white">
-<li><b>Comapny Name:</b> {{ work.company_name}}   <b>Location:</b> {{work.work_city}},  {{work.work_country}} <b>From:</b> {{work.start_date}} <b>To:</b> {{work.end_date}}</br>
-<b>Position:</b> {{work.position}}  <b>Title:</b> {{work.job_title}}</br> <b>Position Description:</b>{{work.description}}
+<li><b>Comapny Name:</b> {{ work.company_name}}   <br><b>Location:</b> {{work.work_city}},  {{work.work_country}} <br><b>From:</b> {{work.start_date}} <b>To:</b> {{work.end_date}}</br>
+<b>Position:</b> {{work.position}}  <br><b>Title:</b> {{work.job_title}}</br></br> <b><u>Position Description: </u></b></br>{{work.description}}
  </li> </ul>
     {% endfor %} 
 </div>
@@ -84,7 +87,7 @@
       
       {% for portfolio in expert_portfolio %}
     <ul>
-  <li><b>Client Name:</b>{{ portfolio.client_name }} <b>  Reference Contact:</b>{{portfolio.reference_email}} </br><b>Project title: </b>{{ portfolio.project_title}}, {{Portfolio.project_type}} <b>Location:</b>{{ portfolio.project_city}}, {{ portfolio.project_country}}</br> <b>From:</b> {{ portfolio.start_date}} <b>To:</b> {% if portfolio.end_date %}{{portfolio.end_date}} {% else %} Present {% endif %}</br> <b>Technologies:</b>{{ portfolio.technologies_used}}</br></br><b>Project Description:</b></br>{{portfolio.description}} 
+  <li><b>Client Name: </b>{{ portfolio.client_name }} </br><b>  Reference Contact:</b>{{portfolio.reference_email}} </br><b>Project title: </b>{{ portfolio.project_title}}, {{Portfolio.project_type}} </br><b>Location:</b>{{ portfolio.project_city}}, {{ portfolio.project_country}}</br> <b>From:</b> {{ portfolio.start_date}} <b>To:</b> {% if portfolio.end_date %}{{portfolio.end_date}} {% else %} Present {% endif %}</br> <b>Technologies: </b>{{ portfolio.technologies_used}}</br></br><b><u>Project Description: </u></b></br>{{portfolio.description}} 
 
       {% endfor %}
     </div>
@@ -110,6 +113,9 @@
 {% endif %}
 
 </div>
+</div>
+</section>
+
 
 <!--script>
   function myFunction() {

@@ -24,11 +24,13 @@ class UserCreateForm(UserCreationForm):
         model = CustomUser
         fields = [
            
-            'salutations','first_name','last_name', 'username', 'email', 'is_expert' ,'company_name',
+            'salutations','first_name','last_name', 'username', 'email' ,'company_name',
             'commercial', 'technical', 'financial', 'management', 'agreement'
             ]
         widgets = {
-        'password': forms.PasswordInput()
+        'password': forms.PasswordInput(),
+       
+        
         #'email': forms.EmailField()
         
         }

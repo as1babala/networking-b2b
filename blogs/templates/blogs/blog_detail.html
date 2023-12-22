@@ -75,48 +75,76 @@
 <p><small> Created On: <i>{{blog.created_on |date}} </i></small></p>
 </section>
 
+
 <section style="width:100%" class=" my-2 rounded">
-<div class="shadow p-3 mb-5 bg-body-tertiary rounded " style="border-width:0;color:gray;background-color: #133b5c">
-<h3>Reviews</h3>
-<hr style="height:3px;border-width:0;color:gray;background-color:gray">
-{% for review in reviews %}
-  <p>by {{ review.user }} on {{ review.created_on|date }} </p>
+  <button type="button" class="collapsible rounded btn" style="width:100%"><h4>To Read reviews click here</h4></button>
   
-  <p>{{ review.comment }}</p>
-  <p>Rating: {{ review.rating }}</p>
-<div>
-  {% for reply in replies %}
-                <div class="card mb-2 ml-3">
-                    <div class="card-body">
-                        <h6 class="card-subtitle mb-2 text-muted">{{ reply.replier }}</h6>
-                        <p class="card-text">{{ reply.comment }}</p>
-                    </div>
-                </div>
-            {% endfor %}
-            <a href="{% url 'blogs:reply-create' review.id %}" class="card-link">Reply</a>
-        </div>
-  <hr>
-  {% empty %}
-    <p>No reviews yet.</p>
-
-  {% endfor %}
+    <div class="shadow p-3 mb-5 bg-body-tertiary rounded content" style="border-width:0;color:gray;background-color: #133b5c">
+      <h3>Reviews</h3>
+      <hr style="height:3px;border-width:0;color:gray;background-color:gray">
+      {% for review in reviews %}
+        <p>by {{ review.user }} on {{ review.created_on|date }} </p>
+        
+        <p>{{ review.comment }}</p>
+        <p>Rating: {{ review.rating }}</p>
+      <div>
+        {% for reply in replies %}
+                      <div class="card mb-2 ml-3">
+                          <div class="card-body">
+                              <h6 class="card-subtitle mb-2 text-muted">{{ reply.replier }}</h6>
+                              <p class="card-text">{{ reply.comment }}</p>
+                          </div>
+                      </div>
+                  {% endfor %}
+                  <a href="{% url 'blogs:reply-create' review.id %}" class="card-link">Reply</a>
+              </div>
+        <hr>
+        {% empty %}
+          <p>No reviews yet.</p>
+      
+        {% endfor %}
+      </div>
+  
 </div>
+    <hr>
 
-<div class="shadow p-3 mb-5 bg-body-tertiary rounded section_color2 " >
+
+</section>
+<section class="">
+  <button type="button" class="btn collapsible rounded" style="width:100%"><h4>Clich Here to add a review</h4></button>
+  
+  <div class="shadow p-3 mb-5 bg-body-tertiary rounded content" style="border-width:0;color:gray;background-color: #133b5c">
+
     {% if user.is_authenticated %}
-    <h3 class="text-white">Add a review</h3>
     <form method="POST" action="{% url 'blogs:review-create' pk=blog.pk %}" class="white">
         {% csrf_token %}
         {% bootstrap_form form %}
         {% buttons %}
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Post Review</button>
         {% endbuttons %}
     </form>
   {% endif %}
   </div>
 </div>
-</div>
+
 </section>
 
+
+<script type="text/javascript">
+  var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+</script>
 {% include 'footer.html'%}
 {% endblock content %}

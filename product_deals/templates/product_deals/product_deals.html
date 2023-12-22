@@ -15,7 +15,7 @@
   }
   </style>
 </head>
-<section class="" style="width:100%">
+<section class="py-3" style="width:100%">
   <div class="p-3 mb-2 bg-info text-blue " >
     <!--h2 class="text-4xl text-gray800"></h2-->
     <form class="d-flex" role="search" action="{% url 'product_deals:product-deal-search' %}" method='GET' enctype="">
@@ -49,19 +49,21 @@
               <p class="list blog"><span class="about"></span><b>Product Category:</b> {{ product_deal.product_category }} </br>
                 <b>Deal:</b> {{ product_deal.product_deal_title }} - <span class="about2">{{product_deal.opportunity_type}}</span></br>
               
-              <span class="about"> </span><b>Contact email:</b> {{ product_deal.email }}</p>
+              <span class="about"> </span><b>Announcer:</b> {{ product_deal.dealer }} - {{ product_deal.email }} </p>
               
               <p class="list blog"><b>Deal description</b></br> {{ product_deal.product_description|truncatewords:'50'|safe }} </br></br>
               <small  class="text-muted"><b>Date Posted: </b> {{ product_deal.announcement_date|date }}</small></p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                   {% if product_deal.user == request.user or user.is_admin %}
-              <p><button type="button" class="btn btn-secondary mx-2" onclick="location.href='{% url 'product_deals:product-deal-update' product_deal.pk %}'"><i class="fa-sharp fa-solid fa-pen-to-square"></i> Update</button></p>
+              <p><button type="button" class="btn btn-secondary mx-2" onclick="location.href='{% url 'product_deals:product-deal-update' product_deal.pk %}'"><i class="fa-sharp fa-solid fa-pen-to-square"></i> Edit</button></p>
               {% endif %} 
+
+              
               <p><button type="button" class="btn btn-secondary mx-2" onclick="location.href='{% url 'product_deals:product-deal-detail' product_deal.pk %}'"><i class="fa-sharp fa-solid fa-circle-info"></i> More Details </p>
               
               {% if user.is_admin %}
-               <p><button type="button" class="btn btn-danger" onclick="location.href='{% url 'product_deals:product-deal-delete' product_deal.pk %}'"><i class="fa-sharp fa-solid fa-trash-can"></i> Delete blog </p-->
+               <p><button type="button" class="btn btn-danger" onclick="location.href='{% url 'product_deals:product-deal-delete' product_deal.pk %}'"><i class="fa-sharp fa-solid fa-trash-can"></i> Delete </p-->
                 {% endif %}
                
                </div>

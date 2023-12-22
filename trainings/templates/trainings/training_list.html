@@ -30,8 +30,8 @@
             <!--img src="{% static 'images/user-solid.svg' %}" style="width:10 height=10"-->
             <!--img class="card-img-top" src="{% static 'images/technic.jpeg' %}" alt="{{ consultant.user }}"-->
             <div class="card-body card-3">
-            <p class="list"><i><b>Training Title:</b></i> {{ training.training_title}} &nbsp &nbsp <b><i>Category of Training:</i></b> {{ training.domain}}</p>
-              <p class="list"><i><b>Teacher:</b></i> {{ training.teacher }} &nbsp&nbsp <b><i>Teacher Email: </i></b> {{ training.email }}</p>
+            <p class="list"><i><b>Training Title:</b></i> {{ training.training_title}} &nbsp|&nbsp</i></b> {{ training.domain}}</p>
+              <p class="list"><i><b>Teacher :</b></i> {{ training.teacher }} &nbsp|&nbsp <b><i> </i></b> {{ training.email }}</p>
               <!--p class="list"><span class="about"><i class="fa-sharp fa-solid fa-at"></i> {{ training.email }} </p-->
               <p class="list"><span class="about"> </span><b>Training Type:</b> {{ training.training_type }} &nbsp &nbsp {{ training.duration }} &nbsp &nbsp {{ training.training_mode }}</p>
               <p class="list"><i></i> <b>Teacher's Biographie:</b> {{ training.teacher_bio|truncatewords:'50' }}</p>

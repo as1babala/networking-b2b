@@ -139,7 +139,7 @@ class SearchProjectView(ListView):
         object_list = Projects.objects.filter(
             Q(company_name__icontains=query) | 
             Q(project_name__icontains=query)  |
-            Q(review__icontains=query)  |
+            Q(project_initiator__icontains=query)  |
             Q(reviewer__icontains=query)|
             Q(approver__icontains=query)|  
             Q(create_on__icontains=query)

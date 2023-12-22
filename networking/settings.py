@@ -229,15 +229,31 @@ MEDIA_ROOT=os.path.join(BASE_DIR, "media")
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+##########
 
-EMAIL_BACKEND ='django.core.mail.backends.smtp.EmailBackend'
+# For development (console backend)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+# For production (using SMTP) uncomment these lines for production
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+#EMAIL_HOST = 'your_smtp_host'
+#EMAIL_PORT = your_smtp_port
+#EMAIL_HOST_USER = 'your_email@example.com'
+#EMAIL_HOST_PASSWORD = 'your_password'
+#EMAIL_USE_TLS = True
+# EMAIL_USE_SSL = True # Use this for SSL instead of TLS
+
+
+
+
+#########
+
+#EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 #EMAIL_FILE_PATH = [os.path.join(BASE_DIR, "sent_emails")]
 #EMAIL_ROOT = '/sent_emails/'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
+#EMAIL_HOST = 'smtp.gmail.com'
+#EMAIL_USE_TLS = True
+#EMAIL_PORT = 587
 EMAIL_HOST_USER = 'babala.assih@gmail.com' # this email will be used to send emails
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS') # host email password required
 # now sign in with your host gmail account in your browser
@@ -245,7 +261,7 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS') # host email password require
 # https://myaccount.google.com/lesssecureapps
 # otherwise you will get SMTPAuthenticationError at /contactus
 # this process is required because google blocks apps authentication by default
-EMAIL_RECEIVING_USER = ['to@gmail.com'] # email on which you will receive messages sent from website
+#EMAIL_RECEIVING_USER = ['to@gmail.com'] # email on which you will receive messages sent from website
 
 SITE_ID = 1
 

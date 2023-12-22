@@ -1,24 +1,32 @@
 {% extends "base_content.html" %}
 
 {% block content %}
+<section class="py-3">
    <p class="white"><a href="{% url 'trainings:training-list' %}">Trainings list</a></p> 
 
-    <h3 class="white">Training title: {{trainings.training_title}}</h3>
+    <h3 class="white">Training title: {{trainings.training_title}} - {{trainings.domain}}</h3>
     <hr>
-    
     <div class="card-body">
-        <p class="white"><i><b>Training Title:</b></i> {{ trainings.training_title}}
-          <br/><br/><i><b>Teacher:</b></i> {{ trainings.teacher }}
-          <br/><br/><span class="about"><i class="fa-sharp fa-solid fa-at"></i> {{ trainings.email }} 
-            <br/><br/> </span><b>Training Type:</b> {{ trainings.training_type }}
+        <p class="white"><i><b>Training Title:</b></i> {{ trainings.training_title}} 
+          <br/><i><b>Teacher:</b></i> {{ trainings.teacher }} - {{trainings.email}}
+         </br> </span><b>Training Type:</b> {{ trainings.training_type }}
+        <br/><b>Training Days:</b>  {% if trainings.monday %} Monday | {% endif %}
+            {% if trainings.tuesday %} Tuesday |  {% endif %} 
+            {% if trainings.wednesday %} Wednesday | {% endif %}
+            {% if trainings.thursday %} Thursday |  {% endif %}
+            {% if trainings.friday %} Friday |  {% endif %}
+            {% if trainings.saturday %} Saturday |  {% endif %}
+          </br> </span><b>Training Venue (Location):</b> {{ trainings.venue_address}}, {{ trainings.city}}, {{ trainings.country}}
+          <br/> <b><i>Teacher Mode: </i></b>{{ trainings.training_mode }} | {{trainings.duration}}
             <br/><br/> <b><i>Teacher's Biographie:</i></b> <br/>{{ trainings.teacher_bio }}
             <br/><br/> <b><i>Training Description:</i></b>  <br/>{{ trainings.description }}
             <br/><br/> <b><i>Training Cost ($):</i></b>  {{ trainings.cost }}</p>
 
-            <p class="white"><i><span class="about">Start From : </i>{{ trainings.start_date|date }}  </span>
-            <i><span class="about">To: </i>{{ trainings.end_date|date }}  </span></p>
-            <p class="white"><i><span class="about">Time From: </i>{{ trainings.start_time|time }}  </span>
-           <i><span class="about">To: </i>{{ trainings.end_time|time }}  </span></p>
+
+            <p class="white"><i><small><b>Start From : </b></i>{{ trainings.start_date|date }}  </small>
+            <i><small><b>To: </b></i>{{ trainings.end_date|date }}  </small></br>
+            <i><small><b>Time From: </b></i>{{ trainings.start_time|time }}  </small>
+           <i><small><b>To: </b></i>{{ trainings.end_time|time }}  </small></p>
     
 <hr />
 {% if user.is_admin %}
@@ -32,5 +40,5 @@
 <button type="button" class="btn btnfont btnbg mx-2" onclick="location.href='{% url 'trainings:non-member-create' trainings.pk %}'">Apply</button>
 {% endif %}
 
-
+            </section>
 {% endblock %}

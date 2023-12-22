@@ -113,13 +113,15 @@ def SignUp(request):
     if request.method == 'POST':
         form = UserCreateForm(request.POST)
         if form.is_valid():
-            user = form.save()# old line of code just remove the comment to activate it
-            #user = form.save(commit=False) #new line
+            #user = form.save()# old line of code just remove the comment to activate it
+            user = form.save(commit=False) #new line
             #user.is_active=False # new line
             #user.save() #new line
             first_name = user.first_name # old line of code just remove the comment to activate it
             last_name = user.last_name # old line of code just remove the comment to activate it
             name = first_name + ' ' + last_name # old line of code just remove the comment to activate it
+            user.is_expert = True
+            user.save()
             #UserProfile.objects.create(name=name, user=user)
             login(request, user) # old line of code just remove the comment to activate it
             #return redirect('accounts:home-page') 
@@ -216,3 +218,49 @@ class EducationCreateView( LoginRequiredMixin, CreateView):
         return super().form_valid(form) 
 
 
+def AdminSignUp(request):
+    if request.method == 'POST':
+        form = UserCreateForm(request.POST)
+        if form.is_valid():
+            #user = form.save()# old line of code just remove the comment to activate it
+            user = form.save(commit=False) #new line
+            #user.is_active=False # new line
+            #user.save() #new line
+            first_name = user.first_name # old line of code just remove the comment to activate it
+            last_name = user.last_name # old line of code just remove the comment to activate it
+            name = first_name + ' ' + last_name # old line of code just remove the comment to activate it
+            user.is_admin = True
+            user.is_active = False
+            user.save()
+            #UserProfile.objects.create(name=name, user=user)
+            login(request, user) # old line of code just remove the comment to activate it
+            #return redirect('accounts:home-page') 
+            #activateEmail(request, user, form.cleaned_data.get('email')) # new line
+            return redirect('accounts:home-page')
+    else:
+        form = UserCreateForm()
+    return render(request, 'accounts/admin_signup.html', {'form': form})
+
+
+def EmployeeSignUp(request):
+    if request.method == 'POST':
+        form = UserCreateForm(request.POST)
+        if form.is_valid():
+            #user = form.save()# old line of code just remove the comment to activate it
+            user = form.save(commit=False) #new line
+            #user.is_active=False # new line
+            #user.save() #new line
+            first_name = user.first_name # old line of code just remove the comment to activate it
+            last_name = user.last_name # old line of code just remove the comment to activate it
+            name = first_name + ' ' + last_name # old line of code just remove the comment to activate it
+            user.is_employee = True
+            user.is_active = False
+            user.save()
+            #UserProfile.objects.create(name=name, user=user)
+            login(request, user) # old line of code just remove the comment to activate it
+            #return redirect('accounts:home-page') 
+            #activateEmail(request, user, form.cleaned_data.get('email')) # new line
+            return redirect('accounts:home-page')
+    else:
+        form = UserCreateForm()
+    return render(request, 'accounts/employee_signup.html', {'form': form})

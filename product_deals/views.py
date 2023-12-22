@@ -212,6 +212,7 @@ class RfiDeleteView(LoginRequiredMixin, generic.DeleteView):
     def get_success_url(self):
         return reverse("rfi:rfi-list")
 
+
 class ProductDealsSearchView(ListView):
     model = ProductDeals
     template_name = "product_deals/product_deal_search.html"
@@ -219,9 +220,8 @@ class ProductDealsSearchView(ListView):
     def get_queryset(self):  # new
         query = self.request.GET.get("q")
         object_list = ProductDeals.objects.filter(
-            
-            Q(dealer__icontains=query)| 
             Q(email__icontains=query) |
+            #Q(dealer__icontains=query)| 
             Q(company_name__icontains=query)|
             Q(product_name__icontains=query) |
             Q(product_category__icontains=query) |

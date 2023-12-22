@@ -153,152 +153,7 @@ def pre_save_product(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = slugify(instance.name)        
     
-''' 
 
-class EmployeeProfile(RandomIDModel):
-#class Employee(models.Model):
-    slug = models.SlugField(unique=True)
-    user=models.OneToOneField(CustomUser,on_delete=models.CASCADE, null=True, blank=True)
-    user_type = models.OneToOneField(CustomUser, on_delete=models.CASCADE, default='EMPLOYEE', related_name='employees')
-    DOB = models.DateField()
-    prof_pic = models.ImageField(upload_to='employee_pictures/', default='blog_pics/person_icon 1.png')
-    street_number = models.CharField(max_length=5, default="")
-    city = models.CharField(max_length = 66, default="")
-    state = models.CharField(default='', max_length = 2)
-    country = models.CharField(choices=COUNTRIES, max_length =2, default="" )
-    department = models.CharField(choices=DEPARTMENTS, max_length = 50, default="")
-    emp_title = models.CharField(choices=EMP_TITLE, max_length = 3, default="")
-    phone_code = models.CharField(max_length=10, choices=PHONE_CODE, default="")
-    phone_number = models.CharField(max_length=10, default="")
-    email = models.EmailField()
-    sex = models.CharField(choices=SEX, max_length=1, default="")
-    contract = models.CharField(choices=CONTRACT, max_length=2, default="")
-    hired_date = models.DateField()
-    #start_date = models.DateField(1/1/1900)
-    is_employee = models.BooleanField('Is employee', default=True)
-    year_since_hired =  models.PositiveIntegerField(null=True)
-    bio = models.TextField(max_length=1000)
-    created_on = models.DateTimeField(auto_now_add = True)
-    updated_on = models.DateTimeField( auto_now=True) 
-   
-    class Meta: 
-        verbose_name = "Employee"
-        verbose_name_plural = "Employees"
-
-    @property 
-    def nbr_yr_exp(self):
-        now = timezone.now().date()
-        #diff = now - self.start_date
-        nbr_yr_exp =  now - self.hired_date
-        nbr_yr_exp_stripped = str(nbr_yr_exp).split(" ", 1)[0]
-        nbr_exp = int(nbr_yr_exp_stripped)
-        yrs_exp = round((nbr_exp/365)) 
-        return yrs_exp
-    
-    @property 
-    def emp_age(self):
-        now = timezone.now().date()
-        emp_age =  now - self.DOB
-        emp_age_stripped = (str(emp_age).split(" ", 1)[0])
-        nbr = int(emp_age_stripped)
-        nbr_yrs = round((nbr/365),0)
-       
-        return nbr_yrs
-    
-    @property
-    def get_name(self):
-        return self.user.first_name+" "+self.user.last_name
-    
-    @property
-    def get_id(self):
-        return self.id
-    
-    
-    def get_absolute_url(self):
-        return reverse("employees:employee-detail", kwargs={"slug": self.slug})
-    
-    def __str__(self):
-        return self.email
-
-##For pre_save; with this, the slug will not be created if already exist
-def pre_save_employee(sender, instance, *args, **kwargs):
-    if not instance.slug:
-        instance.slug = slugify(instance.user)
-
-def post_save_employee(sender, instance, created, *args, **kwargs):
-    if created:
-        if instance.is_employee:
-            EmployeeProfile.objects.create(user=instance, last_name = instance.last_name, first_name = instance.first_name, 
-                                    email = instance.email
-            )             
-
-
-
-class Experts(RandomIDModel):
-#class Experts(models.Model):
-    slug = models.SlugField(unique=True)
-    user=models.OneToOneField(CustomUser,on_delete=models.CASCADE, related_name='expert_users', default='')
-    #user_type = models.OneToOneField(CustomUser, on_delete=models.CASCADE, default='EXPERT', related_name='experts')
-    first_name = models.CharField(max_length=100, default="")
-    last_name = models.CharField(max_length=100, default="")
-    company_name = models.CharField(max_length=50, default="")
-    DOB = models.DateField(null=True)
-    prof_pic = models.ImageField(upload_to='document/', default='blog_pics/person_icon 1.png')
-    street_number = models.CharField(max_length=5, default="", blank=True, null=True)
-    city = models.CharField(max_length = 66, default="")
-    state = models.CharField( max_length = 2, default="")
-    country = models.CharField(choices=COUNTRIES, max_length =2, default="" )   
-    phone_code = models.CharField(max_length=10, choices=PHONE_CODE, default="")
-    phone_number = models.CharField(max_length=10, default="")
-    email = models.EmailField()
-    sex = models.CharField(choices=SEX, max_length=1)
-    commercial = models.BooleanField('Would like to be a commercial partner', default=False)
-    technical = models.BooleanField('Would like to be a technical partner', default=False)
-    financial = models.BooleanField('Would like to be a financial partner', default=False)
-    management = models.BooleanField('Would like to be a management partner', default=False)
-    is_expert = models.BooleanField('Is Expert', default=True)
-    bio = models.TextField(max_length=1000)
-    #resume = models.FileField(upload_to='Expert_resumes/', default="")
-    created_on = models.DateTimeField(auto_now_add = True)
-    updated_on = models.DateTimeField( auto_now=True) 
-   
-    class Meta: 
-        verbose_name = "Expert"
-        verbose_name_plural = "Experts"
-    
-    @property 
-    def consultant_age(self):
-        now = timezone.now().date()
-        consultant_age =  now - self.DOB
-        consultant_age_stripped = (str(consultant_age).split(" ", 1)[0])
-        nbr = int(consultant_age_stripped)
-        nbr_yrs = round((nbr/365),0)
-       
-        return nbr_yrs
-    
-    @property
-    def get_id(self):
-        return self.id
-    
-    def get_absolute_url(self):
-        return reverse("experts:expert-detail", kwargs={"slug": self.slug})
-    
-    def __str__(self):
-        return self.user.email
- 
-def pre_save_expert(sender, instance, *args, **kwargs):
-    if not instance.slug:
-        #instance.slug = slugify(f"{instance.user}-{instance.id}")
-        instance.slug = slugify(instance.id)
-       
-def post_save_expert(sender, instance, created, *args, **kwargs):
-    if created:
-        if instance.is_expert:
-            Experts.objects.create(user=instance, last_name = instance.last_name, first_name = instance.first_name, 
-                                    company_name = instance.company_name, email = instance.email, commercial=instance.commercial, technical=instance.technical,
-                                    financial=instance.financial, management=instance.management
-            )             
-'''
 
 class AdminProfile(RandomIDModel):
     slug = models.SlugField(unique=True)
@@ -364,7 +219,9 @@ def post_save_admin_p(sender, instance, created, *args, **kwargs):
 class EmployeeProfile(RandomIDModel):
     slug = models.SlugField(unique=True)
     user=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
-    DOB = models.DateField()
+    first_name = models.CharField(max_length=100, default="")
+    last_name = models.CharField(max_length=100, default="")
+    DOB = models.DateField(null=True, blank=True)
     prof_pic = models.ImageField(upload_to='employee_pictures/', default='blog_pics/person_icon 1.png')
     street_number = models.CharField(max_length=5, default="")
     city = models.CharField(max_length = 66, default="")
@@ -377,7 +234,7 @@ class EmployeeProfile(RandomIDModel):
     email = models.EmailField()
     sex = models.CharField(choices=SEX, max_length=1, default="")
     contract = models.CharField(choices=CONTRACT, max_length=2, default="")
-    hired_date = models.DateField()
+    hired_date = models.DateField(null=True, blank=True)
     #start_date = models.DateField(1/1/1900)
     is_employee = models.BooleanField('Is employee', default=False)
     year_since_hired =  models.PositiveIntegerField(null=True)
@@ -601,65 +458,7 @@ def post_save_company(sender, instance, created, *args, **kwargs):
             Enterprises.objects.create(
                 user=instance, company_name=instance.company_name, commercial=instance.commercial, technical=instance.technical, financial=instance.financial, management=instance.management
             )
-'''
-class CompanyProfile(RandomIDModel):
-    slug = models.SlugField(unique = True )
-    user=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=100, default="")
-    last_name = models.CharField(max_length=100, default="")
-    email = models.EmailField()
-    company_name = models.CharField(max_length=50)
-    company_type = models.CharField(max_length=50, choices=TYPE_COMPANIES, default = '')
-    company_email = models.EmailField()
-    company_address = models.CharField(max_length=255)
-    company_city = models.CharField(max_length=100)
-    company_country = models.CharField(max_length=255, choices=COUNTRIES)
-    industry = models.ForeignKey(Industry, on_delete=models.SET_NULL, null=True)
-    sector = models.ForeignKey(Sectors, on_delete=models.SET_NULL, null=True)
-    company_web = models.CharField(max_length=255)
-    phone_code = models.CharField(max_length=10, choices=PHONE_CODE)
-    phone_number = models.CharField(max_length=10)
-    number_employees = models.CharField(max_length=30, choices=EMP_NUMBER, default='')
-    activity_description = models.TextField(max_length=500)
-    annual_revenue = models.CharField(max_length = 50, choices=REVENUE, default='')
-    is_company = models.BooleanField('Would like to register my company', default=False)
-    commercial = models.BooleanField('Would like to be a commercial partner', default=False)
-    technical = models.BooleanField('Would like to be a technical partner', default=False)
-    financial = models.BooleanField('Would like to be a financial partner', default=False)
-    management = models.BooleanField('Would like to be a management partner', default=False)
-    active = models.BooleanField(default=True)
-    created_on = models.DateTimeField(auto_now_add=True)
-    updated_on = models.DateTimeField(auto_now=True)
-    
-    class Meta:
-        ordering = ('-created_on',)
-        verbose_name = "Company Profile"
-        verbose_name_plural = "Company Profiles"
-    
-    def __str__(self):
-        return self.user.email
-    
-    @property
-    def get_id(self):
-        return self.id
-    
-    def get_absolute_url(self):
-        return reverse("enterprises:enterprise-detail", kwargs={"slug": self.slug})
-    
-def pre_save_company(sender, instance, *args, **kwargs):
-    if not instance.slug:
-        #instance.slug = slugify(instance.user)
-        #instance.slug = slugify(instance.company_name)
-        instance.slug = slugify(f"{instance.company_name}-{instance.id}")
-                 
-def post_save_company_p(sender, instance, created, *args, **kwargs):
-    if created:
-        if instance.is_company:
-            CompanyProfile.objects.create(user=instance, last_name=instance.last_name, first_name=instance.first_name,
-            company_name=instance.company_name, email=instance.email, is_company=instance.is_company, 
-        commercial=instance.commercial, technical=instance.technical, financial=instance.financial,
-            management=instance.management)
-    '''    
+  
 class FicheTechnic(RandomIDModel):
 #class FicheTechnic(models.Model):
     slug = models.SlugField(max_length = 20, unique=True)
@@ -1395,15 +1194,14 @@ pre_save.connect(pre_save_product_deals, sender=ProductDeals)
 pre_save.connect(pre_save_product_rfi, sender=ProductRFI)
 pre_save.connect(pre_save_job, sender=Jobs)
 pre_save.connect(pre_save_application, sender=JobApplication)
-#pre_save.connect(pre_save_expert, sender=Experts)
 pre_save.connect(pre_save_expert_p, sender=ExpertProfile)
 pre_save.connect(pre_save_product, sender=Product)
-#post_save.connect(post_save_expert, sender=CustomUser )
+post_save.connect(post_save_admin_p, sender=CustomUser )
+pre_save.connect(pre_save_admin_p, sender=AdminProfile)
 #post_save.connect(post_save_employee, sender=CustomUser )
 post_save.connect(post_save_expert_p, sender=CustomUser )
-#post_save.connect(post_save_employee_p, sender=CustomUser )
+post_save.connect(post_save_employee_p, sender=CustomUser )
 pre_save.connect(pre_save_testimony, sender=Testimonies)
-#post_save.connect(post_save_company_p, sender=CustomUser)
 post_save.connect(post_save_company, sender=CustomUser)
 pre_save.connect(pre_save_deal, sender=Deals)
 pre_save.connect(pre_save_project, sender=Projects)

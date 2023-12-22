@@ -167,11 +167,11 @@ a:hover{
 }
 
 th{
-    color: #00e6e6;
+    color: #0a2647;
 }
 
 td{
-    color: #CCEEFF;
+    color: #0a2647;
 }
 
 .list{
@@ -196,5 +196,16 @@ div{
     color: #0a2647;
     font-size: 20px;
 
+}
+
+.social-circle {
+    display: inline-block;
+    position: relative;
+    margin: 0 auto 0 auto;
+    border-radius: 50%;
+    text-align: center;
+    width: 50px;
+    height: 50px;
+    font-size: 20px
 }
 

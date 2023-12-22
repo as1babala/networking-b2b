@@ -20,7 +20,8 @@ from django.core.mail import send_mail
 from core.models import *
 from .forms import *
 from django.db.models import Count, Avg, Sum
-
+from django.shortcuts import render, redirect
+from common.utils import send_notification_email
 class admin(UserPassesTestMixin):
     
     def test_func(self):

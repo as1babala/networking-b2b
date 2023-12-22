@@ -240,6 +240,12 @@ class ExpertUserProfileListView(LoginRequiredMixin, generic.ListView):
     
     def get_queryset(self):
         return ExpertProfile.objects.filter(user=self.request.user)
+    
+class AdminProfileListView(LoginRequiredMixin, generic.ListView):
+    template_name = "profiles/admin_list.html"
+    queryset = AdminProfile.objects.all() # not adding context here
+    context_object_name = "admin_profiles"
+    paginate_by = 8
 
 
    

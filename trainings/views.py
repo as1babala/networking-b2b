@@ -112,6 +112,7 @@ class TrainingSearchView(ListView):
             Q(training_title__icontains=query)|
             Q(domain__icontains=query)|
             Q(email__icontains=query)|
+            Q(training_mode__icontains=query)|
             Q(cost__icontains=query)|
             Q(training_mode__icontains=query)|
             Q(duration__icontains=query)

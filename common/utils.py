@@ -1298,3 +1298,43 @@ DISCOUNTS = [
     ('20%','20%'),
    
 ]
+
+# utils.py in one of your apps
+
+from django.core.mail import send_mail
+from django.conf import settings
+
+def send_notification_email(subject, message, recipient_list):
+    send_mail(
+        subject,
+        message,
+        settings.EMAIL_HOST_USER,
+        recipient_list,
+        fail_silently=False,
+    )
+
+###Then, modify your send_notification_email function to use this template.
+###<!-- templates/email_template.html -->
+
+##<!html>
+## <body>
+##<h1>{{ subject }}</h1>
+##<p>{{ message }}</p>
+##</body>
+##</html>
+
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
+
+def send_notification_email(subject, message, recipient_list):
+    context = {'subject': subject, 'message': message}
+    email_content = render_to_string('email_template.html', context)
+
+    email = EmailMessage(
+        subject,
+        email_content,
+        settings.EMAIL_HOST_USER,
+        recipient_list
+    )
+    email.content_subtype = "html"  # Set the content type to HTML
+    email.send()

@@ -113,9 +113,9 @@ class FicheTechnicSearchView(ListView):
         object_list = FicheTechnic.objects.filter(
             Q(name__icontains=query) | 
             Q(category__icontains=query)  |
-            Q(principal_risks__icontains=query)  |
-            Q(season__icontains=query)|
-            Q(seed_supplier__icontains=query)  
+            Q(principal_risks__icontains=query)  
+            
+            
            
             )
         return object_list

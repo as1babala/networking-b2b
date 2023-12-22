@@ -51,8 +51,8 @@ urlpatterns = [
     path("education/", EducationListView.as_view(), name="education-list"),
     path("education/create/", EducationCreateView.as_view(), name="education-create"),
     
-    
-    
+    path("admin-register/", AdminSignUp, name="admin-signup"),  
+    path("employee-register/", EmployeeSignUp, name="employee-signup"),  
 ]
     
     

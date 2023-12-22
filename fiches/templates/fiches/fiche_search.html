@@ -6,26 +6,15 @@
 
 {% block content %}
 
-<div class="row" style="color: #0d6efd; font-style: bold; font-size: 2rem; ">
-    <div class="col-md-8">Product and animals list</div>
-    
-</div>
-
-<div style="border-bottom: 1px solid white;" class="row">
-    <div class="col-md-4">               
+<section class="py-3">        
    
     <div style="float:left; color: #0d6efd" width="30%"> 
         <a class="btn ghost-blue" href="{% url 'fiches:fiche-create' %}">
-        <button class="btn btn-outline-secondary" type="submit">Add a new</button></a> 
+        Add a new</a> 
     </div>
 
 </div>
-<div class="col-md-4" style="float:right" width="70%">
-  <form class="d-flex" role="search" action="{% url 'fiches:fiche-search' %}" method='GET' enctype="">
-    <input class="form-control me-2" name="q" type="search" placeholder="Search" aria-label="Search">
-    <button class="btn btn-outline-success" type="submit">Search</button>
-  </form>
-</div>
+
 </div>
 
 <br>
@@ -37,13 +26,13 @@
     <thead class="thead-inverse align-middle">
         <tr>
             
-            <th scope="col">Action</th>
+        <th>Action</th>
         <th scope="col">Name</th>
         <th scope="col">Category</th>
         <th scope="col">Description</th>
         <th scope="col">Principal risk </th>
-        <th scope="col">Seed </th>
-        <th scope="col">Seed supplier</th>
+        <th scope="col">Technical_factors </th>
+        <th scope="col">harvest_factors</th>
         <th scope="col">Created on</th>
        
         </tr>
@@ -52,24 +41,24 @@
 {% if object_list %}
 
     <tbody>         
-        {% for consultant in object_list %}
+        {% for fiche in object_list %}
             <tr>
-                <td class="align-middle" style="color:#0d6efd; font-style: bold; font-size: .7rem">
-                    <td><a href="{% url 'fiches:fiche-detail' fiche.slug %}">Check Details</a></td>
+                
+                    <td class="align-middle white"><a href="{% url 'fiches:fiche-detail' fiche.slug %}">Details</a></td>
               
                     <td>{{fiche.name}}</td>
                     <td>{{fiche.category}}</td>
                     <td>{{fiche.description}}</td>
                     <td>{{fiche.principal_risks}}</td>
-                    <td>{{fiche.seed}}</td>
-                    <td>{{fiche.seed_supplier}}</td>
-                    <td>{{fiche.created_on|date}}</td>    
+                    <td class="white">{{fiche.Technical_factors|truncatewords:'20'}}</td>
+                    <td class="white">{{fiche.harvest_factors|truncatewords:'20'}}</td>
+                    <td class="white">{{fiche.created_on|date}}</td> 
             </tr>
         {% endfor %}                   
     </tbody>
 
 </table>  
-
+</section>
 <div class="align-middle">
     {% if is_paginated %}
 

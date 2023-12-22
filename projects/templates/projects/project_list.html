@@ -8,7 +8,7 @@
 <section class="py-5">
 <div class= class="list white">
  
-  <form class="d-flex" role="search" action='/search/' method='GET' enctype="">
+  <form class="d-flex" role="search" action="{% url 'projects:project-search' %}" method='GET' enctype="">
       <input class="form-control me-2" name="q" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
