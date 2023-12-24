@@ -1,5 +1,10 @@
 from django.contrib import admin
 from .models import *
+from django.contrib import admin
+
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
+from django.db import models
+
 #from networking.urls import *
 
 # Register your models here.
@@ -36,7 +41,11 @@ admin.site.register(Trainings)
 admin.site.register(TrainingApplication)
 
 class BlogAdmin(admin.ModelAdmin):
-     list_display=['categories','title','author', 'status', 'created_on']
+    formfield_overrides = {
+        models.TextField: {'widget': CKEditorUploadingWidget},
+    }
+    list_display=['categories','title','author', 'status', 'created_on']
+
    
 admin.site.register(Blog, BlogAdmin)
 admin.site.register(BlogRead)

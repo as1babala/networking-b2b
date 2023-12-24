@@ -28,9 +28,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'django-insecure-!ii!0m(3f+mbowdwey!6d)ht3a@xxe=8s0%8n8a&%pf9%&puhb'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['as1babala.pythonanywhere.com']
 
 
 # Application definition
@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
-    ### Allauth 
+    ### Allauth
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.microsoft',
     'allauth.socialaccount.providers.facebook',
     ### third party libraries
-    
+
     'request',
     'rest_framework',
     'widget_tweaks',
@@ -69,8 +69,8 @@ INSTALLED_APPS = [
     'django_otp',
     'django_otp.plugins.otp_totp',
     #'djstripe',
-    
-    
+
+
     ### System apps
     'core',
     'accounts',
@@ -88,7 +88,6 @@ INSTALLED_APPS = [
     'rfi',
     'projects',
     'enterprises',
-    'ckeditor_uploader',
     'ckeditor',
     'tinymce',
     'trainings',
@@ -96,11 +95,11 @@ INSTALLED_APPS = [
     'analytics.apps',
     'discussions',
     'products',
-    
-    
+
+
 ]
 
-INSTALLED_APPS += ('django_summernote', ) 
+INSTALLED_APPS += ('django_summernote', )
 
 CRISPY_ALLOWED_TEMPLATES_PACKS = "bootstraps5"
 
@@ -116,7 +115,7 @@ MIDDLEWARE = [
     'django_otp.middleware.OTPMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
+
 ]
 
 '''
@@ -128,8 +127,8 @@ REST_FRAMEWORK = {
         ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
     'rest_framework_simplejwt.authentication.JWTAuthentication',]
-       
-    
+
+
 }
 
 SIMPLE_JWT = {
@@ -183,7 +182,7 @@ AUTHENTICATION_BACKENDS  = (
     'django.contrib.auth.backends.ModelBackend',
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
-    
+
    # `allauth` specific authentication methods, such as login by email
     'allauth.account.auth_backends.AuthenticationBackend',
 )
@@ -230,31 +229,15 @@ MEDIA_ROOT=os.path.join(BASE_DIR, "media")
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-##########
 
-# For development (console backend)
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND ='django.core.mail.backends.smtp.EmailBackend'
 
-# For production (using SMTP) uncomment these lines for production
-#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-#EMAIL_HOST = 'your_smtp_host'
-#EMAIL_PORT = your_smtp_port
-#EMAIL_HOST_USER = 'your_email@example.com'
-#EMAIL_HOST_PASSWORD = 'your_password'
-#EMAIL_USE_TLS = True
-# EMAIL_USE_SSL = True # Use this for SSL instead of TLS
-
-
-
-
-#########
-
-#EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 #EMAIL_FILE_PATH = [os.path.join(BASE_DIR, "sent_emails")]
 #EMAIL_ROOT = '/sent_emails/'
-#EMAIL_HOST = 'smtp.gmail.com'
-#EMAIL_USE_TLS = True
-#EMAIL_PORT = 587
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
 EMAIL_HOST_USER = 'babala.assih@gmail.com' # this email will be used to send emails
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS') # host email password required
 # now sign in with your host gmail account in your browser
@@ -262,7 +245,7 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS') # host email password require
 # https://myaccount.google.com/lesssecureapps
 # otherwise you will get SMTPAuthenticationError at /contactus
 # this process is required because google blocks apps authentication by default
-#EMAIL_RECEIVING_USER = ['to@gmail.com'] # email on which you will receive messages sent from website
+EMAIL_RECEIVING_USER = ['to@gmail.com'] # email on which you will receive messages sent from website
 
 SITE_ID = 1
 
@@ -274,7 +257,7 @@ ACCOUNT_EMAIL_REQUIRED = False
 ACCOUNT_EMAIL_VERIFICATION = ('optional')
 #ACCOUNT_EMAIL_VERIFICATION = ('mandatory')
 
-#Stripe 
+#Stripe
 #STRIPE_PUBLIC_KEY = env("STRIPE_PUBLIC_KEY")
 #STRIPE_SECRET_KEY = env("STRIPE_SECRET_KEY")
 #STRIPE_WEBHOOK_SECRET_KEY =
@@ -289,19 +272,12 @@ CKEDITOR_IMAGE_BACKEND = 'pillow'
 CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': 'full',
-    },
-}
-
-'''
-CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar': 'full',
         'height': 300,
         'width': '100%',
     },
 }
 
-
+'''
 MESSAGE_TAGS = {
         messages.DEBUG: 'alert-secondary',
         messages.INFO: 'alert-info',

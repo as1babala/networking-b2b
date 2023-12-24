@@ -2,7 +2,6 @@ from django.db import models
 from django.shortcuts import reverse
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
-from django.dispatch import receiver
 from common.utils import *
 import re
 from django.utils.text import slugify
@@ -13,7 +12,7 @@ from django.contrib.auth.models import User, AbstractUser
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 #from common.utils import *
-from django.dispatch import receiver
+
 from django.db.models.signals import post_save
 from django.utils.translation import pgettext_lazy, gettext_lazy as _
 from datetime import datetime
@@ -610,8 +609,8 @@ class Blog(RandomIDModel):
     title = models.CharField(max_length=200)
     #categories = models.CharField(choices=BLOG_CATEGORIES, max_length=50, default='')
     categories = models.ForeignKey(Category, on_delete=models.CASCADE, default='')
-    #content = RichTextField(blank=True, null=True )# to use rich text for blog post
-    content = models.TextField(max_length = 5000)
+    content = RichTextField()# to use rich text for blog post
+    #content = models.TextField(max_length = 5000)
     created_on = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     email = models.EmailField(null=True)

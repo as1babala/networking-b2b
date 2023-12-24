@@ -17,7 +17,9 @@
         <div class="col-md-12 white">
             <form method="post"class="form" enctype="multipart/form-data">
                 {% csrf_token %}
+                
                 {% bootstrap_form form %}
+                {{form.media}}
                 {% buttons %}
                 <button type="submit" class="btn btn-primary">Create New Blog</button>
                 <button type="button" class="btn btn-dark" onclick="location.href='{% url 'blogs:blog-list' %}'">Cancel</button>

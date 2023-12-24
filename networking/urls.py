@@ -3,6 +3,8 @@ from django.urls import path
 from django.contrib import admin
 from django.conf import settings
 from django.urls import path, include
+from django.conf.urls import url
+from django.urls import include
 from django.conf.urls.static import static
 #from products.views import CreateCheckoutSessionView
 from core.models import *
@@ -52,6 +54,7 @@ urlpatterns = [
     path("product_deals/", include('product_deals.urls', namespace="product_deals")),
     path("discussions/", include('discussions.urls', namespace="discussions")),
     path("products/", include('products.urls', namespace="products")),
+    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
