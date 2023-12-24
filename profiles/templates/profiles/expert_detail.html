@@ -65,7 +65,12 @@
     <li><b>Institution:</b> {{education.institution_name }} <br><b> Specialization: </b>{{ education.specialization}}<br> <b>Minor: </b>{{education.minor}} </br> <b>From: </b> {{education.start_date|date}} <b>To: </b> {{education.end_date|date}}
   
     {% if education.graduated %} Graduated on {{education.end_date}} {% else %} Not graduated yet {% endif %} </br><br> <b><u>Comment: </u></br></b>{{ education.description}}
-  </li> </ul>
+  </li> 
+  {% if education.student == request.user %} 
+  <button type="button" class="btn btn-primary" onclick="location.href='{% url 'accounts:education-update' education.pk %}'">Edit</button>
+  {% endif %}
+
+</ul>
     {% endfor %}
 </div>
 
@@ -78,7 +83,11 @@
   <ul class="white">
 <li><b>Comapny Name:</b> {{ work.company_name}}   <br><b>Location:</b> {{work.work_city}},  {{work.work_country}} <br><b>From:</b> {{work.start_date}} <b>To:</b> {{work.end_date}}</br>
 <b>Position:</b> {{work.position}}  <br><b>Title:</b> {{work.job_title}}</br></br> <b><u>Position Description: </u></b></br>{{work.description}}
- </li> </ul>
+ </li>
+ {% if work.user == request.user %} 
+    <button type="button" class="btn btn-primary" onclick="location.href='{% url 'accounts:experience-update' work.pk %}'">Edit</button>
+    {% endif %}
+</ul>
     {% endfor %} 
 </div>
     <hr>
@@ -87,8 +96,14 @@
       
       {% for portfolio in expert_portfolio %}
     <ul>
-  <li><b>Client Name: </b>{{ portfolio.client_name }} </br><b>  Reference Contact:</b>{{portfolio.reference_email}} </br><b>Project title: </b>{{ portfolio.project_title}}, {{Portfolio.project_type}} </br><b>Location:</b>{{ portfolio.project_city}}, {{ portfolio.project_country}}</br> <b>From:</b> {{ portfolio.start_date}} <b>To:</b> {% if portfolio.end_date %}{{portfolio.end_date}} {% else %} Present {% endif %}</br> <b>Technologies: </b>{{ portfolio.technologies_used}}</br></br><b><u>Project Description: </u></b></br>{{portfolio.description}} 
+  <li><b>Client Name: </b>{{ portfolio.client_name }} </br><b>  Reference Contact:</b>{{portfolio.reference_email}} </br><b>Project title: </b>{{ portfolio.project_title}}, {{Portfolio.project_type}} </br><b>Location:</b>{{ portfolio.project_city}}, {{ portfolio.project_country}}</br> <b>From:</b> {{ portfolio.start_date}} <b>To:</b> {% if portfolio.end_date %}{{portfolio.end_date}} {% else %} Present {% endif %}</br> <b>Technologies: </b>{{ portfolio.technologies_used}}</br></br><b><u>Project Description: </u></b></br>{{portfolio.description}}
+  </li>
+  
+  {% if portfolio.consultant == request.user %} 
+    <button type="button" class="btn btn-primary" onclick="location.href='{% url 'accounts:portfolio-update' portfolio.pk %}'">Edit</button>
+    {% endif %}
 
+</ul>
       {% endfor %}
     </div>
   </br></br>

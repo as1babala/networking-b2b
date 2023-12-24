@@ -46,8 +46,7 @@ class IndustryListView(LoginRequiredMixin, generic.ListView):
     template_name = "industries/industry_list.html"
     queryset = Industry.objects.all() # not adding context here
     context_object_name = "industry"
-    paginate_by = 2
-    
+    paginate_by = 10 
 class IndustryDetailView(LoginRequiredMixin, generic.DetailView):
     template_name = "industries/industry_detail.html"
     queryset = Industry.objects.all() # not adding context here
@@ -130,7 +129,7 @@ class SectorListView(LoginRequiredMixin, generic.ListView):
     template_name = "industries/sector_list.html"
     queryset = Sectors.objects.all() # not adding context here
     context_object_name = "sectors"
-    paginate_by = 2
+    paginate_by = 10
     
 class SectorsDetailView(LoginRequiredMixin, generic.DetailView):
     template_name = "industries/sector_detail.html"
@@ -143,7 +142,7 @@ class SectorListView(LoginRequiredMixin, generic.ListView):
     template_name = "industries/sector_list.html"
     queryset = Sectors.objects.all() # not adding context here
     context_object_name = "sectors"
-    paginate_by = 2
+    paginate_by = 10
     
 class SectorsDetailView(LoginRequiredMixin, generic.DetailView):
     template_name = "industries/sector_detail.html"

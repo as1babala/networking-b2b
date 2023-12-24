@@ -71,6 +71,24 @@ class CategoryListView(LoginRequiredMixin, generic.ListView):
 
 
 #@user_passes_test(is_admin)
+class BlogCreateViewAlert(admin, employee,  CreateView):
+    template_name = "blogs/blog_create.html"
+    form_class = BlogForm
+    success_url = reverse_lazy('blogs:blog-list')
+    
+    
+    def form_valid( self, form):
+        form.instance.author = self.request.user
+        form.instance.email = self.request.user.email
+        if form.instance.status =='DRAFT':
+            subject = 'New Blog Created' if form.instance.status=='PUBLISHED' else 'Blog Published'
+            message = 'A new blog post has been created' if form.instance.status=='PUBLISHED' else 'A blog post has been published'
+            recipient_list = ['babala.assih@gmail.com', 'user2@example.com']  # List of recipients
+            send_notification_email(subject, message, recipient_list)
+            
+        return super().form_valid(form)
+    
+ 
 class BlogCreateView(admin, employee,  CreateView):
     template_name = "blogs/blog_create.html"
     form_class = BlogForm
@@ -81,8 +99,7 @@ class BlogCreateView(admin, employee,  CreateView):
         form.instance.author = self.request.user
         form.instance.email = self.request.user.email
         return super().form_valid(form)
-
-    
+       
 class CategoryCreateView(admin, employee, CreateView):
     template_name = "blogs/category_create.html"
     form_class = CategoryForm
@@ -110,10 +127,13 @@ def blog_detail(request, pk):
     reviews = Review.objects.filter(blog=blog)
     #reply = Review.objects.filter(blog=blog).get(pk=pk)
     review_count = Review.objects.filter(blog=blog).annotate(num_reviews=Count("rating")).count()
-    sum_rating = Review.objects.filter(blog=blog).aggregate(Sum("rating")) 
-    average_rating = Review.objects.filter(blog=blog).aggregate(Avg("rating"))
+    sum_rating = Review.objects.filter(blog=blog).aggregate(Sum("rating"))
+    if Review.objects.filter(blog=blog).count() == 0:
+        average_rating = 0
+    else:
+        average_rating = Review.objects.filter(blog=blog).aggregate(Avg("rating"))
     #replies = ReplyToReview.objects.filter(blog=blog, review=reviews)
-    average_rating = average_rating.get('rating__avg')# format the average rating
+    #average_rating = average_rating.get('rating__avg')# format the average rating
     average_rating = round(average_rating)# the whole number
    
     context = {

@@ -1328,7 +1328,7 @@ from django.template.loader import render_to_string
 
 def send_notification_email(subject, message, recipient_list):
     context = {'subject': subject, 'message': message}
-    email_content = render_to_string('email_template.html', context)
+    email_content = render_to_string('/blogs/email_template.html', context)
 
     email = EmailMessage(
         subject,

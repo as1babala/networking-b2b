@@ -12,6 +12,7 @@ from django.views.generic import (
 from django.urls import reverse_lazy
 from core.models import *
 from core.forms import *
+from .forms import *
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -181,7 +182,15 @@ class WorkExperienceCreateView( LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         #form.instance.user = CustomUser.objects.get(pk=self.kwargs['pk'])
         return super().form_valid(form)
+
+class WorkExperienceUpdateView(LoginRequiredMixin, generic.UpdateView):
+    template_name = "accounts/expert_experience_update.html"
+    form_class = WorkExperienceForm
+    queryset = WorkExperience.objects.all()
     
+    def get_success_url(self):
+        return reverse("profiles:expert-profile-list")
+     
 class ExpertPortfolioListView(ListView):
     model = ExpertPortfolio
     template_name = 'accounts/expert_portfolio_list.html'
@@ -200,6 +209,14 @@ class ExpertPortfolioCreateView( LoginRequiredMixin, CreateView):
         #form.instance.user = CustomUser.objects.get(pk=self.kwargs['pk'])
         return super().form_valid(form)
 
+class ExpertPortfolioUpdateView(LoginRequiredMixin, generic.UpdateView):
+    template_name = "accounts/expert_portfolio_update.html"
+    form_class = ProjectPortfolioForm
+    queryset = ExpertPortfolio.objects.all()
+    
+    def get_success_url(self):
+        return reverse("profiles:expert-profile-list")
+    
 class EducationListView(ListView):
     model = Education
     template_name = 'accounts/education_list.html'
@@ -217,7 +234,15 @@ class EducationCreateView( LoginRequiredMixin, CreateView):
         
         return super().form_valid(form) 
 
-
+class EducationUpdateView(LoginRequiredMixin, generic.UpdateView):
+    template_name = "accounts/education_update.html"
+    form_class = EducationModelForm
+    queryset = Education.objects.all()
+    
+    def get_success_url(self):
+        return reverse("profiles:expert-profile-list")
+    
+    
 def AdminSignUp(request):
     if request.method == 'POST':
         form = UserCreateForm(request.POST)

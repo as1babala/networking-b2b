@@ -32,7 +32,7 @@
     <tbody>
       {% for sectors in object_list %}
           <tr>
-              <td><a href="{% url 'industries:sector-detail' sectors.pk %}">{{sectors.id}}</a></td>
+              <td><a href="{% url 'industries:sector-detail' sectors.pk %}">Edit</a></td>
               <td>{{sectors.industry}}</td>
               <td>{{sectors.name}}</td>
               <td>{{sectors.description}}</td>

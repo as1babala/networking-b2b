@@ -48,17 +48,23 @@ class ContactusForm(forms.Form):
         fields = ('email','phone_ind','phone_number','message')
         
 class WorkExperienceForm(forms.ModelForm):
-    start_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
-    end_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    #start_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    #end_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
     class Meta:
         model = WorkExperience
         exclude = ('id', 'user', 'created_on', 'email')
-        
+
+    widgets = {
+            'start_date': forms.DateInput(attrs={'type': 'date'}),
+            'end_date': forms.DateInput(attrs={'type': 'date'}),
+           
+        }        
+
 class ProjectPortfolioForm(forms.ModelForm):
     start_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
     end_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
     class Meta:
-        model = WorkExperience
+        model = ExpertPortfolio
         exclude = ('id', 'consultant', 'created_on', 'consultant_email')
         
         widgets = {
@@ -68,7 +74,7 @@ class ProjectPortfolioForm(forms.ModelForm):
         }
         
 class EducationModelForm(forms.ModelForm):
-    #end_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    end_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
     start_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
     description= forms.CharField(widget=forms.Textarea(attrs={"rows":3, "cols":20}))
     

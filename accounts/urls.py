@@ -42,14 +42,16 @@ urlpatterns = [
     ### Work Experience
     path("work_experience/", WorkExperienceListView.as_view(), name="experience-list"),
     path("work_experience/create/", WorkExperienceCreateView.as_view(), name="experience-create"),
+    path('work_experience/<int:pk>/update/', WorkExperienceUpdateView.as_view(), name='experience-update'),
     
     ### Exper Portfolio
     path("expert_portfolio/", ExpertPortfolioListView.as_view(), name="portfolio-list"),
     path("expert_portfolio/create/", ExpertPortfolioCreateView.as_view(), name="portfolio-create"),
-    
+    path('portfolio/<int:pk>/update/', ExpertPortfolioUpdateView.as_view(), name='portfolio-update'), 
     ### Work Experience
     path("education/", EducationListView.as_view(), name="education-list"),
     path("education/create/", EducationCreateView.as_view(), name="education-create"),
+    path('education/<int:pk>/update/', EducationUpdateView.as_view(), name='education-update'), 
     
     path("admin-register/", AdminSignUp, name="admin-signup"),  
     path("employee-register/", EmployeeSignUp, name="employee-signup"),  

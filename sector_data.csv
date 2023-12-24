@@ -1,0 +1,146 @@
+﻿industry,name,description
+Agriculture,Crop Production,"Cultivation of plants for food, fuel, fiber, and feed."
+Agriculture,Livestock Farming,"Rearing of animals for meat, milk, wool, and leather."
+Agriculture,Agricultural Equipment,Manufacturing and sale of machinery used in farming.
+Agriculture,Agri-Tech,Application of technology in agriculture for enhancing yield and efficiency.
+Agriculture,Aquaculture,"Breeding, rearing, and harvesting of fish, shellfish, and aquatic plants."
+Automotive,Vehicle Manufacturing,"Designing and building cars, motorcycles, and trucks."
+Automotive,Auto Parts Suppliers,Production of components used in vehicle assembly.
+Automotive,Auto Retail and Dealerships,Selling new and used vehicles to consumers.
+Automotive,Electric Vehicles,Specializing in the production of battery-operated cars.
+Automotive,Autonomous Vehicles,Developing self-driving technology for transportation.
+Finance,Banking,"Providing financial services such as loans, deposits, and investments."
+Finance,Investment Services,Offering advisory and wealth management services.
+Finance,Insurance,Providing risk management through insurance policies.
+Finance,Fintech,Using technology to improve or automate financial services.
+Finance,Capital Markets,Facilitating the buying and selling of securities and commodities.
+Construction,Residential Building,Construction of homes and apartments.
+Construction,Commercial Building,"Building of offices, shops, and other commercial properties."
+Construction,Infrastructure,"Development of large-scale public works, like roads and bridges."
+Construction,Civil Engineering,Design and construction of public and private-sector works.
+Construction,Construction Equipment,Supplying the machinery and tools used in construction projects.
+Education,Primary & Secondary Schools,Institutions for foundational education typically for children and adolescents.
+Education,Higher Education,Universities and colleges offering undergraduate to postgraduate education.
+Education,Vocational Training,Educational programs focused on practical and work-oriented training.
+Education,E-Learning,Digital platforms offering online courses and educational content.
+Education,Educational Products,Companies that produce and sell educational materials and technologies.
+Energy,Oil & Gas,"Exploration, extraction, and processing of petroleum and natural gas."
+Energy,Renewable Energy,"Generation of energy from renewable resources like wind, solar, and hydro."
+Energy,Nuclear Energy,Production of energy through nuclear reactions.
+Energy,Energy Efficiency,Products and services aimed at reducing energy consumption.
+Energy,Utilities,"Providers of electricity, gas, water, and other basic energy services."
+Entertainment,Film & Television,Production and distribution of movies and television shows.
+Entertainment,Music,"Production, distribution, and promotion of music and music-related events."
+Entertainment,Publishing,"The sector involves publishing books, magazines, and other written content."
+Entertainment,Video Gaming,"Developing, publishing, and distribution of video games."
+Entertainment,Live Performances,Production and hosting of live entertainment events such as theater and concerts.
+Healthcare,Hospitals,Institutions providing patient treatment with specialized medical and nursing staff.
+Healthcare,Pharmaceuticals,Companies that produce and sell medicinal drugs.
+Healthcare,Medical Devices,Development and manufacturing of devices used in healthcare.
+Healthcare,Health Insurance,Financial services covering medical expenses for individuals.
+Healthcare,Biotechnology,Companies that use living systems and organisms to develop new products.
+Information Technology,Software Development,"Companies that create, maintain, and publish software."
+Information Technology,Hardware Manufacturing,Production of physical computer and technology components.
+Information Technology,IT Services,Firms offering technology consulting and services.
+Information Technology,Cloud Computing,Providers of networked online storage and computing resources.
+Information Technology,Cybersecurity,"Protection of internet-connected systems, including hardware, software, and data, from cyberattacks."
+Manufacturing,Consumer Goods,"Production of goods used by consumers, such as electronics and apparel."
+Manufacturing,Heavy Industry,"Manufacturing of large items like vehicles, machinery, and industrial equipment."
+Manufacturing,Chemicals,Companies that produce industrial chemicals.
+Manufacturing,Textiles,"Firms involved in the production of fibers, fabrics, and clothing."
+Manufacturing,Food Production,Processing and packaging of food products.
+Retail,E-Commerce,Online retailing of goods and services.
+Retail,Brick-and-Mortar Stores,Physical locations selling a variety of consumer products.
+Retail,Specialty Stores,"Retailers focused on specific product categories, like clothing or electronics."
+Retail,Supermarkets,Large stores offering a wide variety of food and household products.
+Retail,Department Stores,Large establishments offering a wide range of products under one roof.
+Telecommunications,Mobile Network Operators,Companies providing wireless communication services.
+Telecommunications,Internet Service Providers,Firms offering access to the Internet and related services.
+Telecommunications,Satellite Communications,Companies that operate communication satellites providing global coverage.
+Telecommunications,Telecommunications Equipment,Manufacturers of hardware for telecom networks.
+Telecommunications,Telecommunications Services,"Companies offering services like voice calls, messaging, and data."
+Tourism,Travel Agencies,"Businesses that sell travel, tourism-related services to the public."
+Tourism,Tour Operators,Companies organizing and selling package holidays and tours.
+Tourism,Accommodation,"Including hotels, B&Bs, and other types of lodging."
+Tourism,Attractions,"Natural or man-made sites of interest, museums, parks, etc."
+Tourism,Event Planning,Services specializing in organizing and managing events and conferences.
+Transport,Road,"Companies providing transport by road such as bus, freight, and ride-sharing services."
+Transport,Rail,Operators of passenger and freight train services.
+Transport,Air,Airlines and cargo carriers providing domestic and international flights.
+Transport,Water,Shipping companies that transport goods and people via seas and waterways.
+Transport,Logistics,Companies managing the flow of goods from point of origin to end consumer.
+Real Estate,Residential,Dealing with homes and housing-related properties.
+Real Estate,Commercial,"Encompassing office spaces, retail units, and other business properties."
+Real Estate,Industrial,Involving properties used for manufacturing and production.
+Real Estate,Land Development,Firms that prepare raw land for construction and development.
+Real Estate,Property Management,Companies responsible for managing real estate properties.
+Pharmaceuticals,Drug Manufacturing,Companies that produce prescription and over-the-counter medications.
+Pharmaceuticals,Biopharmaceuticals,Firms developing drugs derived from biological sources.
+Pharmaceuticals,Generics,Companies specializing in off-patent drugs.
+Pharmaceuticals,Vaccine Development,Focused on creating vaccines to prevent diseases.
+Pharmaceuticals,Clinical Trials,Conducting research studies to evaluate drug safety and efficacy.
+Insurance,Life Insurance,Products providing financial security for life events and after death.
+Insurance,Health Insurance,Coverage for medical expenses and treatments.
+Insurance,Property & Casualty,Protecting against property losses and liability damages.
+Insurance,Reinsurance,Insurance purchased by insurance companies to mitigate risk.
+Insurance,Specialty Insurance,Coverage for unique or high-risk areas.
+Fashion,Apparel,"Designing, manufacturing, and selling clothing."
+Fashion,Footwear,Specializing in the design and sale of shoes and related products.
+Fashion,Accessories,"Includes items like jewelry, handbags, and belts."
+Fashion,Luxury Goods,High-end goods including designer clothing and fine jewelry.
+Fashion,Fast Fashion,Retailers that quickly bring fashion from the catwalk to stores at affordable prices.
+Food and Beverage,Food Processing,Transforming raw ingredients into packaged food.
+Food and Beverage,Beverages,"Production of drinks, both alcoholic and non-alcoholic."
+Food and Beverage,Food Service,"Establishments serving prepared food, like restaurants and catering."
+Food and Beverage,Food Retail,Grocery stores and supermarkets selling food to consumers.
+Food and Beverage,Specialty Foods,"Producers of unique or high-quality food products, often with a focus on organic or local sourcing."
+Legal Services,Corporate Law,"Advising businesses on matters such as incorporation, corporate governance, and transactions."
+Legal Services,Criminal Law,Defense and prosecution of individuals charged with criminal conduct.
+Legal Services,Litigation,Lawyers and firms specializing in taking legal action against individuals and organizations.
+Legal Services,Intellectual Property,"Specializing in the protection of inventions, trademarks, and copyrights."
+Legal Services,Family Law,"Dealing with domestic matters like divorce, child custody, and adoption."
+Aerospace,Commercial Aircraft,Manufacturing and selling of aircraft for commercial airlines.
+Aerospace,Defense,Producing military aircraft and defense systems.
+Aerospace,Space Exploration,Design and deployment of spacecraft for missions beyond Earth.
+Aerospace,Unmanned Aerial Systems,Development of drones and unmanned vehicles for various uses.
+Aerospace,"Aircraft Maintenance, Repair, and Overhaul (MRO)",Services dedicated to maintaining aircraft safety and performance.
+Chemicals,Basic Chemicals,"Production of essential chemicals for various industries, like plastics and petrochemicals."
+Chemicals,Specialty Chemicals,Producing chemicals for specific applications in industries such as electronics or cosmetics.
+Chemicals,Agricultural Chemicals,Manufacturing fertilizers and pesticides for the agriculture sector.
+Chemicals,Pharmaceuticals,Developing and producing chemical compounds for medical use.
+Chemicals,Biochemicals,Using biological processes to create chemicals for a variety of applications.
+Electronics,Consumer Electronics,Manufacturing and selling devices like smartphones and TVs to consumers.
+Electronics,Semiconductors,Producing foundational components for electronic devices.
+Electronics,Industrial Electronics,Providing electronic components and systems for industrial use.
+Electronics,Electronic Components,"Manufacturing the parts that go into electronic devices, like capacitors and resistors."
+Electronics,Wearable Technology,"Developing electronics that can be worn on the body, like smartwatches."
+Environmental Services,Waste Management,Handling and disposal of waste materials.
+Environmental Services,Recycling,Processing used materials into new products to prevent waste.
+Environmental Services,Environmental Consulting,Advising businesses on environmental compliance and sustainability practices.
+Environmental Services,Water Treatment,Purifying and sanitizing water for consumption and use.
+Environmental Services,Conservation,Efforts focused on protecting and managing natural resources.
+Shipping,Freight Transport,"Moving goods by land, air, or sea."
+Shipping,Warehousing,Storing goods in large quantities before they are sold or further distributed.
+Shipping,Courier Services,"Providing fast, door-to-door delivery services for parcels and documents."
+Shipping,Supply Chain Management,Overseeing and managing the entire flow of goods from manufacturers to consumers.
+Shipping,Maritime Logistics,Specializing in the logistics of shipping goods across oceans and seas.
+Mining,Metal Mining,"Extraction of metal ores, such as iron, copper, and gold."
+Mining,Coal Mining,Extracting coal used for fuel and steelmaking.
+Mining,Quarrying,Mining non-metallic minerals like granite or limestone.
+Mining,Oil and Gas Extraction,Drilling for natural resources used in energy production.
+Mining,Support Activities,"Providing services to mining operations, such as drilling and surveying."
+Publishing,Book Publishing,The production and dissemination of literature or information in book form.
+Publishing,Newspapers,The publication of news through daily or weekly printed papers.
+Publishing,Magazines,"Periodical publications containing a variety of articles, typically on specific subjects."
+Publishing,Digital Publishing,Publishing content through digital platforms like e-books and online articles.
+Publishing,Academic and Technical Publishing,Specializing in publications for educational and technical fields.
+Renewable Energy,Solar Power,Harnessing sunlight for energy through photovoltaic or thermal systems.
+Renewable Energy,Wind Power,Generating energy using wind turbines.
+Renewable Energy,Hydro Power,"Producing energy from water sources, like dams and tidal systems."
+Renewable Energy,Bioenergy,"Creating energy from biological sources, such as plants or organic waste."
+Renewable Energy,Geothermal,Utilizing heat from within the Earth for power generation.
+Sports,Professional Teams and Leagues,Organizations and companies that operate professional sports teams and leagues.
+Sports,Sports Events and Promotion,Planning and promoting sporting events and tournaments.
+Sports,Sports Training and Academies,Facilities and programs dedicated to training athletes.
+Sports,Sporting Goods Manufacturing,Producing equipment and apparel for various sports activities.
+Sports,Sports Medicine,Healthcare services focusing on the treatment and prevention of sports-related injuries.

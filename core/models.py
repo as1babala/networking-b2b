@@ -371,14 +371,13 @@ def post_save_expert_p(sender, instance, created, *args, **kwargs):
                                      )
 
 class Industry(models.Model):
-    #industry_id = models.IntegerField(primary_key=True)
-    name = models.CharField( max_length=200, unique=True)
+    name = models.CharField( max_length=200, )
     description = models.TextField(max_length=255)
-    created_on = models.DateTimeField(auto_now_add = True)
-    updated_on = models.DateTimeField(auto_now = True)
+    #created_on = models.DateTimeField(auto_now_add = True)
+    #updated_on = models.DateTimeField(auto_now = True)
     
     class Meta:
-        ordering = ('-created_on',)
+        #ordering = ('-created_on',)
         verbose_name = "Industry"
         verbose_name_plural = "Industries"
     
@@ -386,15 +385,15 @@ class Industry(models.Model):
         return self.name
 
 class Sectors(models.Model):
-    industry = models.ForeignKey(Industry, on_delete=models.CASCADE, verbose_name='Industry')
-    name = models.CharField(max_length=100, unique=True, default="", null=True)
+    industry = models.ForeignKey(Industry, on_delete=models.CASCADE, related_name='sectors')
+    name = models.CharField(max_length=100, default="", null=True)
     description = models.TextField(max_length=500)
-    created_on = models.DateTimeField(auto_now_add=True)
-    updated_on = models.DateTimeField(auto_now=True)
+    #created_on = models.DateTimeField(auto_now_add=True)
+    #updated_on = models.DateTimeField(auto_now=True)
     
     class Meta:
         
-        ordering = ('-created_on',)
+        #ordering = ('-created_on',)
         verbose_name = "Sector"
         verbose_name_plural = "Sectors"
     
@@ -1023,8 +1022,6 @@ def pre_save_product_rfi(sender, instance, *args, **kwargs):
 class WorkExperience(RandomIDModel):
     # A foreign key to associate experience with a specific employee
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    #email = models.CharField(max_length=100, null=True, blank=True)
-    # Details of the work experience
     company_name = models.CharField(max_length=100)
     work_location_address = models.CharField(max_length=100)
     work_city = models.CharField("Enter the City where the work is located", max_length=100)

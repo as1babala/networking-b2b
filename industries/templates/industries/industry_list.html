@@ -4,6 +4,7 @@
 {% endblock title%}
 
 {% block content %}
+<section class="py-3">
 <div class="p-3 mb-2 bg-info text-dark" >
   <h2 class="text-4xl text-gray800">Industries List</h2>
   <hr class="text-danger border-2 opacity-50">
@@ -30,7 +31,7 @@
     <tbody>
       {% for industry in object_list %}
           <tr>
-              <td><a href="{% url 'industries:industry-detail' industry.pk %}">{{industry.id}}</a></td>
+              <td><a href="{% url 'industries:industry-detail' industry.pk %}">Edit</a></td>
               <td>{{industry.name}}</td>
               <td>{{industry.description}}</td>
               <td>{{industry.created_on|date}}</td>
@@ -70,7 +71,7 @@
   {% include 'footer.html' %}
 
 </div>
-
+</section>
 
 
 {% endblock content %}
