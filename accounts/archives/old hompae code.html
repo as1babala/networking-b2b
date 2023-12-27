@@ -4,95 +4,9 @@
 {% block content %}
 <body>
 <head>
- 
-   
- 
-  <!--link rel="stylesheet" href="{% static 'css/card_hover.css' %}"-->
+    <!--link rel="stylesheet" href="{% static 'css/style_main.css' %}"-->
+    <link rel="stylesheet" href="{% static 'css/card_hover.css' %}">
     <style>
-
-  .section_color1{
-    background: #0a2647;
-    
-  }
-
-  .section_color12{
-    background: #1d2d50;
-    
-  }
-
-  .section_color13{
-    background: #1b262c;
-    
-  }
-
-  .section_color2{
-    background: #144272;
-    
-  }
-
-  .section_color22{
-    background: #133b5c;
-    
-  }
-
-  .section_color23{
-    background: #0f4c75;
-    
-  }
-
-  .white{
-    color:#ffffff
-  }
-
-.text{
-    color: white;
-    font-style:normal;
-    /*font-size: 16px;*/
-    font-family: Georgia, 'Times New Roman', Times, serif;
-
-}
-
-.section_color3{
-  background: #205295;
-  
-}
-
-.section_color32{
-  background: #1e5741;
-  
-}
-
-.section_color33{
-  background: #328238;
-  
-}
-
-.section_color4{
-  background: #2c74b3;
-  
-}
-
-.section_color42{
-  background: #00a8ec;
-  
-}
-
-.section_color43{
-  background: #38a3a5;
-  backgroung-transparent: 
-  
-}
-
-.line-spacing-1-5 {
-  line-height: 2.0;
-}
-
-.center {
-display: block;
-margin-left: auto;
-margin-right: auto;
-width: 50%;
-}
       * {
         box-sizing: border-box;
       }
@@ -116,19 +30,6 @@ width: 50%;
         width: 100%;
         padding: 10px;
       }
-      .card-3{
-        /*background-image: url(https://ionicframework.com/img/getting-started/theming-card.png);
-       background-image: url('../images/deals.jpeg');*/
-       background-repeat: no-repeat;
-       background-position: right;
-       background-size: 80px;
-     }
-     
-     @media(max-width: 990px){
-       .card{
-         margin: 20px;
-       }
-     }
 
       .center {
         display: block;
@@ -137,7 +38,7 @@ width: 50%;
         width: 50%;
       }
 
-      
+
 .stats {
   color: #3D30A2 ;
   font-size: 20px;
@@ -148,11 +49,9 @@ width: 50%;
   font-size: 20px;
 }
       </style>
-  </head> 
+  </head>
 
-
-  
-  <!--section  style="width:100%" class="rounded py-3"> 
+  <section  style="width:100%" class="rounded ">
     <div class="row bottom-section">
       <div class="col-md-12 ">
         <div class="bottom-image home-image">
@@ -166,52 +65,11 @@ width: 50%;
         </div>
       </div>
     </div>
-  </section-->
+  </section>
 
-<section  style="width:100%" class="rounded py-3 my-2">
-  <div id="carouselExampleCaptions" class="carousel slide">
-    <div class="carousel-indicators">
-      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-    </div>
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img src="{% static 'images/saas 1.png' %}" class="d-block w-100 rounded" alt="..." style="width: 800px; height: 350px;">
-        <div class="carousel-caption d-none d-md-block">
-          <h5 style="color:#00e6e6; font-style: bold; font-size: 2.5rem">One platform</h5>
-          <p style="color:#00e6e6; font-style: bold; font-size: 1.5rem">Networking Opportunities to Deal With Partners Across the World</p>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <img src="{% static 'images/vanille.png' %}" class="d-block w-100 rounded" alt="..." style="width: 800px; height: 350px;">
-        <div class="carousel-caption d-none d-md-block">
-          <h5 style="color:#00e6e6; font-style: bold; font-size: 2rem">one objective</h5>
-          <p style="color:#00e6e6; font-style: bold; font-size: 1.5rem">Create Your Perfect Network and Grow Sales</p>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <img src="{% static 'images/real estate listing.png' %}" class="d-block w-100 rounded" alt="..." style="width: 800px; height: 350px;">
-        <div class="carousel-caption d-none d-md-block">
-          <h5 style="color:#00e6e6; font-style: bold; font-size: 2rem">All Domains and Industries</h5>
-          <p style="color:#00e6e6; font-style: bold; font-size: 1.5rem"> Connect With Businesses and experts</p>
-        </div>
-      </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
-</section>
-
-  <section style="width:100%" class="section_color1 py-3 my-2 text-white">
-    <div class="container-fluid">
-      <h3 style="color:#00e6e6; font-style: bold; font-size: 2rem"> Our Available Services Deals </h3>
+ <section style="width:100%" class="section_color1 py-3 my-2 rounded text-white">
+    <div class="container-fluid" >
+      <h3 style="align-center"> Our Available Services Deals </h3>
       <div class="row">
         {% if deals %}
         {% for deal in deals %}
@@ -220,14 +78,13 @@ width: 50%;
             <div class="card-body card-3  ">
               <!--p class="list"><img src="{% static 'images/forest.jpeg' %}" alt="Smiley face" width="90%" height="250" class="float-start"-->
                <!--img src="{{ deal.deal_picture.url}}" alt="testing"  class="img-responsive img-fluid rounded my-3 center" style="width: 95%; height: 150px;"-->
-              <p class="list"><i><b>Deal Category:</b></i> {{ deal.service_category }}<br>
-               <i><b>Dealer Type:</b></i> <span class="about"> </span> {{ deal.deal_type }} <br> 
-                <i><b>Location:</b></i>  {{ deal.deal_country }}, {{deal.deal_city }} 
-              
+              <p class="list"><i><b>Deal Category:</b></i> {{ deal.deal_category }}<br>
+               <i><b>Dealer Type:</b></i> <span class="about"> </span> {{ deal.deal_type }} <br>
+                <i><b>Location:</b></i>  {{ deal.deal_country }}, {{deal.deal_city }}
               <p class="list"><i></i> {{ deal.descriptions|truncatewords:'50' }}</p>
               <p>  <small class="text-muted"><i>Date created: </i>{{ deal.created_on|date }}</small></p>
             </div>
-           
+
           </div>
         </div>
         {% endfor %}
@@ -239,22 +96,22 @@ width: 50%;
    </div>
    <div class="">
     {% if user.is_authenticated %}
-    <button class="btn btnfont btnbg mb-1" onclick="location.href='{% url 'deals:deal-list' %}'"> <span class="about"><i class="fa-solid fa-magnifying-glass"></i> Search for New Deals  </span></button>
+    <button class="btn btnfont btnbg mb-1" onclick="location.href='{% url 'deals:deal-list' %}'"> <span class="about"><i class="fa-solid fa-magnifying-glass">
+    </i> Search for New Deals  </span></button>
   {% else%}
-  <button type="button" class="btn btnfont btnbg mx-2" onclick="location.href='{% url 'accounts:login' %}'"><span class="about"><i class="fa-solid fa-magnifying-glass"></i> Search for New Deals  </span></button>
-
-  </p>   
-  {% endif%}    
-       
+  <button type="button" class="btn btnfont btnbg mx-2" onclick="location.href='{% url 'accounts:login' %}'"><span class="about"><i class="fa-solid fa-magnifying-glass">
+  </i> Search for New Deals  </span></button>
+  </p>
+  {% endif%}
      </div>
       </div>
-  
-    </div>
+</div>
   </section>
+
 
   <section style="width:100%" class="section_color4 py-3 my-2 rounded text-white">
     <div class="container-fluid" >
-      <h3 style="color:#00e6e6; font-style: bold; font-size: 2rem"> Available Products Announcements </h3>
+      <h3 style="align-center"> Our Available Products Deals </h3>
       <div class="row">
         {% if product_deals %} <!-- for class based  we use data.product since the is the name of aour queryset-->
         {% for deal in product_deals %}
@@ -264,13 +121,13 @@ width: 50%;
               <!--p class="list"><img src="{% static 'images/forest.jpeg' %}" alt="Smiley face" width="90%" height="250" class="float-start"-->
                <!--img src="{{ deal.product_image.url}}" alt="testing"  class="img-responsive img-fluid rounded my-3 center" style="width: 95%; height: 150px;"-->
               <p class="list"><i>Title:</i> {{ deal.product_name }}<br>
-               <i>Dealer name:</i> <span class="about"> </span> {{ deal.dealer }} <br> 
-                <i>Dealer email:</i> <span class="about"><i class="fa-sharp fa-solid fa-at"></i></span> {{ deal.email }} 
+               <i>Dealer name:</i> <span class="about"> </span> {{ deal.dealer }} <br>
+                <i>Dealer email:</i> <span class="about"><i class="fa-sharp fa-solid fa-at"></i></span> {{ deal.email }}
               <br>Location: {{ deal.country }}, {{deal.city}}
               <p class="list"><i></i> {{ deal.product_description|truncatewords:'25' }}</p>
               <p>  <small class="text-muted"><i>Date created: </i>{{ deal.created_on|date }}</small></p>
             </div>
-           
+
           </div>
         </div>
         {% endfor %}
@@ -282,24 +139,25 @@ width: 50%;
    </div>
    <div class="">
     {% if user.is_authenticated %}
-    <button class="btn btnfont" onclick="location.href='{% url 'product_deals:product-deal-list' %}'"> <span class="about"><i class="fa-solid fa-magnifying-glass"></i> Search for New Deals  </span></button>
+    <button class="btn btnfont btnbg mb-1 mx-2" onclick="location.href='{% url 'product_deals:product-deal-list' %}'"> <span class="about"><i class="fa-solid fa-magnifying-glass"></i> Search for New Deals  </span></button>
   {% else%}
-  <button type="button" class="btn btnfont " onclick="location.href='{% url 'accounts:login' %}'"><span class="about"><i class="fa-solid fa-magnifying-glass"></i> Search for New Deals  </span></button>
+  <button type="button" class="btn btnfont btnbg mx-2" onclick="location.href='{% url 'accounts:login' %}'"><span class="about"><i class="fa-solid fa-magnifying-glass"></i> Search for New Deals  </span></button>
 
-  </p>   
-  {% endif%}    
-       
+  </p>
+  {% endif%}
+
      </div>
       </div>
-   </div>
     </div>
   </section>
+
+
   <section style="width:100%" class="section_color2 py-3 rounded">
     <div class="container-fluid">
-      <h3 style="color:#00e6e6; font-style: bold; font-size: 2rem" > Blogs </h3>
+      <h3 style="align-center" class="text-white"> Blogs </h3>
       <div class="row">
         {% if blogs %}
-        {% for blog in blogs %} 
+        {% for blog in blogs %}
         <div class="col-md-6 my-2">
           <div class="card mb-4 box-shadow">
             <div class="card-body card-3 ">
@@ -310,7 +168,6 @@ width: 50%;
             </div>
           </div>
         </div>
-        
     {% endfor %}
 
     {% else %}
@@ -323,35 +180,32 @@ width: 50%;
    <div>
 
     {% if user.is_authenticated %}
-    <p> <button class="btn btnfont btnbg mb-1" onclick="location.href='{% url 'blogs:blog-list' %}'"> <span class="about"><i class="fa-solid fa-blog mx-3"></i> Read Blogs </span> </button>      
+    <p> <button class="btn btnfont btnbg mb-1" onclick="location.href='{% url 'blogs:blog-list' %}'"> <span class="about"><i class="fa-solid fa-blog mx-3"></i> Read Blogs </span> </button>
      {% else%}
-   <button type="button" class="btn btnfont btnbg mx-2" onclick="location.href='{% url 'accounts:login' %}'"><span class="about"><i class="fa-solid fa-magnifying-glass"></i> Read Blogs</span>  </button></p>   
-   {% endif%} 
+   <button type="button" class="btn btnfont btnbg mx-2" onclick="location.href='{% url 'accounts:login' %}'"><span class="about"><i class="fa-solid fa-magnifying-glass"></i> Read Blogs</span>  </button></p>
+   {% endif%}
 
-     </div>
-      </div>
-   </div>
-    </div>
+
   </section>
 
 
   <section style="width:100%" class="section_color3 py-3 my-2">
     <div class="container-fluid">
-      <h4 style="color:#00e6e6; font-style: bold; font-size: 2rem"> Training Schedule </h4>
+      <h4 style="align-center" class="text-white"> Training Schedule </h4>
       <div class="row">
-      {% if trainings %} 
+      {% if trainings %}
         {% for training in trainings %}
         <div class="col-md-6 my-2">
           <div class="card mb-4 box-shadow">
             <div class="card-body card-3 ">
-              <p class="list"><i><b>Category of Training:</b></i>{{ training.domain}}  <br/> 
+              <p class="list"><i><b>Category of Training:</b></i>{{ training.domain}}  <br/>
                 <b><i>Training Title: </i></b>{{ training.training_title}} </p>
               <p class="list"><i><b>Teacher:</b></i> {{ training.teacher }} - {{ training.email }}</p>
               <!--p class="list"><span class="about"><i class="fa-sharp fa-solid fa-at"></i> {{ training.email }} </p-->
               <p><span class="about"> </span><b>Training Type:</b> {{ training.training_type }} &nbsp &nbsp {{ training.duration }} &nbsp &nbsp {{ training.training_mode }}</p>
               <p class="list"><i></i> <b>Teacher's Biographie:</b> {{ training.teacher_bio|truncatewords:'50' }}</p>
               <p class="list"><i></i> <b>Training Description:</b>  {{ training.description|truncatewords:'50' }}</p>
-              <p>  <small class="text-muted"><i><b>Start Date: </b></i>{{ training.start_date|date }}  </small> 
+              <p>  <small class="text-muted"><i><b>Start Date: </b></i>{{ training.start_date|date }}  </small>
                 <small class="text-muted"><i><b>To:</b> </i>{{ training.end_date|date }}  </small><br/>
                 <small class="text-muted"><i><b>Start Time:</b> </i>{{ training.start_time|time }}  </small>
                 <small class="text-muted"><i><b>To:</b> </i>{{ training.end_time|time }}  </small>
@@ -369,30 +223,27 @@ width: 50%;
    <div>
 
     {% if user.is_authenticated %}
-    <p> <button class="btn btnfont btnbg mb-1 mx-2" onclick="location.href='{% url 'trainings:training-list' %}'"> <span class="about"><i class="fa-solid fa-book-open"></i> Check Our Trainings Schedule </span> </button>      
+    <p> <button class="btn btnfont btnbg mb-1 mx-2" onclick="location.href='{% url 'trainings:training-list' %}'"> <span class="about"><i class="fa-solid fa-book-open"></i> Check Our Trainings Schedule </span> </button>
      {% else%}
-   <button type="button" class="btn btnfont btnbg mx-2" onclick="location.href='{% url 'accounts:login' %}'"><span class="about"><i class="fa-solid fa-book-open"></i> Check Our Trainings Schedule</span>  </button></p>   
-   {% endif%} 
-       
-     </div>
-      </div>
-   </div>
-    </div>
+   <button type="button" class="btn btnfont btnbg mx-2" onclick="location.href='{% url 'accounts:login' %}'"><span class="about"><i class="fa-solid fa-book-open"></i> Check Our Trainings Schedule</span>  </button></p>
+   {% endif%}
+
+
   </section>
 
   <section style="width:100%" class="section_color2 py-3 rounded">
     <div class="container-fluid">
-      <h4 style="color:#00e6e6; font-style: bold; font-size: 2rem"> Farming Technical Forms </h4>
+      <h4 style="align-center" class="text-white"> Farming Technical Forms </h4>
       <div class="row">
         {% if fiches %}
-        {% for fiche in fiches %} 
+        {% for fiche in fiches %}
         <div class="col-md-6 my-2">
           <div class="card mb-4 box-shadow">
             <div class="card-body card-3 ">
-              <img src="{{ fiche.fiche_avatar.url}}" alt="testing"  class="img-responsive img-fluid rounded my-3 center" style="width: 95%; height: 150px;">
+              <img src="{{ fiche.fiche_avatar.url}}" alt="testing"  class="img-responsive img-fluid rounded-start my-3" style="width: 80%; height: 150px;">
               <h5>{{fiche.name}}</h5>
               <p class="list blog"> {{ fiche.category }} </p>
-              <p class=" list blog">{{ fiche.description|truncatewords:'50'|safe }}</p>
+              <p class=" list blog">{{ fiche.description|truncatewords:'20'|safe }}</p>
               <p>  <small class="text-muted"><i>Date created: </i>{{ fiche.created_on|date }}</small></p>
             </div>
           </div>
@@ -409,36 +260,32 @@ width: 50%;
    <div>
 
     {% if user.is_authenticated %}
-    <p> <button class="btn btnfont btnbg mb-1" onclick="location.href='{% url 'fiches:fiche-list' %}'"> <span class="about"><i class="fa-solid fa-blog mx-3"></i>Read More </span> </button>      
+    <p> <button class="btn btnfont btnbg mb-1" onclick="location.href='{% url 'fiches:fiche-list' %}'"> <span class="about"><i class="fa-solid fa-blog mx-3"></i>Read More </span> </button>
      {% else%}
-   <button type="button" class="btn btnfont btnbg mx-2" onclick="location.href='{% url 'accounts:login' %}'"><span class="about"><i class="fa-solid fa-magnifying-glass"></i> Read More</span>  </button></p>   
-   {% endif%} 
+   <button type="button" class="btn btnfont btnbg mx-2" onclick="location.href='{% url 'accounts:login' %}'"><span class="about"><i class="fa-solid fa-magnifying-glass"></i> Read More</span>  </button></p>
+   {% endif%}
 
-     </div>
-      </div>
-   </div>
-    </div>
+
   </section>
 
   <section class=" py-3">
-    <div class="card bg-dark text-white">
-      <img src="{% static 'images/samsung 1.png' %}" class="d-block w-100 rounded" alt="..." style="width: 800px; height: 500px;">
+    <div class="card bg-dark text-white" style="width:100% height:250">
+      <img src="{% static 'images/soybeans_green.jpeg' %}" class="card-img" alt="Soybeans"/>
       <div class="card-img-overlay text-center">
         <h2 class="card-title">Site Statistics:</h2>
         <span class="about2"><h3 class=""><b>{{experts_count}}</b></h3></br><p class=""> Experts Registered  </P></span>
 
           <span class="about2"><h3 class="">{{companies_count}}</h3></br><p class=""> Registered Companies  </P></span>
-        
+
             <span class="about2"><h3 class=""><b>{{deals_count}}</b></h3></br><p class="">Services Deals Announcements  </P></span>
               <span class="about2"><h3 class=""><b>{{product_deals_count}}</b></h3><p class="">Products Deals Announcements  </P> </span>
-        
+
       </div>
     </div>
-  </div>
-  
+
   </section>
 
-</body>
+
 <script>
   let slideIndex = 0;
 showSlides();
@@ -456,12 +303,8 @@ function showSlides() {
 }
 </script>
 
-<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
-
-
-{% include 'footer.html' %} 
+{% include 'footer.html' %}
 
 {% endblock content%}
 
+</body>

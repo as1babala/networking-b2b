@@ -9,61 +9,62 @@
 {% block content %}
 
 <head>
-  <link rel="stylesheet" href="{% static 'css/card_hover.css' %}">
-  <style>
-    .line-spacing-1-5 {
-        line-height: 2.0;
-    }
+<!--link rel="stylesheet" href="{% static 'css/card_hover.css' %}"-->
+<style>
+.line-spacing-1-5 {
+    line-height: 2.0;
+}
 
-    .center {
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      width: 50%;
-    }
+.center {
+  display: block;
+  margin-left: 5px;
+  margin-right: 5px;
+  width: 50%;
+}
 </style>
 </head>
-<section style="width:100%" class="section_color1 py-3 rounded line-spacing-1-5 opacity-25">
-<div class="container-fluid opacity-25" >
-<div class="col-md-12 white text-justify ">
+<section class=" py-5 line-spacing-1-5 rounded">
+  <div class="row">
+    <div  class="col-md-2 col">
+    </div>
+<div class="col-md-8 col text-justify">
 <p><a href="{% url 'blogs:blog-list' %}">blogs list</a></p> 
 <hr style="height:3px;border-width:0;color:gray;background-color:gray">
-<h3><span class="about"><b><i>{{blog.categories}}</i></b></br> {{blog.title}}</span></h3>
+<h3><span class="" style="color:#0A2647; font-style: bold"><b><i>{{blog.categories}}</i></b></br> {{blog.title}}</span></h3>
 <p><img src="{{ blog.blog_image.url}}" alt="testing"  class="img-responsive img-fluid rounded my-3 center" style="width: 800px; height: 300px;"></p></br>
 
-
-<p class="white" style="text-align:justify"><i class="">Written by:</i> {{blog.author}} <i class="mx-3">Contact via: </i><a href="mailto:{{blog.email}}">{{blog.email}}</a>
-
-  <button type="button" class="btn btn-primary position-relative mx-4 ">
-    Number of words
-    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary about">
-      {{  blog.blog_length|intcomma}}
-      <span class="visually-hidden"></span>
-    </span>
-  </button>
-
-<button type="button" class="btn btn-primary position-relative mx-4">
-  Number of Reviews
-  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary about">
-    {{review_count}}
-    <span class="visually-hidden"></span>
-  </span>
+<p class="white" style="text-align:justify"><i class="">Written by:</i> {{blog.author}} <i class="mx-3">Contact via: </i><a href="mailto:{{blog.email}}">{{blog.email}}</a></p>
+<p>
+<button type="button" class="btn btn-primary position-relative ">
+Number of words
+<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary" >
+  {{  blog.blog_length|intcomma}}
+  <span class="visually-hidden"></span>
+</span>
 </button>
 
 <button type="button" class="btn btn-primary position-relative mx-4">
-  Blog Rating
-  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary about">
-    {{average_rating}}
-    <span class="visually-hidden"></span>
-  </span>
+Number of Reviews
+<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
+{{review_count}}
+<span class="visually-hidden"></span>
+</span>
 </button>
 
 <button type="button" class="btn btn-primary position-relative mx-4">
-  Reading Time
-  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary about">
-    {{ blog.blog_time}} minutes
-    <span class="visually-hidden"></span>
-  </span>
+Blog Rating
+<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary ">
+{{average_rating}}
+<span class="visually-hidden"></span>
+</span>
+</button>
+
+<button type="button" class="btn btn-primary position-relative mx-4">
+Reading Time
+<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary ">
+{{ blog.blog_time}} minutes
+<span class="visually-hidden"></span>
+</span>
 </button>
 
 </p>
@@ -73,78 +74,81 @@
 
 </p>
 <p><small> Created On: <i>{{blog.created_on |date}} </i></small></p>
+</div></div>
 </section>
 
 
-<section style="width:100%" class=" my-2 rounded">
-  <button type="button" class="collapsible rounded btn" style="width:100%"><h4>To Read reviews click here</h4></button>
-  
-    <div class="shadow p-3 mb-5 bg-body-tertiary rounded content" style="border-width:0;color:gray;background-color: #133b5c">
-      <h3>Reviews</h3>
-      <hr style="height:3px;border-width:0;color:gray;background-color:gray">
-      {% for review in reviews %}
-        <p>by {{ review.user }} on {{ review.created_on|date }} </p>
-        
-        <p>{{ review.comment }}</p>
-        <p>Rating: {{ review.rating }}</p>
-      <div>
-        {% for reply in replies %}
-                      <div class="card mb-2 ml-3">
-                          <div class="card-body">
-                              <h6 class="card-subtitle mb-2 text-muted">{{ reply.replier }}</h6>
-                              <p class="card-text">{{ reply.comment }}</p>
-                          </div>
+<section class="py-2" >
+<button type="button" class="collapsible rounded btn" style="width:100%"><h4>To Read reviews click here</h4></button>
+
+<div class="shadow p-3 mb-5 bg-body-tertiary rounded content" style="border-width:0;color:gray;background-color: #133b5c">
+  <div class="container-fluid opacity-25" >
+  <h3>Reviews</h3>
+  <hr style="height:3px;border-width:0;color:gray;background-color:gray">
+  {% for review in reviews %}
+    <p>by {{ review.user }} on {{ review.created_on|date }} </p>
+    
+    <p>{{ review.comment }}</p>
+    <p>Rating: {{ review.rating }}</p>
+  <div>
+    {% for reply in replies %}
+                  <div class="card mb-2 ml-3">
+                      <div class="card-body">
+                          <h6 class="card-subtitle mb-2 text-muted">{{ reply.replier }}</h6>
+                          <p class="card-text">{{ reply.comment }}</p>
                       </div>
-                  {% endfor %}
-                  <a href="{% url 'blogs:reply-create' review.id %}" class="card-link">Reply</a>
-              </div>
-        <hr>
-        {% empty %}
-          <p>No reviews yet.</p>
-      
-        {% endfor %}
-      </div>
-  
-</div>
+                  </div>
+              {% endfor %}
+              <a href="{% url 'blogs:reply-create' review.id %}" class="card-link">Reply</a>
+          </div>
     <hr>
-
-
-</section>
-<section class="">
-  <button type="button" class="btn collapsible rounded" style="width:100%"><h4>Clich Here to add a review</h4></button>
+    {% empty %}
+      <p>No reviews yet.</p>
   
-  <div class="shadow p-3 mb-5 bg-body-tertiary rounded content" style="border-width:0;color:gray;background-color: #133b5c">
-
-    {% if user.is_authenticated %}
-    <form method="POST" action="{% url 'blogs:review-create' pk=blog.pk %}" class="white">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        {% buttons %}
-        <button type="submit" class="btn btn-primary">Post Review</button>
-        {% endbuttons %}
-    </form>
-  {% endif %}
+    {% endfor %}
   </div>
+
+</div>
+</section>
+<hr>
+
+
+<section>
+<button type="button" class="btn collapsible rounded" style="width:100%"><h4>Clich Here to add a review</h4></button>
+
+<div class="shadow p-3 mb-5 bg-body-tertiary rounded content" style="border-width:0;color:gray;background-color: #133b5c">
+
+{% if user.is_authenticated %}
+<form method="POST" action="{% url 'blogs:review-create' pk=blog.pk %}" class="white">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+    <button type="submit" class="btn btn-primary">Post Review</button>
+    {% endbuttons %}
+</form>
+{% endif %}
 </div>
 
-</section>
 
+</section>
 
 <script type="text/javascript">
-  var coll = document.getElementsByClassName("collapsible");
+var coll = document.getElementsByClassName("collapsible");
 var i;
 
 for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.display === "block") {
-      content.style.display = "none";
-    } else {
-      content.style.display = "block";
-    }
-  });
+coll[i].addEventListener("click", function() {
+this.classList.toggle("active");
+var content = this.nextElementSibling;
+if (content.style.display === "block") {
+  content.style.display = "none";
+} else {
+  content.style.display = "block";
+}
+});
 }
 </script>
-{% include 'footer.html'%}
+
+{% include 'footer.html' %}
+
 {% endblock content %}

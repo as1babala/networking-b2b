@@ -128,13 +128,14 @@ def blog_detail(request, pk):
     #reply = Review.objects.filter(blog=blog).get(pk=pk)
     review_count = Review.objects.filter(blog=blog).annotate(num_reviews=Count("rating")).count()
     sum_rating = Review.objects.filter(blog=blog).aggregate(Sum("rating"))
-    if Review.objects.filter(blog=blog).count() == 0:
-        average_rating = 0
-    else:
-        average_rating = Review.objects.filter(blog=blog).aggregate(Avg("rating"))
+    #if Review.objects.filter(blog=blog).count() == 0:
+        #average_rating = 0
+    #else:
+        #average_rating = Review.objects.filter(blog=blog).aggregate(Avg("rating"))
     #replies = ReplyToReview.objects.filter(blog=blog, review=reviews)
     #average_rating = average_rating.get('rating__avg')# format the average rating
-    average_rating = round(average_rating)# the whole number
+    average_rating = Review.objects.filter(blog=blog).aggregate(Avg("rating"))
+    average_rating = (average_rating)# the whole number
    
     context = {
         "blog": blog,

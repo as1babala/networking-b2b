@@ -41,7 +41,7 @@
               
               <td class="white">{{fiche.name}}</td>
               <td class="white">{{fiche.category}}</td>
-              <td class="white">{{fiche.description}}</td>
+              <td class="white">{{fiche.description|truncatewords:'20'}}</td>
               <td class="white">{{fiche.principal_risks|truncatewords:'20'}}</td>
               <td class="white">{{fiche.Technical_factors|truncatewords:'20'}}</td>
               <td class="white">{{fiche.harvest_factors|truncatewords:'20'}}</td>

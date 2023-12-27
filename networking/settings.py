@@ -243,10 +243,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #EMAIL_HOST_PASSWORD = 'your_password'
 #EMAIL_USE_TLS = True
 # EMAIL_USE_SSL = True # Use this for SSL instead of TLS
-
-
-
-
 #########
 
 #EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
