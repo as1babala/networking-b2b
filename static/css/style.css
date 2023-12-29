@@ -503,7 +503,7 @@ th {
 }
 
 .active, .dot:hover {
-  background-color:;
+  background-color:none;
 }
 
 /* Fading animation */

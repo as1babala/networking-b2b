@@ -47,6 +47,7 @@ body{
     background-repeat: no-repeat;
     background-position: right;
     background-size: 80px;
+    padding: 50px
   }
   
   @media(max-width: 990px){
@@ -124,7 +125,7 @@ body{
 
 .section_color43{
   background: #38a3a5;
-  backgroung-transparent: 
+  background-transparent: ;
   
 }
 

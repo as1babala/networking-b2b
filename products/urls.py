@@ -12,7 +12,7 @@ urlpatterns = [
     path('', ProductListView.as_view(), name='product-list'),
     path('payment_success/', SuccessView.as_view(), name='payment-success'),
     path('payment_cancel/', CancelView.as_view(), name='payment-cancel'),
-     path('payments/webhook/', stripe_webhook, name='stripe-webhook'),
+    path('payments/webhook/', stripe_webhook, name='stripe-webhook'),
      
     path('<int:pk>/update/', ProductUpdateView.as_view(), name='product-update'),
     path('<int:pk>/delete/', ProductDeleteView.as_view(), name='product-delete'),

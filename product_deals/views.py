@@ -22,7 +22,7 @@ from rfi.forms import *
 from django.db.models import Count
 from .filters import *
 
-class ProductDealsListView(ListView):
+class ProductDealsListView(LoginRequiredMixin,ListView):
     model = ProductDeals
     template_name = 'product_deals/product_deals.html'
     context_object_name = 'deals'
@@ -213,7 +213,7 @@ class RfiDeleteView(LoginRequiredMixin, generic.DeleteView):
         return reverse("rfi:rfi-list")
 
 
-class ProductDealsSearchView(ListView):
+class ProductDealsSearchView(LoginRequiredMixin, ListView):
     model = ProductDeals
     template_name = "product_deals/product_deal_search.html"
 

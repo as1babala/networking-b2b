@@ -4,150 +4,8 @@
 {% block content %}
 <body>
 <head>
- 
+  <link rel="stylesheet" href="{% static 'css/card_hover.css' %}">
    
- 
-  <!--link rel="stylesheet" href="{% static 'css/card_hover.css' %}"-->
-    <style>
-
-  .section_color1{
-    background: #0a2647;
-    
-  }
-
-  .section_color12{
-    background: #1d2d50;
-    
-  }
-
-  .section_color13{
-    background: #1b262c;
-    
-  }
-
-  .section_color2{
-    background: #144272;
-    
-  }
-
-  .section_color22{
-    background: #133b5c;
-    
-  }
-
-  .section_color23{
-    background: #0f4c75;
-    
-  }
-
-  .white{
-    color:#ffffff
-  }
-
-.text{
-    color: white;
-    font-style:normal;
-    /*font-size: 16px;*/
-    font-family: Georgia, 'Times New Roman', Times, serif;
-
-}
-
-.section_color3{
-  background: #205295;
-  
-}
-
-.section_color32{
-  background: #1e5741;
-  
-}
-
-.section_color33{
-  background: #328238;
-  
-}
-
-.section_color4{
-  background: #2c74b3;
-  
-}
-
-.section_color42{
-  background: #00a8ec;
-  
-}
-
-.section_color43{
-  background: #38a3a5;
-  backgroung-transparent: 
-  
-}
-
-.line-spacing-1-5 {
-  line-height: 2.0;
-}
-
-.center {
-display: block;
-margin-left: auto;
-margin-right: auto;
-width: 50%;
-}
-      * {
-        box-sizing: border-box;
-      }
-      body {
-        font-family: Arial;
-        font-size: 17px;
-      }
-      .container {
-        position: relative;
-        max-width: 100%;
-        height: 0px;
-        margin: 0 auto;
-      }
-      .container img {vertical-align: middle;}
-      .container .content {
-        position: absolute;
-        bottom: 0;
-        background: rgb(0, 0, 0); /* Fallback color */
-        background: rgba(0, 0, 0, 0.4); /* Black background with 0.5 opacity */
-        color: #f1f1f1;
-        width: 100%;
-        padding: 10px;
-      }
-      .card-3{
-        /*background-image: url(https://ionicframework.com/img/getting-started/theming-card.png);
-       background-image: url('../images/deals.jpeg');*/
-       background-repeat: no-repeat;
-       background-position: right;
-       background-size: 80px;
-     }
-     
-     @media(max-width: 990px){
-       .card{
-         margin: 20px;
-       }
-     }
-
-      .center {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        width: 50%;
-      }
-
-      
-.stats {
-  color: #3D30A2 ;
-  font-size: 20px;
-}
-
-.stats1 {
-  color: #362FD9;
-  font-size: 20px;
-}
-      </style>
   </head> 
 
 
@@ -168,7 +26,8 @@ width: 50%;
     </div>
   </section-->
 
-<section  style="width:100%" class="rounded py-3 my-2">
+
+<section  style="width:100%" class="rounded py-3">
   <div id="carouselExampleCaptions" class="carousel slide">
     <div class="carousel-indicators">
       <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -209,46 +68,41 @@ width: 50%;
   </div>
 </section>
 
-  <section style="width:100%" class="section_color1 py-3 my-2 text-white">
+  <section style="width:100%" class="section_color1 py-3 text-white rounded">
     <div class="container-fluid">
-      <h3 style="color:#00e6e6; font-style: bold; font-size: 2rem"> Our Available Services Deals </h3>
+      <h5 style="color:#00e6e6; font-style: bold; font-size: 2rem"> Our Available Services Deals </h5>
       <div class="row">
         {% if deals %}
         {% for deal in deals %}
-        <div class="col-md-6 my-2 ">
+        <div class="col-md-6 my-2">
           <div class="card mb-4 box-shadow">
-            <div class="card-body card-3  ">
+            <div class="card-body card-3">
               <!--p class="list"><img src="{% static 'images/forest.jpeg' %}" alt="Smiley face" width="90%" height="250" class="float-start"-->
                <!--img src="{{ deal.deal_picture.url}}" alt="testing"  class="img-responsive img-fluid rounded my-3 center" style="width: 95%; height: 150px;"-->
-              <p class="list"><i><b>Deal Category:</b></i> {{ deal.service_category }}<br>
+              <p class="list"><i><b>Deal Category: </b></i> {{ deal.service_category }}<br>
                <i><b>Dealer Type:</b></i> <span class="about"> </span> {{ deal.deal_type }} <br> 
-                <i><b>Location:</b></i>  {{ deal.deal_country }}, {{deal.deal_city }} 
+                <i><b>Location:</b></i>  {{ deal.deal_country }}, {{deal.deal_city }} </br>
               
-              <p class="list"><i></i> {{ deal.descriptions|truncatewords:'50' }}</p>
-              <p>  <small class="text-muted"><i>Date created: </i>{{ deal.created_on|date }}</small></p>
+              <i></i> {{ deal.descriptions|truncatewords:'50' }}</br>
+              <small class="text-muted"><i>Date created: </i>{{ deal.created_on|date }}</small></p>
             </div>
-           
           </div>
         </div>
         {% endfor %}
         {% else %}
-        <div class="card-body card-3  ">
+        <div class="">
           <p> No deals to show for now</p>
         </div>
         {% endif %}
    </div>
    <div class="">
     {% if user.is_authenticated %}
-    <button class="btn btnfont btnbg mb-1" onclick="location.href='{% url 'deals:deal-list' %}'"> <span class="about"><i class="fa-solid fa-magnifying-glass"></i> Search for New Deals  </span></button>
+    <button class="btn btnfont btnbg mb-1" onclick="location.href='{% url 'deals:deal-list' %}'"> <span class="about2"><i class="fa-solid fa-magnifying-glass"></i> Search for New Deals  </span></button>
   {% else%}
-  <button type="button" class="btn btnfont btnbg mx-2" onclick="location.href='{% url 'accounts:login' %}'"><span class="about"><i class="fa-solid fa-magnifying-glass"></i> Search for New Deals  </span></button>
-
-  </p>   
+  <button type="button" class="btn btnfont btnbg mx-2" onclick="location.href='{% url 'accounts:login' %}'"><span class="about2"><i class="fa-solid fa-magnifying-glass"></i> Search for New Deals  </span></button> 
   {% endif%}    
-       
      </div>
       </div>
-  
     </div>
   </section>
 
@@ -266,7 +120,7 @@ width: 50%;
               <p class="list"><i>Title:</i> {{ deal.product_name }}<br>
                <i>Dealer name:</i> <span class="about"> </span> {{ deal.dealer }} <br> 
                 <i>Dealer email:</i> <span class="about"><i class="fa-sharp fa-solid fa-at"></i></span> {{ deal.email }} 
-              <br>Location: {{ deal.country }}, {{deal.city}}
+              <br>Location: {{ deal.country }}, {{deal.city}}</p>
               <p class="list"><i></i> {{ deal.product_description|truncatewords:'25' }}</p>
               <p>  <small class="text-muted"><i>Date created: </i>{{ deal.created_on|date }}</small></p>
             </div>
@@ -282,18 +136,15 @@ width: 50%;
    </div>
    <div class="">
     {% if user.is_authenticated %}
-    <button class="btn btnfont" onclick="location.href='{% url 'product_deals:product-deal-list' %}'"> <span class="about"><i class="fa-solid fa-magnifying-glass"></i> Search for New Deals  </span></button>
+    <button class="btn btnfont" onclick="location.href='{% url 'product_deals:product-deal-list' %}'"> <span class="about2"><i class="fa-solid fa-magnifying-glass"></i> Search for New Deals  </span></button>
   {% else%}
-  <button type="button" class="btn btnfont " onclick="location.href='{% url 'accounts:login' %}'"><span class="about"><i class="fa-solid fa-magnifying-glass"></i> Search for New Deals  </span></button>
-
-  </p>   
+  <button type="button" class="btn btnfont " onclick="location.href='{% url 'accounts:login' %}'"><span class="about2"><i class="fa-solid fa-magnifying-glass"></i> Search for New Deals  </span></button>
   {% endif%}    
-       
      </div>
       </div>
-   </div>
-    </div>
+  
   </section>
+
   <section style="width:100%" class="section_color2 py-3 rounded">
     <div class="container-fluid">
       <h3 style="color:#00e6e6; font-style: bold; font-size: 2rem" > Blogs </h3>
@@ -304,34 +155,27 @@ width: 50%;
           <div class="card mb-4 box-shadow">
             <div class="card-body card-3 ">
               <p class="img-fluid rounded-start"><img src="{{blog.blog_image.url}}" alt="Smiley face" class="img-responsive img-fluid rounded my-3 center" style="width: 95%; height: 150px;">
-              <h4 class="list blog">{{ blog.categories }} </br> {{ blog.title|truncatewords:'4' }}</h4>
+              <h4 class="list blog">{{ blog.categories }} </br> {{ blog.title|truncatewords:'4' }}</h4></p>
               <p class=" list blog">{{ blog.content|truncatewords:'20'|safe }}</p>
               <p>  <small class="text-muted"><i>Date created: </i>{{ blog.created_on|date }}</small></p>
             </div>
           </div>
         </div>
-        
     {% endfor %}
-
     {% else %}
     <div class="card-body card-3  ">
       <p class="white"> No blogs available at this time, please check back later</p>
     </div>
     {% endif %}
-
    </div>
    <div>
-
     {% if user.is_authenticated %}
     <p> <button class="btn btnfont btnbg mb-1" onclick="location.href='{% url 'blogs:blog-list' %}'"> <span class="about"><i class="fa-solid fa-blog mx-3"></i> Read Blogs </span> </button>      
      {% else%}
    <button type="button" class="btn btnfont btnbg mx-2" onclick="location.href='{% url 'accounts:login' %}'"><span class="about"><i class="fa-solid fa-magnifying-glass"></i> Read Blogs</span>  </button></p>   
    {% endif%} 
-
      </div>
       </div>
-   </div>
-    </div>
   </section>
 
 
@@ -344,7 +188,7 @@ width: 50%;
         <div class="col-md-6 my-2">
           <div class="card mb-4 box-shadow">
             <div class="card-body card-3 ">
-              <p class="list"><i><b>Category of Training:</b></i>{{ training.domain}}  <br/> 
+              <p class="list"><i><b>Category of Training: </b></i>{{ training.domain}}  <br/> 
                 <b><i>Training Title: </i></b>{{ training.training_title}} </p>
               <p class="list"><i><b>Teacher:</b></i> {{ training.teacher }} - {{ training.email }}</p>
               <!--p class="list"><span class="about"><i class="fa-sharp fa-solid fa-at"></i> {{ training.email }} </p-->
@@ -372,12 +216,9 @@ width: 50%;
     <p> <button class="btn btnfont btnbg mb-1 mx-2" onclick="location.href='{% url 'trainings:training-list' %}'"> <span class="about"><i class="fa-solid fa-book-open"></i> Check Our Trainings Schedule </span> </button>      
      {% else%}
    <button type="button" class="btn btnfont btnbg mx-2" onclick="location.href='{% url 'accounts:login' %}'"><span class="about"><i class="fa-solid fa-book-open"></i> Check Our Trainings Schedule</span>  </button></p>   
-   {% endif%} 
-       
+   {% endif%}   
      </div>
       </div>
-   </div>
-    </div>
   </section>
 
   <section style="width:100%" class="section_color2 py-3 rounded">
@@ -392,32 +233,26 @@ width: 50%;
               <img src="{{ fiche.fiche_avatar.url}}" alt="testing"  class="img-responsive img-fluid rounded my-3 center" style="width: 95%; height: 150px;">
               <h5>{{fiche.name}}</h5>
               <p class="list blog"> {{ fiche.category }} </p>
-              <p class=" list blog">{{ fiche.description|truncatewords:'50'|safe }}</p>
+              <p class=" list blog">{{ fiche.description|truncatewords:'10'|safe }}</p>
               <p>  <small class="text-muted"><i>Date created: </i>{{ fiche.created_on|date }}</small></p>
             </div>
           </div>
         </div>
     {% endfor %}
-
     {% else %}
     <div class="card-body card-3  ">
       <p class="white"> No blogs available at this time, please check back later</p>
     </div>
     {% endif %}
-
    </div>
    <div>
-
     {% if user.is_authenticated %}
     <p> <button class="btn btnfont btnbg mb-1" onclick="location.href='{% url 'fiches:fiche-list' %}'"> <span class="about"><i class="fa-solid fa-blog mx-3"></i>Read More </span> </button>      
      {% else%}
    <button type="button" class="btn btnfont btnbg mx-2" onclick="location.href='{% url 'accounts:login' %}'"><span class="about"><i class="fa-solid fa-magnifying-glass"></i> Read More</span>  </button></p>   
    {% endif%} 
-
      </div>
       </div>
-   </div>
-    </div>
   </section>
 
   <section class=" py-3">
@@ -434,11 +269,9 @@ width: 50%;
         
       </div>
     </div>
-  </div>
-  
   </section>
-
 </body>
+
 <script>
   let slideIndex = 0;
 showSlides();
@@ -458,7 +291,7 @@ function showSlides() {
 
 <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+<!--script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script-->
 
 
 {% include 'footer.html' %} 

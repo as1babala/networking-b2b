@@ -86,7 +86,7 @@ Reading Time
   <h3>Reviews</h3>
   <hr style="height:3px;border-width:0;color:gray;background-color:gray">
   {% for review in reviews %}
-    <p>by {{ review.user }} on {{ review.created_on|date }} </p>
+    <p>by {{ review.reviewer }} on {{ review.created_on|date }} </p>
     
     <p>{{ review.comment }}</p>
     <p>Rating: {{ review.rating }}</p>

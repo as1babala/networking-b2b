@@ -4,8 +4,7 @@
 
 {% block content %}
 
-<h2 class="jumbotron" align="center"><a href="{% url 'accounts:home-page' %}">RESEAU <span>D'ECHANGE</span></a></h2>
-    <br> 
+
 <style>
     * {box-sizing: border-box;}
     body {font-family: Verdana, sans-serif;}
@@ -81,29 +80,31 @@
       .text {font-size: 18px}
     }
     </style>
+    <h2 class="jumbotron" align="center"><a href="{% url 'accounts:home-page' %}">RESEAU <span>D'ECHANGE ==></span></a></h2>
+    <br>  
     <div class="slideshow-container">
     
     <div class="mySlides fade">
       <div class="numbertext">1 / 4</div>
-      <img src="{% static 'images/financing.jpeg' %}" style="width:100%">
+      <img src="{% static 'images/financing.jpeg' %}" style="width:100%; height: 550px" class="img-responsive img-fluid rounded my-3 center">
       <div class="text" style="color:#006699; font-style: bold; font-size: 4rem; border-bottom: 1px solid white;"><h2>FINANCING PARTNERSHIP</h2></div>
     </div>
     
     <div class="mySlides fade">
       <div class="numbertext">2 / 4</div>
-      <img src="{% static 'images/bckgrd2.jpeg' %}" style="width:100% ">
+      <img src="{% static 'images/bckgrd2.jpeg' %}" style="width:100%; height: 550px" class="img-responsive img-fluid rounded my-3 center">
       <div class="text" style="color:#006699; font-style: bold; font-size: 4rem; border-bottom: 1px solid white;"><h2>MANAGEMENT PARTNERSHIP</h2></div>
     </div>
     
     <div class="mySlides fade">
       <div class="numbertext">3 / 4</div>
-      <img src="{% static 'images/leadership1.avif' %}" style="width:100%">
+      <img src="{% static 'images/leadership1.avif' %}" style="width:100%; height: 550px" class="img-responsive img-fluid rounded my-3 center">
       <div class="text" style="color:#006699; font-style: bold; font-size: 4rem; border-bottom: 1px solid white;"><h2>LEADERSHIP PARTNERSHIP</h2></div>
     </div>
     
     <div class="mySlides fade">
       <div class="numbertext">4 / 4</div>
-      <img src="{% static 'images/technic.jpeg' %}" style="width:100%">
+      <img src="{% static 'images/technic.jpeg' %}" style="width:100%; height: 550px" class="img-responsive img-fluid rounded my-3 center">
       <div class="text" style="color:#CC0000; font-style: bold; font-size: 4rem; border-bottom: 1px solid white;"><h2>TECHNICAL PARTNERSHIP</h2></div>
     </div>
     <br>
