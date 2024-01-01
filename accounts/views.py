@@ -242,7 +242,10 @@ class EducationUpdateView(LoginRequiredMixin, generic.UpdateView):
     def get_success_url(self):
         return reverse("profiles:expert-profile-list")
     
-    
+def logout_view(request):
+    logout(request)
+    return redirect('accounts/login.html')
+ 
 def AdminSignUp(request):
     if request.method == 'POST':
         form = UserCreateForm(request.POST)
@@ -289,3 +292,18 @@ def EmployeeSignUp(request):
     else:
         form = UserCreateForm()
     return render(request, 'accounts/employee_signup.html', {'form': form})
+
+
+class ReadContentView(ListView):
+    context_object_name = "data"
+    template_name = "accounts/read_content.html"
+
+    def get_queryset(self):
+        message_all = {
+            "forms_read": FicheRead.objects.all(),
+            "blogs_read": BlogRead.objects.all(),
+            "deals_read": DealRead.objects.all(),
+            "product_deals_read": ProductDealRead.objects.all(),
+            
+             }
+        return message_all

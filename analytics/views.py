@@ -51,6 +51,8 @@ class MainAnalyticsView(admin, employee, ListView):
            
         }
         return my_set
+    
+    
 @login_required()
 def main_analytics(request):
     blog_published = Blog.objects.filter(status="PUBLISHED").count()
@@ -58,7 +60,7 @@ def main_analytics(request):
     blog_archived = Blog.objects.filter(status="ARCHIVED").count()
     experts= CustomUser.objects.filter(is_expert=True ).count()
     enterprises=Enterprises.objects.filter().count()
-    reviews = Review.objects.values('rating').annotate(count=Count("reviews"), average_rating=Avg('ating'))
+    reviews = Review.objects.values('rating').annotate(count=Count("reviews"), average_rating=Avg('rating'))
     context = {
         'blog_published': blog_published,
         'blog_drafted': blog_drafted,

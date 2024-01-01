@@ -40,7 +40,7 @@ class ProductListView( generic.ListView):
     context_object_name = "products"
     paginate_by = 3
     
-class ProductCreateView(LoginRequiredMixin, CreateView):
+class ProductCreateView(admin, CreateView):
     template_name = "products/product_create.html"
     form_class = ProductForm
     

@@ -1,13 +1,18 @@
-{% extends "base_content.html" %}
+<head>
+  <style>
 
-{% block content %}
-<section class="white py-3">
-  <h1>Viewed Job Postings History</h1>
+.read  {
+  color: #0a2647;
+}
+li  {
+  color: #0a2647;
+}
+  </style>
   <hr>
   <ul>
     {% for job in user.jobread_set.all %}
      <p> <li>
-        <a href="{% url 'jobs:job-detail' job.job_read.id %}">
+        <a href="{% url 'jobs:job-detail' job.job_read.id %}" class="read">
           {{ job.job_read.job_title }}
         </a>
          - {{ job.timestamp|date:"F j, Y, g:i a" }}-
@@ -17,5 +22,3 @@
   {% endfor %}
     
 </ul>
-</section>
-{% endblock %}

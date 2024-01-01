@@ -1,51 +1,26 @@
-{% extends "base_content.html" %}
 <head>
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+
+.read  {
+  color: #0a2647;
+}
+li  {
+  color: #0a2647;
+}
+  </style>
 </head>
-{% block content %}
-<section class="white py-3">
-  <h3>Product Adds Viewed History</h3>
   <hr>
   <ul>
     {% for deal in user.productdealread_set.all %}
      <p> <li>
-        <a href="{% url 'product_deals:product-deal-detail' deal.product_deal_read.id %}">
+        <a href="{% url 'product_deals:product-deal-detail' deal.product_deal_read.id %}" class="read">
           {{ deal.product_deal_read.product_deal_title }}
         </a>
-         - {{ deal.timestamp|date:"F j, Y, g:i a" }}-
+         - {{ deal.timestamp|date:"F j, Y, g:i" }}-
       </li></p>
     {% empty %}
-      <li>No blog posts have been marked as read.</li>
+     <p> <li>No blog posts have been marked as read.</li></p>
   {% endfor %}
     
 </ul>
-</section>
 
-<!--section>
-  <div class="container-fluid">
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
-        </li>
-    </ul>
-    <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-          
-        </div>
-        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-         
-        </div>
-        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...Contact content...</div>
-    </div>
-</div>
-</section>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script-->
-{% endblock %}

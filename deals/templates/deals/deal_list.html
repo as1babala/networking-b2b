@@ -112,9 +112,9 @@
       <div class="row">
         {% if object_list %}
         {% for deal in object_list %}
-        <div class="col-md-6 col">
-          <div class="card mb-4 box-shadow">
-            <div class="card-body card-3 ">
+        <div class="col-md-6 col d-flex">
+          <div class="card mb-4 box-shadow flex-fill">
+            <div class="card-body card-3 flex-fill">
 
             {% if deal.image_url %}
             <img src="{{ deal.image_url }}" class="card-img-top rounded" alt="{{ deal.deal_title }}" style="width: 90%; height: 150px;">

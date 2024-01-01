@@ -53,6 +53,7 @@ body{
   @media(max-width: 990px){
     .card{
       margin: 20px;
+      padding: 50px 0;
     }
   }
   
@@ -139,4 +140,6 @@ margin-left: auto;
 margin-right: auto;
 width: 50%;
 }
-  
+section {
+  padding: 50px 0;
+}

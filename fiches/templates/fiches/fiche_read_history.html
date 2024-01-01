@@ -1,21 +1,25 @@
-{% extends "base_content.html" %}
+<head>
+  <style>
 
-{% block content %}
-<section class="white py-3">
-  <h3>My Reading History</h3>
+.read  {
+  color: #0a2647;
+}
+li  {
+  color: #0a2647;
+}
+  </style>
   <hr>
-  <ol>
+  <ul>
     {% for forms in user.ficheread_set.all %}
      <p> <li>
-        <a href="{% url 'fiches:fiche-detail' forms.fiche_read.slug %}">
+        <a href="{% url 'fiches:fiche-detail' forms.fiche_read.slug %}" class="read">
           {{ forms.fiche_read.name }} - {{ forms.fiche_read.category }}
         </a>
-         - {{ forms.timestamp|date:"F j, Y, g:i a" }}-
+         - {{ forms.timestamp|date:"F j, Y, g:i" }}
       </li></p>
     {% empty %}
       <li>No Deal announcements have been marked as read.</li>
   {% endfor %}
     
-</ol>
+</ul>
 </section>
-{% endblock %}

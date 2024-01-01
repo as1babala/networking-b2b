@@ -22,18 +22,20 @@ class UserCreateForm(UserCreationForm):
     
     class Meta:
         model = CustomUser
-        fields = [
-           
-            'salutations','first_name','last_name', 'username', 'email' ,'company_name',
-            'commercial', 'technical', 'financial', 'management', 'agreement'
-            ]
+       
         widgets = {
         'password': forms.PasswordInput(),
+     
        
         
         #'email': forms.EmailField()
         
         }
+        fields = [
+           
+            'salutations','first_name','last_name', 'username', 'email' ,'company_name',
+            'commercial', 'technical', 'financial', 'management', 'password1', 'password2','agreement'
+            ]
 
 #for contact us page
 class ContactusForm(forms.Form):

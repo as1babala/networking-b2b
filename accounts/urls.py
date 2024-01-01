@@ -8,7 +8,7 @@ app_name = "accounts"
 urlpatterns = [
     
     path("login/", auth_views.LoginView.as_view(template_name="accounts/login.html"),name='login'),
-    path("logout/", auth_views.LogoutView.as_view(template_name="accounts/logout.html"), name="logout"),
+    path("logout/", auth_views.LogoutView.as_view(template_name="accounts/login.html"), name="logout"),
     
     #### Password reset  ###
     path("reset_password/", auth_views.PasswordResetView.as_view(template_name="accounts/password_reset.html"), name="password_reset"),
@@ -22,6 +22,7 @@ urlpatterns = [
     path("change_complete/", auth_views.PasswordChangeDoneView.as_view(template_name="accounts/change-complete.html"), name="change-complete"),
     
     ### Site links ###
+    #path('logout/', logout_view, name='logout'),
     path("register/", SignUp, name="signup"), 
     path("", home, name="home"),
     path("testing", testing, name="testing"),
@@ -54,7 +55,10 @@ urlpatterns = [
     path('education/<int:pk>/update/', EducationUpdateView.as_view(), name='education-update'), 
     
     path("admin-register/", AdminSignUp, name="admin-signup"),  
-    path("employee-register/", EmployeeSignUp, name="employee-signup"),  
+    path("employee-register/", EmployeeSignUp, name="employee-signup"),
+    
+    ### Read content ###
+    path("content-read/", ReadContentView.as_view(), name="content-read" ),  
 ]
     
     
