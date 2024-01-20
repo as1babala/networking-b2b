@@ -106,16 +106,16 @@ def download_pdf_view(request,pk):
 class FicheTechnicSearchView(ListView):
     model = FicheTechnic
     template_name = "fiches/fiche_search.html"
-    paginate_by= 1
+    paginate_by= 10
 
     def get_queryset(self):  # new
         query = self.request.GET.get("q")
         object_list = FicheTechnic.objects.filter(
             Q(name__icontains=query) | 
             Q(category__icontains=query)  |
-            Q(principal_risks__icontains=query)  
-            
-            
+            Q(principal_risks__icontains=query)|
+            Q(Expertise_level__icontains=query)|
+            Q(description__icontains=query )
            
             )
         return object_list

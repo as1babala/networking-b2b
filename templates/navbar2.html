@@ -29,7 +29,7 @@
 <!--nav class="navbar navbar-expand-lg navbar-light admin fixed-top"-->
 
 
-  <nav class="navbar navbar-expand-lg navbar-light employee fixed-top">
+  <nav class="navbar navbar-expand-md navbar-light employee fixed-top">
     
   <div class="navtop container-fluid" style="align-right">
     
@@ -80,7 +80,7 @@
 </nav>
 
 {% elif user.is_employee %}
-<nav class="navbar navbar-expand-lg navbar-light employee fixed-top">
+<nav class="navbar navbar-expand-md navbar-light employee fixed-top">
   <div class="navtop container-fluid" style="align-left">
     
     <a class="navbar-brand" href="{% url 'accounts:home-page' %}" ><img src="{% static "/images/logo.png" %}" style="width:100%; height:10%"></a>
@@ -129,7 +129,7 @@
 {% elif user.is_expert %}
 
 <!-- Here end the new -->
-<nav class="navbar navbar-expand-lg navbar-light employee fixed-top">
+<nav class="navbar navbar-expand-md navbar-light employee fixed-top">
   <div class="navtop container-fluid" style="align-left">
     
     <a class="navbar-brand" href="{% url 'accounts:home-page' %}" ><img src="{% static "/images/logo.png" %}" style="width:100%; height:10%"></a>
@@ -182,7 +182,7 @@
 {% endif %}
 
 {% else %}
-<nav class="navbar navbar-expand-lg navbar-light no-member fixed-top">
+<nav class="navbar navbar-expand-md navbar-light no-member fixed-top">
   <div class="navtop container-fluid" style="align-left">
     
     <a class="navbar-brand" href=""><img src="{% static "/images/logo.png" %}" style="width:100%; height:10%"></a>
@@ -198,6 +198,7 @@
   <li class="nav-item"><a class="nav-link {% if request.path == path_to_signup %}active{% endif %}" href="{{path_to_signup}}">Join Us</a></li>
   <li class="nav-item"><a class="nav-link {% if request.path == path_to_job_listing %}active{% endif %}" href="{{path_to_job_listing}}">Job Listing</a></li>
   <li class="nav-item"><a class="nav-link {% if request.path == path_to_packages %}active{% endif %}" href="{{path_to_packages}}"></a></li>
+  <li class="nav-item"><a class="nav-link {% if request.path == path_to_packages %}active{% endif %}" href="{{path_to_packages}}"> Service Packages</a></li>
   <li><a class="nav-link {% if request.path == path_to_contact%}active{% endif %}" href="{{path_to_contact}}">contact Us</a></li>
   <li><a class="nav-link {% if request.path == path_to_about_us%}active{% endif %}" href="{{path_to_about_us}}">Who We Are</a></li>
 </ul>

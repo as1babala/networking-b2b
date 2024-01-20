@@ -123,7 +123,7 @@ class EnterpriseDeleteView(LoginRequiredMixin, generic.DeleteView):
 class SearchEntView(ListView):
     model = Enterprises
     template_name = "enterprises/enterprise_search.html"
-    paginate_by= 1
+    paginate_by= 10
 
     def get_queryset(self):  # new
         query = self.request.GET.get("q")
@@ -139,8 +139,8 @@ class SearchEntView(ListView):
             Q(financial__icontains=query)|
             Q(management__icontains=query)|
             Q(company_web__icontains=query)|
-            Q(sector__icontains=query)|
-            Q(industry__icontains=query)|
+            Q(sector__name__icontains=query)|
+            Q(industry__name__icontains=query)|
             Q(annual_revenue__icontains=query)
             
             )

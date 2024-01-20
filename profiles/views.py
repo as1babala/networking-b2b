@@ -222,7 +222,7 @@ class ExpertProfileSearchView(ListView):
         query = self.request.GET.get("q")
         object_list = ExpertProfile.objects.filter(
             
-            Q(user__icontains=query)| 
+            Q(user__username__icontains=query)| 
             Q(email__icontains=query)|
             Q(city__icontains=query)|
             Q(state__icontains=query)|

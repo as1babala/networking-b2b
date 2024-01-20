@@ -7,6 +7,13 @@
 
 <head>
   <link rel="stylesheet" href="{% static 'css/card_hover.css' %}">
+  <style>
+    /* Add some spacing between the panels on smaller screens */
+    @media (max-width: 768px) {
+        .content-panel {
+            margin-bottom: 20px;
+        }
+  </style>
 </head>
 <section>
   <div class="p-3 mb-2 bg-info text-blue search-column" >

@@ -61,12 +61,14 @@ def main_analytics(request):
     experts= CustomUser.objects.filter(is_expert=True ).count()
     enterprises=Enterprises.objects.filter().count()
     reviews = Review.objects.values('rating').annotate(count=Count("reviews"), average_rating=Avg('rating'))
+    blog_category = Blog.objects.values('category').count()
     context = {
         'blog_published': blog_published,
         'blog_drafted': blog_drafted,
         'blog_archived': blog_archived,
         'experts': experts,
         'enterprises': enterprises,
-        'reviews': reviews
+        'reviews': reviews,
+        'blog_category': blog_category,
     }
     return render(request, 'analytics/main.html', context)

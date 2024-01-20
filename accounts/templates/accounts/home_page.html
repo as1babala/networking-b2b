@@ -15,6 +15,11 @@
       flex: 1;
 
     }
+    /* Add some spacing between the panels on smaller screens */
+    @media (max-width: 768px) {
+        .content-panel {
+            margin-bottom: 20px;
+        }
   </style>
    
   </head> 
@@ -44,23 +49,23 @@
       <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
     </div>
     <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img src="{% static 'images/saas 1.png' %}" class="d-block w-100 rounded" alt="..." style="width: 800px; height: 350px;">
-        <div class="carousel-caption d-none d-md-block">
-          <h5 style="color:#00e6e6; font-style: bold; font-size: 2.5rem">One platform</h5>
-          <p style="color:#00e6e6; font-style: bold; font-size: 1.5rem">Networking Opportunities to Deal With Partners Across the World</p>
+      <div class="carousel-item active content-panel">
+        <img src="{% static 'images/banner hero.png' %}" class="d-block w-100 rounded" alt="..." style="width: 800px; height: 350px;">
+        <div class="carousel-caption d-none d-md-block content-panel">
+          <!--h5 style="color:#00e6e6; font-style: bold; font-size: 2.5rem">One platform</h5>
+          <p style="color:#00e6e6; font-style: bold; font-size: 1.5rem">Networking Opportunities to Deal With Partners Across the World</p-->
         </div>
       </div>
-      <div class="carousel-item">
+      <div class="carousel-item content-panel">
         <img src="{% static 'images/vanille.png' %}" class="d-block w-100 rounded" alt="..." style="width: 800px; height: 350px;">
-        <div class="carousel-caption d-none d-md-block">
+        <div class="carousel-caption d-none d-md-block content-panel">
           <h5 style="color:#00e6e6; font-style: bold; font-size: 2rem">one objective</h5>
           <p style="color:#00e6e6; font-style: bold; font-size: 1.5rem">Create Your Perfect Network and Grow Sales</p>
         </div>
       </div>
-      <div class="carousel-item">
+      <div class="carousel-item content-panel">
         <img src="{% static 'images/real estate listing.png' %}" class="d-block w-100 rounded" alt="..." style="width: 800px; height: 350px;">
-        <div class="carousel-caption d-none d-md-block">
+        <div class="carousel-caption d-none d-md-block content-panel">
           <h5 style="color:#00e6e6; font-style: bold; font-size: 2rem">All Domains and Industries</h5>
           <p style="color:#00e6e6; font-style: bold; font-size: 1.5rem"> Connect With Businesses and experts</p>
         </div>
@@ -70,7 +75,7 @@
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
     </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+    <button class="carousel-control-next content-panel" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
     </button>
@@ -79,13 +84,13 @@
 
   <section style="width:100%" class="section_color1 py-3 text-white rounded">
     <div class="container-fluid">
-      <h5 style="color:#00e6e6; font-style: bold; font-size: 2rem"> Our Available Services Deals </h5>
+      <h5 style="color:#00e6e6; font-style: bold; font-size: 2rem"> Our Available Service Deals </h5>
       <div class="row">
         {% if deals %}
         {% for deal in deals %}
-        <div class="col-md-6 my-2">
-          <div class="card mb-4 box-shadow">
-            <div class="card-body card-3 column">
+        <div class="col-md-6 my-2 d-flex">
+          <div class="card mb-4 box-shadow flex-fill">
+            <div class="card-body card-3 column flex-fill content-panel">
               <!--p class="list"><img src="{% static 'images/forest.jpeg' %}" alt="Smiley face" width="90%" height="250" class="float-start"-->
                <!--img src="{{ deal.deal_picture.url}}" alt="testing"  class="img-responsive img-fluid rounded my-3 center" style="width: 95%; height: 150px;"-->
               <p class="list"><i><b>Deal Category: </b></i> {{ deal.service_category }}<br>
@@ -121,9 +126,9 @@
       <div class="row">
         {% if product_deals %} <!-- for class based  we use data.product since the is the name of aour queryset-->
         {% for deal in product_deals %}
-        <div class="col-md-6 my-2 ">
-          <div class="card mb-4 box-shadow">
-            <div class="card-body card-3 column ">
+        <div class="col-md-6 my-2 d-flex">
+          <div class="card mb-4 box-shadow flex-fill">
+            <div class="card-body card-3 column content-panel flex-fill">
               <!--p class="list"><img src="{% static 'images/forest.jpeg' %}" alt="Smiley face" width="90%" height="250" class="float-start"-->
                <!--img src="{{ deal.product_image.url}}" alt="testing"  class="img-responsive img-fluid rounded my-3 center" style="width: 95%; height: 150px;"-->
               <p class="list"><i>Title:</i> {{ deal.product_name }}<br>
@@ -160,9 +165,9 @@
       <div class="row">
         {% if blogs %}
         {% for blog in blogs %} 
-        <div class="col-md-6 my-2">
-          <div class="card mb-4 box-shadow">
-            <div class="card-body card-3 column">
+        <div class="col-md-6 my-2 d-flex">
+          <div class="card mb-4 box-shadow flex-fill">
+            <div class="card-body card-3 column content-panel flex-fill">
               <p class="img-fluid rounded-start"><img src="{{blog.blog_image.url}}" alt="Smiley face" class="img-responsive img-fluid rounded my-3 center" style="width: 95%; height: 150px;">
               <h4 class="list blog">{{ blog.categories }} </br> {{ blog.title|truncatewords:'10' }}</h4></p>
               <p class=" list blog">{{ blog.content|truncatewords:'20'|safe }}</p>
@@ -196,7 +201,7 @@
         {% for training in trainings %}
         <div class="col-md-6 my-2 d-flex">
           <div class="card mb-4 box-shadow flex-fill">
-            <div class="card-body card-3 flex-fill">
+            <div class="card-body card-3 flex-fill content-panel">
               <p class="list"><i><b>Category of Training: </b></i>{{ training.domain}}  <br/> 
                 <b><i>Training Title: </i></b>{{ training.training_title}} </p>
               <p class="list"><i><b>Teacher:</b></i> {{ training.teacher }} - {{ training.email }}</p>
@@ -236,9 +241,9 @@
       <div class="row">
         {% if fiches %}
         {% for fiche in fiches %} 
-        <div class="col-md-6 my-2">
-          <div class="card mb-4 box-shadow">
-            <div class="card-body card-3 ">
+        <div class="col-md-6 my-2 d-flex">
+          <div class="card mb-4 box-shadow flex-fill">
+            <div class="card-body card-3 content-panel flex-fill">
               <img src="{{ fiche.fiche_avatar.url}}" alt="testing"  class="img-responsive img-fluid rounded my-3 center" style="width: 95%; height: 150px;">
               <h5>{{fiche.name}}</h5>
               <p class="list blog"> {{ fiche.category }} </p>
@@ -265,7 +270,7 @@
   </section>
 
   <section class=" py-3">
-    <div class="card bg-dark text-white">
+    <div class="card bg-dark text-white content-panel">
       <img src="{% static 'images/samsung 1.png' %}" class="d-block w-100 rounded" alt="..." style="width: 800px; height: 500px;">
       <div class="card-img-overlay text-center">
         <h2 class="card-title">Site Statistics:</h2>

@@ -5,11 +5,12 @@
 {% endblock title%}
 
 {% block content %}
+<section class="py-5">
 <div class="p-3 mb-2 bg-info text-dark" >
-  <h2 class="text-4xl text-gray800">Industry Sectors  List</h2>
+  <h3 class="text-4xl text-gray800">Industry Sectors  List</h3>
   <hr class="text-danger border-2 opacity-50">
  
-  <form class="d-flex" role="search" action='/search/' method='GET' enctype="">
+  <form class="d-flex" role="search" action="{% url 'industries:sector-search' %}" method='GET' enctype="">
       <input class="form-control me-2" name="q" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
@@ -25,7 +26,7 @@
         <th scope="col">Industry Name</th>
         <th scope="col">Sector Name</th>
         <th scope="col"> Sector Description</th>
-        <th scope="col">Create on</th>
+       
        
       </tr>
     </thead>
@@ -36,7 +37,7 @@
               <td>{{sectors.industry}}</td>
               <td>{{sectors.name}}</td>
               <td>{{sectors.description}}</td>
-              <td>{{sectors.created_on|date}}</td>
+         
               
           </tr>
       {% endfor %}
@@ -66,6 +67,7 @@
       {% endif %}
       {% endblock %}
         </div> 
+      </section>
         {% include 'footer.html' %} 
 {% endblock content %}
 

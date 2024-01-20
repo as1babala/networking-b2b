@@ -11,4 +11,5 @@ urlpatterns = [
     path('<slug:slug>/', RfiDetailView.as_view(), name='rfi-detail'),
     path('<slug:slug>/update/', RfiUpdateView.as_view(), name='rfi-update'),
     path('<slug:slug>/delete/', RfiDeleteView.as_view(), name='rfi-delete'),
+    
 ]

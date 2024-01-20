@@ -22,6 +22,7 @@ from .forms import *
 from django.db.models import Count, Avg, Sum
 from django.shortcuts import render, redirect
 from common.utils import send_notification_email
+
 class admin(UserPassesTestMixin):
     
     def test_func(self):
@@ -139,6 +140,7 @@ def blog_detail(request, pk):
     average_rating = average_rating.get('rating__avg')# format the average rating
     average_rating = round((average_rating),0)# the whole number
     blogs = Blog.objects.all()
+    #blog_user = CustomUser.objects.filter(user=request.user)
    
     context = {
         "blog": blog,
@@ -148,7 +150,8 @@ def blog_detail(request, pk):
         "review_count": review_count,
         "average_rating": average_rating,
         "sum_rating": sum_rating,
-        "blogs": blogs
+        "blogs": blogs,
+        #"blog_user": blog_user
         
     }
 
@@ -291,3 +294,20 @@ class BlogsSearchView(ListView):
             Q(created_on__icontains=query)
         )
         return object_list   
+
+
+def category_list(request):
+    categories = Category.objects.all()
+    #categories = Category.objects.annotate(num_blogs=Count('blog')).all().order_by('-num_blogs') 
+    return render(request, 'blogs/blog_categories.html', {'categories': categories})
+
+
+def category_detail(request, pk):
+    category = get_object_or_404(Category, pk=pk)
+    blogs = category.blog_set.all()
+    return render(request, 'blogs/category_detail.html', {'category': category, 'blogs': blogs})
+
+def blogs_by_category(request, category_id):
+    blogs = Blog.objects.filter(category_id=category_id)
+    category = Category.objects.get(id=category_id)
+    return render(request, 'blogs_by_category.html', {'blogs': blogs, 'category': category})

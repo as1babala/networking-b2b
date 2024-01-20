@@ -9,7 +9,7 @@
   <h2 class="text-4xl text-gray800">Industries List</h2>
   <hr class="text-danger border-2 opacity-50">
  
-  <form class="d-flex" role="search" action='/search/' method='GET' enctype="">
+  <form class="d-flex" role="search" action="{% url 'industries:industry-search' %}" method='GET' enctype="">
       <input class="form-control me-2" name="q" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success" type="submit">Search</button>
     </form>

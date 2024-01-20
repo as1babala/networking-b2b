@@ -221,7 +221,7 @@ class ProductDealsSearchView(LoginRequiredMixin, ListView):
         query = self.request.GET.get("q")
         object_list = ProductDeals.objects.filter(
             Q(email__icontains=query) |
-            #Q(dealer__icontains=query)| 
+            Q(dealer__username__icontains=query)| 
             Q(company_name__icontains=query)|
             Q(product_name__icontains=query) |
             Q(product_category__icontains=query) |
@@ -230,3 +230,7 @@ class ProductDealsSearchView(LoginRequiredMixin, ListView):
            
         )
         return object_list   
+
+
+def messages_deals(request):
+    return render(request, 'product_deals/messages.html',{'reader': request.user})

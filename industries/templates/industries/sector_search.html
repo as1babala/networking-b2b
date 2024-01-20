@@ -1,0 +1,69 @@
+
+{% extends "base.html" %}
+{% block title %}
+
+{% endblock title%}
+
+{% block content %}
+<section class="py-3">
+<div class="p-3 mb-2 bg-info text-dark my-3" >
+  <h3 class="text-4xl text-gray800">Industry Sectors  List</h3>
+  <hr class="text-danger border-2 opacity-50">
+ 
+    <hr class="border-primary border-3 opacity-75">
+  </div>
+  <br>
+ <p> <a href="{% url 'industries:sector-create' %}">Enter a new industry sector</a><p>
+
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Industry Name</th>
+        <th scope="col">Sector Name</th>
+        <th scope="col"> Sector Description</th>
+       
+       
+      </tr>
+    </thead>
+    <tbody>
+      {% for sectors in object_list %}
+          <tr>
+              <td><a href="{% url 'industries:sector-detail' sectors.pk %}">Edit</a></td>
+              <td>{{sectors.industry}}</td>
+              <td>{{sectors.name}}</td>
+              <td>{{sectors.description}}</td>
+             
+              
+          </tr>
+      {% endfor %}
+  
+    </tbody>
+  </table>
+
+  <div>
+    {% block pagination %}
+      {% if is_paginated %}
+
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+          <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
+          <li class="page-item"><a class="page-link" href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Previous </a></li>
+          {% endif %}
+          <span class="page-current">
+            <li class="page-item"><a class="page-link" href="#">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a></li>
+        </span>
+        {% if page_obj.has_next %}
+          <li class="page-item"><a class="page-link" href="{{ request.path }}?page={{ page_obj.next_page_number }}">Next</a></li>
+          <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+        </ul>
+      </nav>
+      {% endif %}
+      {% endblock %}
+        </div> 
+    </section>
+        {% include 'footer.html' %} 
+{% endblock content %}
+

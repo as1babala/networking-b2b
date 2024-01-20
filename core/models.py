@@ -424,7 +424,7 @@ class Enterprises(RandomIDModel):
     number_employees = models.CharField(max_length=15, choices=EMP_NUMBER, default='0_10')
     annual_revenue = models.CharField(max_length = 50, choices=REVENUE, default='0_150 000 000')
     currency= models.CharField(max_length=50, choices=CURRENCIES_SYMBOLS, default='')
-    activity_description = models.TextField("Tell us more about your company's activities ", max_length=500)
+    activity_description = models.TextField("Tell us more about your company's activities ", max_length=3500)
    
     #is_company = models.BooleanField('Would like to register my company', default=False)
     created_on = models.DateTimeField(auto_now_add=True)
@@ -608,7 +608,7 @@ class Blog(RandomIDModel):
     slug = models.SlugField(max_length = 200, unique=True)
     title = models.CharField(max_length=200)
     #categories = models.CharField(choices=BLOG_CATEGORIES, max_length=50, default='')
-    categories = models.ForeignKey(Category, on_delete=models.CASCADE, default='')
+    categories = models.ForeignKey(Category, on_delete=models.DO_NOTHING, related_name = 'blog', default='')
     content = RichTextField()# to use rich text for blog post
     #content = models.TextField(max_length = 5000)
     created_on = models.DateTimeField(auto_now_add=True)
@@ -956,8 +956,7 @@ class ProductDeals(RandomIDModel):
     #product_image = models.ImageField(upload_to='products/images/', default='deals/deals.jpeg')
     city = models.CharField(max_length=100, default='')
     country = models.CharField(max_length=100, choices=COUNTRIES)
-    availability_date = models.DateField()
-   
+    availability_date = models.DateField() 
     stock_quantity = models.PositiveIntegerField(null=True, blank=True)
     quantity_unit = models.CharField(max_length=100, choices=MEASUREMENT_UNIT, default='')
     is_available = models.BooleanField(default=True)

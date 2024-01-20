@@ -226,7 +226,7 @@ class EducationCreateView( LoginRequiredMixin, CreateView):
     model = Education
     template_name = "accounts/education_create.html"
     fields = ["institution_name", "degree", "specialization", "minor", "start_date", "end_date","gpa","graduated", "description" ] 
-    success_url = reverse_lazy('accounts:education-list')
+    success_url = reverse_lazy('profiles:expert-user-profile-list')
      
     def form_valid(self, form):
         form.instance.student_email = self.request.user.email

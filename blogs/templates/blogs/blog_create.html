@@ -4,24 +4,51 @@
 {% block title%}
 
 {% endblock title%}
+<head>
+    <style>
+        .highlight {
+            border: 2px solid red;
+        }
+    </style>
+    <!--script type="text/javascript">
+        window.onload = function() {
+            const submitButton = document.getElementById('submit-button');
+            const form = document.getElementById('blog-post-form');
+            
+            form.addEventListener('keyup', function() {
+                let allFilled = true;
+                form.querySelectorAll('[required]').forEach(function(input) {
+                    if (!input.value) {
+                        allFilled = false;
+                    }
+                });
+
+                submitButton.disabled = !allFilled;
+            });
+        };
+    </script-->
+
+   
+
+</head>
 
 {% block content %}
 
 {% load crispy_forms_tags %}
 
 {% load bootstrap5 %}
+
 <section style="width:100%" class=" py-3 rounded line-spacing-1-5 opacity-25">
 <p class="white"><a href="{% url 'blogs:blog-list' %}"><i class="fa-solid fa-users"></i> Read our blogs</a></p> 
 <div class="container white">
     <div class="row my-5">
         <div class="col-md-12 white">
-            <form method="post"class="form" enctype="multipart/form-data">
+            <form id="blog-post-form" method="post"class="form" enctype="multipart/form-data">
                 {% csrf_token %}
-                
                 {% bootstrap_form form %}
                 {{form.media}}
                 {% buttons %}
-                <button type="submit" class="btn btn-primary">Create New Blog</button>
+                <button type="submit" id="submit-button" class="btn btn-primary" disabled>Create New Blog</button>
                 <button type="button" class="btn btn-dark" onclick="location.href='{% url 'blogs:blog-list' %}'">Cancel</button>
                
                 {% endbuttons %}
@@ -30,5 +57,29 @@
     </div>
 </div>
 </section>
+
+<script type="text/javascript">
+    window.onload = function() {
+        const submitButton = document.getElementById('submit-button');
+        const form = document.getElementById('blog-post-form');
+        
+        function checkInput() {
+            let allFilled = true;
+            form.querySelectorAll('[required]').forEach(function(input) {
+                if (!input.value) {
+                    allFilled = false;
+                    input.classList.add('highlight');
+                } else {
+                    input.classList.remove('highlight');
+                }
+            });
+
+            submitButton.disabled = !allFilled;
+        }
+
+        form.addEventListener('keyup', checkInput);
+        form.addEventListener('change', checkInput);
+    };
+</script>
 
     {% endblock %}

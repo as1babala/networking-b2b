@@ -64,3 +64,4 @@ class RfiDeleteView(LoginRequiredMixin, generic.DeleteView):
     
     def get_success_url(self):
         return reverse("rfi:rfi-list")
+

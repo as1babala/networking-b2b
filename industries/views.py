@@ -84,12 +84,13 @@ class IndustryDeleteView(LoginRequiredMixin, generic.DeleteView):
 class SearchIndView(ListView):
     model = Industry
     template_name = "industries/industry_search.html"
-    paginate_by= 1
+    paginate_by= 4
 
     def get_queryset(self):  # new
         query = self.request.GET.get("q")
         object_list = Industry.objects.filter(
-            Q(industry_name__icontains=query) 
+            Q(name__icontains=query) |
+            Q(description__icontains=query) 
            
             
             )
@@ -136,8 +137,7 @@ class SectorsDetailView(LoginRequiredMixin, generic.DetailView):
     queryset = Sectors.objects.all() # not adding context here
     context_object_name = "sectors"
     
-class SectorsCreateView(LoginRequiredMixin, CreateView):
-    template_name = "industries/sector_create.html"
+
 class SectorListView(LoginRequiredMixin, generic.ListView):
     template_name = "industries/sector_list.html"
     queryset = Sectors.objects.all() # not adding context here
@@ -176,23 +176,6 @@ class SectorsDeleteView(LoginRequiredMixin, generic.DeleteView):
     
     def get_success_url(self):
         return reverse("industries:sectors-list")
-
-
-class SearchSectorView(ListView):
-    model = Sectors
-    template_name = "industries/sector_search.html"
-    paginate_by= 1
-
-    def get_queryset(self):  # new
-        query = self.request.GET.get("q")
-        object_list = Sectors.objects.filter(
-            Q(industry__icontains=query)|
-           Q(name__icontains=query)|
-           Q(created_on__icontains=query)
-            
-            )
-        return object_list
-        #return reverse( "enterprises: enterprise-update")
 
 @login_required
 def Sectors_update(request, pk):
@@ -251,9 +234,9 @@ class SearchSectorView(ListView):
     def get_queryset(self):  # new
         query = self.request.GET.get("q")
         object_list = Sectors.objects.filter(
-            Q(industry__icontains=query)|
+            Q(industry__name__icontains=query)|
            Q(name__icontains=query)|
-           Q(created_on__icontains=query)
+           Q(description__icontains=query)
             
             )
         return object_list
