@@ -608,7 +608,7 @@ class Blog(RandomIDModel):
     slug = models.SlugField(max_length = 200, unique=True)
     title = models.CharField(max_length=200)
     #categories = models.CharField(choices=BLOG_CATEGORIES, max_length=50, default='')
-    categories = models.ForeignKey(Category, on_delete=models.DO_NOTHING, related_name = 'blog', default='')
+    categories = models.ForeignKey(Category, on_delete=models.CASCADE, related_name = 'blog', default='')
     content = RichTextField()# to use rich text for blog post
     #content = models.TextField(max_length = 5000)
     created_on = models.DateTimeField(auto_now_add=True)

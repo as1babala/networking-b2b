@@ -1,7 +1,11 @@
 {% extends "base.html" %}
+{% load i18n%}
 {% load static %}
 {% load bootstrap5 %}
+{% block title %} {% trans "Welcome to our Netwwork" %} {% endblock %}
 {% block content %}
+
+
 <body>
 <head>
   <link rel="stylesheet" href="{% static 'css/card_hover.css' %}">
@@ -20,6 +24,7 @@
         .content-panel {
             margin-bottom: 20px;
         }
+      }
   </style>
    
   </head> 
@@ -59,14 +64,14 @@
       <div class="carousel-item content-panel">
         <img src="{% static 'images/vanille.png' %}" class="d-block w-100 rounded" alt="..." style="width: 800px; height: 350px;">
         <div class="carousel-caption d-none d-md-block content-panel">
-          <h5 style="color:#00e6e6; font-style: bold; font-size: 2rem">one objective</h5>
-          <p style="color:#00e6e6; font-style: bold; font-size: 1.5rem">Create Your Perfect Network and Grow Sales</p>
+          <h5 style="color:#00e6e6; font-style: bold; font-size: 2rem">{% blocktrans %} one objective {% endblocktrans %}</h5>
+          <p style="color:#00e6e6; font-style: bold; font-size: 1.5rem">{% blocktrans %} Create Your Perfect Network and Grow Sales {% endblocktrans %}</p>
         </div>
       </div>
       <div class="carousel-item content-panel">
         <img src="{% static 'images/real estate listing.png' %}" class="d-block w-100 rounded" alt="..." style="width: 800px; height: 350px;">
         <div class="carousel-caption d-none d-md-block content-panel">
-          <h5 style="color:#00e6e6; font-style: bold; font-size: 2rem">All Domains and Industries</h5>
+          <h5 style="color:#00e6e6; font-style: bold; font-size: 2rem">{% blocktrans %} All Domains and Industries {% endblocktrans %}</h5>
           <p style="color:#00e6e6; font-style: bold; font-size: 1.5rem"> Connect With Businesses and experts</p>
         </div>
       </div>
@@ -285,6 +290,8 @@
     </div>
   </section>
 </body>
+
+
 
 <script>
   let slideIndex = 0;

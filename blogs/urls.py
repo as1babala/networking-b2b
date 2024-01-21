@@ -23,7 +23,8 @@ urlpatterns = [
     path('reply/<int:pk>/edit/', ReplyToReviewUpdateView.as_view(), name='reply-update'),
     path('reply/<int:pk>/delete/', ReplyToReviewDeleteView.as_view(), name='reply-delete'),
     path('read-history/', read_history, name='read-history'),
-    path('categories/', category_list, name='category-list'),
+    #path('categories/', category_list, name='category-list'),
+    path('categories/', CategoryListView.as_view(), name='category-list'),
     #path('categories/<slug:slug>/', category_detail, name='category-detail'),
     path('categories/<int:pk>/', category_detail, name='category-detail'),
 ]

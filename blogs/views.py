@@ -295,6 +295,22 @@ class BlogsSearchView(ListView):
         )
         return object_list   
 
+class CategoryListView(ListView):
+    model = Category
+    template_name = 'blogs/blog_categories.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories_with_count'] = Category.objects.annotate(post_count=Count('blog')).filter(post_count__gt=0) 
+        return context
+
+def category_detail(request, pk):
+    category = get_object_or_404(Category, pk=pk)
+    blogs = Blog.objects.filter(categories=category)
+    return render(request, 'blogs/category_detail.html', {'category': category, 'blogs': blogs})
+
+
+
 
 def category_list(request):
     categories = Category.objects.all()
@@ -302,12 +318,3 @@ def category_list(request):
     return render(request, 'blogs/blog_categories.html', {'categories': categories})
 
 
-def category_detail(request, pk):
-    category = get_object_or_404(Category, pk=pk)
-    blogs = category.blog_set.all()
-    return render(request, 'blogs/category_detail.html', {'category': category, 'blogs': blogs})
-
-def blogs_by_category(request, category_id):
-    blogs = Blog.objects.filter(category_id=category_id)
-    category = Category.objects.get(id=category_id)
-    return render(request, 'blogs_by_category.html', {'blogs': blogs, 'category': category})

@@ -1,6 +1,23 @@
 
-<ul>
+<!--ul>
     {% for category in categories %}
-    <p><li><a href="{% url 'blogs:category-detail' category.pk %}">{{ category.name }}</a> ( {{category.numb_blogs}} )</li></p>
+    <p><li><a href="{% url 'blogs:category-detail' category.pk %}">{{ category.name }}</a> ( {{category.blog_count}} )</li></p>
     {% endfor %}
-</ul>
+</ul-->
+
+
+{% for category in categories_with_count %}
+<li>
+    {% if category.post_count > 0 %}
+    <a href="{% url 'blogs:category-detail' category.pk %}">
+        
+        {{ category.name }} 
+      
+    </a>({{ category.post_count }} blogs)
+    {% else %}
+    <li class="empty">
+        {{ category.name }} (0)
+    </li>
+    {% endif %}
+</li>
+{% endfor %}

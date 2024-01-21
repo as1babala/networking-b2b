@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -98,12 +99,35 @@ crossorigin="anonymous"></script>
         .content-panel {
             margin-bottom: 20px;
         }
-
+      }
 </style>
   </head>
   <body>
     <div class="" >
-      {% include 'navbar2.html' %}
+      {% if request.user.is_authenticated and request.user.is_admin %}
+
+      {% include 'navbar_admin.html' %}
+      
+      {% endif %}
+      
+      {% if request.user.is_authenticated and request.user.is_employee %}
+      
+      {% include 'navbar_employee.html' %}
+      
+      {% endif %}
+      
+      {% if request.user.is_authenticated and request.user.is_expert %}
+      
+      {% include 'navbar_expert.html' %}
+      
+      {% endif %}
+      
+      {% if not request.user.is_authenticated and  not request.user.is_expert and not request.user.is_admin and not request.user.is_employee%}
+      
+      
+      {% include 'navbar0.html' %}
+      
+      {% endif %}
 
       {% include 'messages.html' %}
      </div>

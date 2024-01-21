@@ -6,37 +6,47 @@
 {% url 'accounts:about-us' as path_to_about_us %}
 {% url 'contacts:contact-create' as path_to_contact %}
 {% url 'accounts:signup' as path_to_signup %}
+{% url 'products:services' as path_to_packages %}
 
 {% url 'profiles:user-profile' as path_to_my_profile %}
-{% url 'profiles:expert-profile' as path_to_expert_profile %}
+{% url 'profiles:expert-profile-detail' as path_to_expert_profile %}
 {% url 'profiles:company-profile' as path_to_company_profile %}
 {% url 'profiles:employee-profile' as path_to_employee_profile %}
+{% url 'profiles:admin-profile' as path_to_admin_profile %}
 
 {% url 'employees:employee-create' as path_to_emp_create %}
-{% url 'jobs:job-create' as path_to_job_create %}
+{% url 'blogs:blog-list' as path_to_blog_list %}
+{% url 'blogs:blog-create' as path_to_blog_create %}
 {% url 'jobs:job-list' as path_to_job_listing %}
+{% url 'jobs:job-create' as path_to_job_create %}
 {% url 'applications:application-list' as path_to_app_listings %}
-{% url 'applications:application-create' as path_to_app_create %}
-<link rel="stylesheet" href="{% static 'style_main.css' %}">
+{% url 'jobs:application-create' as path_to_app_create %}
+{% url 'deals:deal-list' as path_to_service_deals %}
+{% url 'discussions:forum-create' as path_to_forum %}
+<!--link rel="stylesheet" href="{% static 'style_main.css' %}"-->
 
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="navtop container-fluid" style="align-left">
+<!--nav class="navbar navbar-expand-lg navbar-light admin fixed-top"-->
+
+
+  <nav class="navbar navbar-expand-md navbar-light employee fixed-top">
     
-    <!--<a class="navbar-brand" href=""><img src="{% static "/images/bckgrd.png" %}" style="width:10%; height:10%"></a-->
-    <h2 class="logo">Net<span>working</span></h2>
+  <div class="navtop container-fluid" style="align-right">
+    
+    <a class="navbar-brand" href="{% url 'accounts:home-page'%}" ><img src="{% static "/images/logo.png" %}" style="width:100; height:100"></a>
+    <!--h2 class="logo">Net<span>working</span></h2-->
+    <h2 class="logo">Networking</h2>
  
   <div > 
   <div class="collapse navbar-collapse" id="navbarNav">
       
-    <ul class="navbar-nav">
+    <ul class="navbar-nav admin">
   <li class="nav-item"><a class="nav-link {% if request.path == path_to_home_page %}active{% endif %}" href="{{path_to_home_page}}">Home</a></li>
-  <li class="nav-item"><a class="nav-link {% if request.path == path_to_login %}active{% endif %}" href="{{path_to_login}}">Login</a></li>
-  <li class="nav-item"><a class="nav-link {% if request.path == path_to_signup %}active{% endif %}" href="{{path_to_signup}}">Join Us</a></li>
+  
   <li class="nav-item"><a class="nav-link {% if request.path == path_to_emp_create %}active{% endif %}" href="{{path_to_emp_create}}">Employee Profile</a></li>
   <li class="nav-item"><a class="nav-link {% if request.path == path_to_job_create %}active{% endif %}" href="{{path_to_job_create}}">Post New Job</a></li>
-  <li class="nav-item"><a class="nav-link {% if request.path == path_to_job_listing %}active{% endif %}" href="{{path_to_job_listing}}">Job Listing</a></li>
-  <li class="nav-item"><a class="nav-link {% if request.path == path_to_app_listing %}active{% endif %}" href="{{path_to_app_listing}}"> Applications</a></li>
+  <li class="nav-item"><a class="nav-link {% if request.path == path_to_forum %}active{% endif %}" href="{{path_to_forum}}">New Forum</a></li>
+  <li class="nav-item"><a class="nav-link {% if request.path == path_to_app_listing %}active{% endif %}" href="{{path_to_blog_create}}"> Write a Blog</a></li>
   <li class="nav-item"><a class="nav-link {% if request.path == path_to_app_create %}active{% endif %}" href="{{path_to_app_create}}"></a></li>
 
 </ul>
@@ -50,6 +60,7 @@
     </div>
     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
       <li><a class="nav-link {% if request.path == path_to_contact%}active{% endif %}" href="{{path_to_contact}}">contact Us</a></li>
+
       <li><a class="nav-link {% if request.path == path_to_about_us%}active{% endif %}" href="{{path_to_about_us}}">Who We Are</a></li>
     </ul>
   </div>
@@ -59,23 +70,15 @@
         <img src="{{request.user.profile.avatar.url}}" class="avatar-sm">&nbsp;{{request.user}}
       </div>
       <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-        {% if CustomUser.is_company %} 
-        <li><a class="nav-link {% if request.path == path_to_company_profile%}active{% endif %}" href="{{path_to_company_profile}}">Profile</a></li>
-        <li><a class="dropdown-item" href="{% url 'accounts:signup' %}">Logout</a></li>
-        
-        {% elif CustomUser.is_consultant %}
-        <li><a class="nav-link {% if request.path == path_to_expert_profile%}active{% endif %}" href="{{path_to_expert_profile}}">Profile</a></li>
-        <li><a class="dropdown-item" href="{% url 'accounts:signup' %}">Logout</a></li> 
-  
-        {% endif %}
-        <li><a class="nav-link {% if request.path == path_to_my_profile%}active{% endif %}" href="{{path_to_my_profile}}">Profile</a></li>
-        <li><a class="dropdown-item" href="{% url 'accounts:signup' %}">Logout</a></li>
+        <li><a class="nav-link {% if request.path == path_to_admin_profile%}active{% endif %}" href="{{path_to_admin_profile}}">Profile</a></li>
+        <li><a class="dropdown-item nav-link" href="{% url 'accounts:login' %}">Logout</a></li>
       </ul>
     </div>
 
 </div>
 
 </nav>
+
 
 
 

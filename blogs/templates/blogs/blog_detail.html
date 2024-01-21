@@ -62,7 +62,7 @@
 <h3><a href="{% url 'blogs:blog-list' %}">blogs list</a></h3> 
 <hr style="height:3px;border-width:0;color:gray;background-color:gray">
 <h3><span class="" style="color:#0A2647; font-style: bold"><b><i>{{blog.categories}}</i></b></br> {{blog.title}}</span></h3>
-<p><img src="{{ blog.blog_image.url}}" alt="testing"  class="img-responsive img-fluid rounded my-3 center" style="width: 800px; height: 300px;"></p></br>
+<p><img src="{{ blog.blog_image.url}}" alt="testing"  class="img-responsive img-fluid rounded my-3 center card-img-top" style="width: 800px; height: 300px;"></p></br>
 
 <p class="white" style="text-align:justify"><i class="">Written by:</i> {{blog.author}} <i class="mx-3">Contact via: </i><a href="mailto:{{blog.email}}">{{blog.email}}</a></p>
 <p>

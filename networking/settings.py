@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 import os
+from django.utils.translation import gettext_lazy as _
 
 
 
@@ -68,6 +69,8 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django_otp',
     'django_otp.plugins.otp_totp',
+    'translation_manager',
+    #'django.contrib.locale',
     #'djstripe',
     
     
@@ -109,6 +112,7 @@ CRISPY_TEMPLATES_PACK = 'bootstrap5'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -116,7 +120,7 @@ MIDDLEWARE = [
     'django_otp.middleware.OTPMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
+   
     
 ]
 
@@ -155,6 +159,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                #'django.core.context_processors',
                 #'django.core.context_processors.i18n',
             ],
         },
@@ -211,6 +216,8 @@ LANGUAGES = [
     ('en', 'English'),
     ('fr', 'French'),
 ]
+
+LANGUAGE_CODE = 'en'
 #LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
@@ -225,6 +232,9 @@ REQUEST_BASE_URL = ""
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 STATIC_ROOT = os.path.join(BASE_DIR, "static_root")
@@ -248,6 +258,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #EMAIL_HOST_PASSWORD = 'your_password'
 #EMAIL_USE_TLS = True
 # EMAIL_USE_SSL = True # Use this for SSL instead of TLS
+
 #########
 
 #EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"

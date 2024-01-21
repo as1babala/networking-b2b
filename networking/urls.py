@@ -13,7 +13,7 @@ from django_otp.admin import OTPAdminSite
 from django_otp.plugins.otp_totp.models import TOTPDevice
 from django_otp.plugins.otp_totp.admin import TOTPDeviceAdmin
 #from rest_framework_simplejwt.views import TokenOBtainPairView, TokenRefreshView, TokenVerifyView
-
+from django.conf.urls.i18n import i18n_patterns
 ### class for MFA usage, this will help create the MFA site for user
 class OTPAdmin(OTPAdminSite):
    pass
@@ -59,5 +59,11 @@ urlpatterns = [
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += i18n_patterns(
+    path('i18n/', include('django.conf.urls.i18n')),
+    # Your translatable URLs
+    path('accounts/', include('django.contrib.auth.urls')),
+    
+)
 
 

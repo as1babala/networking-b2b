@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -97,7 +98,32 @@ crossorigin="anonymous"></script>
   <body>
   <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
    <div class=""> 
-    {% include 'navbar2.html' %}
+{% if request.user.is_authenticated and request.user.is_admin %}
+
+{% include 'navbar_admin.html' %}
+
+{% endif %}
+
+{% if request.user.is_authenticated and request.user.is_employee %}
+
+{% include 'navbar_employee.html' %}
+
+{% endif %}
+
+{% if request.user.is_authenticated and request.user.is_expert %}
+
+{% include 'navbar_expert.html' %}
+
+{% endif %}
+
+{% if not request.user.is_authenticated and  not request.user.is_expert and not request.user.is_admin and not request.user.is_employee%}
+
+
+{% include 'navbar0.html' %}
+
+{% endif %}
+
+    
    </div>
     <div class="container-fluid mt-3 mb-3 main">
         {% block content %}
