@@ -6,7 +6,7 @@ app_name = 'deals'
 
 urlpatterns = [
    
-    path('', DealsListView.as_view(), name='deal_list'),
+    path('', DealsListView.as_view(), name='deal-list'),
     path('create/', DealCreateView.as_view(), name='deal-create'),
     #path('create/', deal_create, name='deal-create'),
     path('<int:pk>/', deal_detail, name='deal-detail'),

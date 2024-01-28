@@ -7,12 +7,17 @@
 
 {% block content %}
 <head>
-   <link rel="stylesheet" href="{% static 'css/card_hover.css' %}">
+   <!--link rel="stylesheet" href="{% static 'css/card_hover.css' %}"-->
 
    <style>
     .card:hover{
       transform: scale(1.02);
       box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+  }
+  
+  
+  p {
+    color:#0A2647
   }
 
   .center {
@@ -91,10 +96,18 @@
 .form-container .btn:hover, .open-button:hover {
   opacity: 1;
 }
+
+
+/* Add some spacing between the panels on smaller screens */
+@media (max-width: 768px) {
+    .content-panel {
+        margin-bottom: 20px;
+    }
+  }
 </style>
 </head>
 
-<section class="" style="width:100%">
+<section class="py-3" style="width:100%">
   <div class="p-3 mb-2 bg-info text-blue " >
     <!--h2 class="text-4xl text-gray800"></h2-->
     <form class="d-flex" role="search" action="{% url 'deals:deal-search' %}" method='GET' enctype="">

@@ -6,16 +6,38 @@
 {% block content %}
 
 <head>
-  <link rel="stylesheet" href="{% static 'css/card_hover.css' %}">
+  <!--link rel="stylesheet" href="{% static 'css/card_hover.css' %}"-->
   <style>
     /* Add some spacing between the panels on smaller screens */
     @media (max-width: 768px) {
         .content-panel {
             margin-bottom: 20px;
         }
+      }
+
+  
+.social-circle {
+  display: inline-block;
+  position: relative;
+  margin: 0 auto 0 auto;
+  border-radius: 50%;
+  text-align: center;
+  width: 50px;
+  height: 50px;
+  font-size: 20px
+}
+
+.card:hover{
+  transform: scale(1.02);
+  box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
+
+p {
+  color:#0A2647
+}
   </style>
 </head>
-<section>
+<section class="py-3">
   <div class="p-3 mb-2 bg-info text-blue search-column" >
     <h2 class="text-4xl text-gray800"></h2>
     <form class="d-flex" role="search" action="{% url 'profiles:expert-profile-search' %}" method='GET' enctype="">
@@ -31,7 +53,7 @@
       <div class="row">
         {% if object_list %}
         {% for expert in object_list %}
-        <div class="col-md-6 col">
+        <div class="col-md-9 col">
           <div class="card mb-4 box-shadow">
             
             <!--img src="{% static 'images/user-solid.svg' %}" style="width:10 height=10"-->

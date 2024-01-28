@@ -115,7 +115,7 @@ Reading Time
 <section class="" >
 <button type="button" class="collapsible rounded btn" style="width:100%"><h4>To Read reviews click here</h4></button>
 
-<div class="shadow p-3 mb-5 bg-body-tertiary rounded content" style="border-width:0;color:gray;background-color: #133b5c">
+<div class="shadow p-3 mb-5 bg-body-tertiary rounded content" style="border-width:0;color:gray">
   <div class="container-fluid opacity-25" >
   <h3>Reviews</h3>
   <hr style="height:3px;border-width:0;color:gray;background-color:gray">
@@ -149,7 +149,7 @@ Reading Time
 <section>
 <button type="button" class="btn collapsible rounded" style="width:100%"><h4>Clich Here to add a review</h4></button>
 
-<div class="shadow p-3 mb-5 bg-body-tertiary rounded content" style="border-width:0;color:gray;background-color: #133b5c">
+<div class="shadow p-3 mb-5 bg-body-tertiary rounded content" style="border-width:0;color:gray;">
 
 {% if user.is_authenticated %}
 <form method="POST" action="{% url 'blogs:review-create' pk=blog.pk %}" class="white">

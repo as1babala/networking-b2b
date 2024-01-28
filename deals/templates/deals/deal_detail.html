@@ -8,8 +8,55 @@
 
 {% block content %}
 <head>
-  <styel>
+  <style>
 
+    /* Style the button that is used to open and close the collapsible content */
+    .collapsible {
+      background-color: #eee;
+      color: ;
+      cursor: pointer;
+      padding: 18px;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;
+    }
+    
+    /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+    .active, .collapsible:hover {
+      background-color: #ccc;
+    }
+    
+    /* Style the collapsible content. Note: hidden by default */
+    .content {
+      padding: 0 18px;
+      display: none;
+      overflow: hidden;
+      background-color: #f1f1f1;
+    }
+    
+      .line-spacing-1-5 {
+        line-height: 2.0;
+    }
+    
+    .center {
+      display: block;
+      margin-left: 5px;
+      margin-right: 5px;
+      width: 50%;
+    }
+    p {
+      color:#0A2647
+    }
+
+
+    /* Add some spacing between the panels on smaller screens */
+    @media (max-width: 768px) {
+        .content-panel {
+            margin-bottom: 20px;
+        }
+      }
   </style>
   
 </head>
@@ -22,7 +69,7 @@
       <div class="carousel-inner">
         {% for image in deal_images %}
         <div class="carousel-item {% if forloop.first %}active{% endif %}">
-          <img src="{{ image.image.url }}" class="d-block w-100 align-center" alt="..." style="width: 80%; height: 350px;">
+          <img src="{{ image.image.url }}" class="d-block w-100 align-center rounded" alt="..." style="width: 80%; height: 350px;">
         </div>
         {% endfor %}
       </div>

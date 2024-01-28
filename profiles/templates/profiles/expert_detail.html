@@ -28,11 +28,27 @@
   overflow: hidden;
   background-color: #f1f1f1;
 }
+
+.social-circle {
+  display: inline-block;
+  position: relative;
+  margin: 0 auto 0 auto;
+  border-radius: 50%;
+  text-align: center;
+  width: 150px;
+  height: 150px;
+  font-size: 20px
+}
+
+p {
+  color:#0A2647
+}
+
 </style>
 
 </head>
 
-<section class="">
+<section class=" py-3">
   <div class="container-fluid row" > 
 
     <div class="col-md-1 col">
@@ -41,7 +57,7 @@
    <p class="white"><a href="{% url 'profiles:expert-profile-list' %}">profiles list</a></p> 
 
     <h3 class="white">User: {{profiles.user}}</h3>
-    <img src="{{profiles.avatar.url}}" alt="Smiley face" width="250" height="250" class="img-responsive flot-start social-circle">
+    <img src="{{profiles.avatar.url}}" alt="Smiley face" width="250" height="250" class="img-responsive flot-start social-circle align-center">
     <hr >
     
     <div class="card-body">
