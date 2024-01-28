@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 {% load static %}
 {% load bootstrap5 %}
 
@@ -17,7 +17,7 @@
         
     </div>
     <div class="col-md-6 p-2 ps-md-0 my-5 container-fluid">
-      <h3 class="text-left" >Our Mission Statement</h3>
+      <h3 class="text-left" >{% trans "Our Mission Statement" %}</h3>
       <p class="text-justify">We are a networking company that specializes in bringing companies and experts together to collaborate, share business opportunities, resources, and expertise. We enable our clients to request technical, financial, commercial, and managerial assistance, allowing them to grow their businesses and reach new heights.
       <br/><br/>Our mission is to help businesses connect with the right people and resources to succeed. <span class="about">
         <br/><b><br/>We believe that collaboration is key to success and that by working together, we can achieve great things.</b></span>
@@ -44,7 +44,7 @@
 
       <br/><br/>
     <a href="{% url 'accounts:signup' %}" >
-      <button class="btn btnfont btnbg"> <span><i class="fa-solid fa-play"></i>  Let's Start</span></button></a>
+      <button class="btn btnfont btnbg"> <span><i class="fa-solid fa-play"></i>{% trans "Let's Start" %}</span></button></a>
       </p>
       
     </div>

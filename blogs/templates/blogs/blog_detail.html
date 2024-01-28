@@ -14,7 +14,7 @@
   /* Style the button that is used to open and close the collapsible content */
 .collapsible {
   background-color: #eee;
-  color: #444;
+  color: ;
   cursor: pointer;
   padding: 18px;
   width: 100%;
@@ -47,22 +47,25 @@
   margin-right: 5px;
   width: 50%;
 }
+p {
+  color:#0A2647
+}
 </style>
 </head>
-<section class=" py-5 line-spacing-1-5 rounded">
+<section class=" py-3 line-spacing-1-5 rounded">
   <div class="row">
     <div  class="col-md-2 col my-5">
-      <h5> Available Blogs categories</h5>
+      <h5 class="text-center"> Your advertisements here</h5>
       {% include 'blogs/blog_categories.html' %}
    <!-- {% for blog in blogs %}
    <p> <a href="">{{blog.categories}}</a></p>
     {% endfor %}-->
     </div>
 <div class="col-md-8 col text-justify my-5">
-<h3><a href="{% url 'blogs:blog-list' %}">blogs list</a></h3> 
+<h5><a href="{% url 'blogs:blog-list' %}">blogs list </a> |  |  <a href="{% url 'blogs:category-list' %}"> blogs categories</a></h5> 
 <hr style="height:3px;border-width:0;color:gray;background-color:gray">
 <h3><span class="" style="color:#0A2647; font-style: bold"><b><i>{{blog.categories}}</i></b></br> {{blog.title}}</span></h3>
-<p><img src="{{ blog.blog_image.url}}" alt="testing"  class="img-responsive img-fluid rounded my-3 center card-img-top" style="width: 800px; height: 300px;"></p></br>
+<p><img src="{{ blog.blog_image.url}}" alt="testing"  class="img-responsive img-fluid rounded my-3 center card-img-top" style="width: 900px; height: 300px;"></p></br>
 
 <p class="white" style="text-align:justify"><i class="">Written by:</i> {{blog.author}} <i class="mx-3">Contact via: </i><a href="mailto:{{blog.email}}">{{blog.email}}</a></p>
 <p>
@@ -99,17 +102,17 @@ Reading Time
 </button>
 
 </p>
-<hr>
+<hr style="height:3px;border-width:0;color:gray;background-color:gray">
 <p class="white" style="text-justify">{{blog.content|safe}}</p>
 <p>
 
 </p>
 <p><small> Created On: <i>{{blog.created_on |date}} </i></small></p>
+<hr style="height:3px;border-width:0;color:gray;background-color:gray">
 </div></div>
 </section>
 
-
-<section class="py-2" >
+<section class="" >
 <button type="button" class="collapsible rounded btn" style="width:100%"><h4>To Read reviews click here</h4></button>
 
 <div class="shadow p-3 mb-5 bg-body-tertiary rounded content" style="border-width:0;color:gray;background-color: #133b5c">
@@ -117,7 +120,7 @@ Reading Time
   <h3>Reviews</h3>
   <hr style="height:3px;border-width:0;color:gray;background-color:gray">
   {% for review in reviews %}
-    <p>by {{ review.reviewer }} on {{ review.created_on|date }} </p>
+    <p class="">by {{ review.reviewer }} on {{ review.created_on|date }} </p>
     
     <p>{{ review.comment }}</p>
     <p>Rating: {{ review.rating }}</p>
@@ -132,7 +135,8 @@ Reading Time
               {% endfor %}
               <a href="{% url 'blogs:reply-create' review.id %}" class="card-link">Reply</a>
           </div>
-    <hr>
+
+          <hr style="height:3px;border-width:0;color:gray;background-color:gray">
     {% empty %}
       <p>No reviews yet.</p>
   
@@ -142,8 +146,6 @@ Reading Time
 </div>
 </section>
 <hr>
-
-
 <section>
 <button type="button" class="btn collapsible rounded" style="width:100%"><h4>Clich Here to add a review</h4></button>
 

@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,13 +47,13 @@
       <div class="col-md-4 footer-panel">
         <h4>Importants Links</h4>
         <ul>
-          <li><a href="{% url 'jobs:job-list' %}">Job Posting</a></li>
-          <li><a href="{% url 'blogs:blog-list' %}">Blogs</a></li>
-          <li><a href="{% url 'product_deals:product-deal-list' %}">Product Announcements</a></li>
-          <li><a href="{% url 'deals:deal-list' %}">Services Announcements</a></li>
-          <li><a href="{% url 'enterprises:enterprise-list' %}">Registered Companies</a></li>
-          <li><a href="{% url 'fiches:fiche-list' %}">Agriculture Forms</a></li>
-          <li><a href="{% url 'trainings:training-list' %}">Trainings Schedule</a></li>
+          <li><a href="{% url 'jobs:job-list' %}">{% trans "Job Posting" %}</a></li>
+          <li><a href="{% url 'blogs:blog-list' %}">{% trans "Blogs" %} </a></li>
+          <li><a href="{% url 'product_deals:product-deal-list' %}">{% trans "Product Announcements" %}</a></li>
+          <li><a href="{% url 'deals:deal_list' %}">{% trans "Services Announcements" %}</a></li>
+          <li><a href="{% url 'enterprises:enterprise-list' %}">{% trans "Registered Companies" %}</a></li>
+          <li><a href="{% url 'fiches:fiche-list' %}">{% trans "Agriculture Forms" %}</a></li>
+          <li><a href="{% url 'trainings:training-list' %}">{% trans "Trainings Schedule" %}</a></li>
         </ul>
       </div>
     </div>

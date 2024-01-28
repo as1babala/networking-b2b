@@ -1,4 +1,4 @@
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import login, logout, authenticate, get_user_model
 from django.shortcuts import render
 from django.shortcuts import render
 from numpy import integer
@@ -15,6 +15,19 @@ from core.forms import *
 from .forms import *
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
+
+# Add below existing imports
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.template.loader import render_to_string
+from .tokens import account_activation_token
+from django.core.mail import EmailMessage
+from django.utils.translation import gettext_lazy as _
+from django.utils.translation import get_language, activate, gettext
+from django.utils import translation
+
+from .tokens import account_activation_token
 
 # Create your views here.
 def activateEmail(request, user, to_email):
@@ -46,6 +59,7 @@ class HomePageView(ListView):
             "companies_count": Enterprises.objects.count(),
             "deals_count": Deals.objects.count(),
             "product_deals_count": ProductDeals.objects.count(),
+           
         }
         return my_set
 
@@ -66,8 +80,19 @@ def home_page(request):
     return render (request, 'accounts/home_page.html',{"deals": deals, "blogs": blogs, #"experts": experts, 
                                                        "fiches": fiches, "companies":companies, "jobs": jobs, "trainings": trainings, "experts": experts,"experts_count": experts_count, "companies_count": companies_count, "deals_count": deals_count, "product_deals_count": product_deals_count, "product_deals": product_deals}) 
     
+
+def translate(language):
+    cur_language = get_language()
+    try:
+        activate(language)
+        text = gettext('hello')
+    finally:
+        activate(cur_language)
+    return text
+
 def aboutus(request):
-    return render(request, 'accounts/aboutus.html')
+    trans = translate(language='fr')
+    return render(request, 'accounts/aboutus.html', {'trans': trans})
 
 def privacy(request):
     return render(request, 'accounts/privacy_policy.html')
@@ -110,7 +135,7 @@ class home_admin( generic.ListView):
     #paginate_by = 5
 
 ### Signup views ####
-def SignUp(request):
+def SignUp1(request):
     if request.method == 'POST':
         form = UserCreateForm(request.POST)
         if form.is_valid():
@@ -131,6 +156,35 @@ def SignUp(request):
     else:
         form = UserCreateForm()
     return render(request, 'accounts/signup.html', {'form': form})
+
+def SignUp(request):
+    if request.method == 'POST':
+        next = request.GET.get('next')
+        form = UserCreateForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            first_name = user.first_name # old line of code just remove the comment to activate it
+            last_name = user.last_name # old line of code just remove the comment to activate it
+            name = first_name + ' ' + last_name # old line of code just remove the comment to activate it
+            user.is_expert = True
+            password = form.cleaned_data.get('password')
+            user.set_password(password)
+            user.save()
+            #new_user = authenticate(email=user.email, password=password)
+            new_user = authenticate(username=user.username, password=password)
+            login(request, new_user)
+            if next:
+                return redirect(next)
+            else:
+                return redirect('accounts:verify-email')
+    else:
+        form = UserCreateForm()
+    context = {
+        'form': form
+    }
+    return render(request, 'accounts/signup.html', context)
+
+
 
 
 def login_view(request):
@@ -307,3 +361,53 @@ class ReadContentView(ListView):
             
              }
         return message_all
+
+
+# send email with verification link
+def verify_email(request):
+    if request.method == "POST":
+        if request.user.email_is_verified != True:
+            current_site = get_current_site(request)
+            user = request.user
+            email = request.user.email
+            subject = "Verify Email"
+            message = render_to_string('accounts/verify_email_message.html', {
+                'request': request,
+                'user': user,
+                'domain': current_site.domain,
+                'uid':urlsafe_base64_encode(force_bytes(user.id)),
+                'token':account_activation_token.make_token(user),
+            })
+            email = EmailMessage(
+                subject, message, to=[email]
+            )
+            email.content_subtype = 'html'
+            email.send()
+            return redirect('accounts:verify-email-done')
+        else:
+            return redirect('accounts:signup')
+    return render(request, 'accounts/verify_email.html')
+
+def verify_email_done(request):
+    return render(request, 'accounts/verify_email_done.html')
+
+
+def verify_email_confirm(request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = CustomUser.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.email_is_verified = True
+        user.save()
+        messages.success(request, 'Your email has been verified.')
+        return redirect('accounts:verify-email-complete')   
+    else:
+        messages.warning(request, 'The link is invalid.')
+    return render(request, 'accounts/verify_email_confirm.html')
+
+
+def verify_email_complete(request):
+    return render(request, 'accounts/verify_email_complete.html')
+

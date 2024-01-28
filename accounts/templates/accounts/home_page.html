@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n%}
+{% load i18n %}
 {% load static %}
 {% load bootstrap5 %}
 {% block title %} {% trans "Welcome to our Netwwork" %} {% endblock %}
@@ -9,8 +9,51 @@
 <body>
 <head>
   <link rel="stylesheet" href="{% static 'css/card_hover.css' %}">
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Platform Name</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
 
   <style >
+    #hero {
+      padding: 50px 0;
+      background: #f9f9f9;
+      text-align: center;
+  }
+  
+  #features-overview {
+      padding: 30px 0;
+      background: #fff;
+  }
+  #features-overview_1 {
+    padding: 30px 0;
+    background: #38a3a5;
+}
+
+  #detailed-features {
+      padding: 30px 0;
+      background: #f9f9f9;
+  }
+  
+  #detailed-features .feature {
+      margin-bottom: 20px;
+  }
+  
+  #cta {
+      padding: 50px 0;
+      background: #0A2647;
+      color: white;
+      text-align: center;
+  }
+  
+  #cta h2 {
+      margin-bottom: 20px;
+  }
+  
+  #cta p {
+      margin-bottom: 40px;
+  }
     .container {
       display: flex;
     }
@@ -19,6 +62,35 @@
       flex: 1;
 
     }
+    .content{
+        color:#0A2647;
+        font-size: 24px;
+        font-weight: bold;
+
+    }
+    .content2{
+      color:#fff;
+      font-size: 24px;
+      font-weight: bold;
+
+  }
+    .content_p{
+      color:#0A2647;
+      font-size: 16px;
+      font-weight: bold;
+
+  }
+  .content_p2 {
+    color:#fff;
+    font-size: 16px;
+    font-weight: bold;
+
+}
+.card1:hover{
+  transform: scale(1.02);
+  box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
+
     /* Add some spacing between the panels on smaller screens */
     @media (max-width: 768px) {
         .content-panel {
@@ -26,296 +98,118 @@
         }
       }
   </style>
-   
-  </head> 
-  
-  <!--section  style="width:100%" class="rounded py-3"> 
-    <div class="row bottom-section">
-      <div class="col-md-12 ">
-        <div class="bottom-image home-image">
-          <img src="{% static 'images/forest.jpeg' %}" class="bottom-image" alt="Bottom Image">
-          <div class="bottom-message content">Networking Opportunities to Deal With Partners Across the World<br/><br/>
-            <h3 class="text-justify my-3 "><span>One platform, one objective <br/>
-              Create Your Perfect Network <br/>
-              With Businesses and experts <br/>
-            In All Domains and Industries</span></h3>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section-->
 
-
-<section  style="width:100%" class="rounded py-3">
-  <div id="carouselExampleCaptions" class="carousel slide">
-    <div class="carousel-indicators">
-      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  <section id="hero" class="rounded">
+    <div class="container text-center">
+        <h1>Welcome to </h1></br>
+        <p>Connecting Businesses and Experts Worldwide</p>
     </div>
-    <div class="carousel-inner">
-      <div class="carousel-item active content-panel">
-        <img src="{% static 'images/banner hero.png' %}" class="d-block w-100 rounded" alt="..." style="width: 800px; height: 350px;">
-        <div class="carousel-caption d-none d-md-block content-panel">
-          <!--h5 style="color:#00e6e6; font-style: bold; font-size: 2.5rem">One platform</h5>
-          <p style="color:#00e6e6; font-style: bold; font-size: 1.5rem">Networking Opportunities to Deal With Partners Across the World</p-->
-        </div>
-      </div>
-      <div class="carousel-item content-panel">
-        <img src="{% static 'images/vanille.png' %}" class="d-block w-100 rounded" alt="..." style="width: 800px; height: 350px;">
-        <div class="carousel-caption d-none d-md-block content-panel">
-          <h5 style="color:#00e6e6; font-style: bold; font-size: 2rem">{% blocktrans %} one objective {% endblocktrans %}</h5>
-          <p style="color:#00e6e6; font-style: bold; font-size: 1.5rem">{% blocktrans %} Create Your Perfect Network and Grow Sales {% endblocktrans %}</p>
-        </div>
-      </div>
-      <div class="carousel-item content-panel">
-        <img src="{% static 'images/real estate listing.png' %}" class="d-block w-100 rounded" alt="..." style="width: 800px; height: 350px;">
-        <div class="carousel-caption d-none d-md-block content-panel">
-          <h5 style="color:#00e6e6; font-style: bold; font-size: 2rem">{% blocktrans %} All Domains and Industries {% endblocktrans %}</h5>
-          <p style="color:#00e6e6; font-style: bold; font-size: 1.5rem"> Connect With Businesses and experts</p>
-        </div>
-      </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next content-panel" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
 </section>
 
-  <section style="width:100%" class="section_color1 py-3 text-white rounded">
-    <div class="container-fluid">
-      <h5 style="color:#00e6e6; font-style: bold; font-size: 2rem"> Our Available Service Deals </h5>
-      <div class="row">
-        {% if deals %}
-        {% for deal in deals %}
-        <div class="col-md-6 my-2 d-flex">
-          <div class="card mb-4 box-shadow flex-fill">
-            <div class="card-body card-3 column flex-fill content-panel">
-              <!--p class="list"><img src="{% static 'images/forest.jpeg' %}" alt="Smiley face" width="90%" height="250" class="float-start"-->
-               <!--img src="{{ deal.deal_picture.url}}" alt="testing"  class="img-responsive img-fluid rounded my-3 center" style="width: 95%; height: 150px;"-->
-              <p class="list"><i><b>Deal Category: </b></i> {{ deal.service_category }}<br>
-               <i><b>Dealer Type:</b></i> <span class="about"> </span> {{ deal.deal_type }} <br> 
-                <i><b>Location:</b></i>  {{ deal.deal_country }}, {{deal.deal_city }} </br>
-              
-              <i></i> {{ deal.descriptions|truncatewords:'50' }}</br>
-              <small class="text-muted"><i>Date created: </i>{{ deal.created_on|date }}</small></p>
-            </div>
-          </div>
-        </div>
-        {% endfor %}
-        {% else %}
-        <div class="">
-          <p> No deals to show for now</p>
-        </div>
-        {% endif %}
-   </div>
-   <div class="">
-    {% if user.is_authenticated %}
-    <button class="btn btnfont btnbg mb-1" onclick="location.href='{% url 'deals:deal-list' %}'"> <span class="about2"><i class="fa-solid fa-magnifying-glass"></i> Search for New Deals  </span></button>
-  {% else%}
-  <button type="button" class="btn btnfont btnbg mx-2" onclick="location.href='{% url 'accounts:login' %}'"><span class="about2"><i class="fa-solid fa-magnifying-glass"></i> Search for New Deals  </span></button> 
-  {% endif%}    
-     </div>
+<section id="features-overview" class="rounded card1">
+  <div class="container-fluid text-center aboutus">
+    <h2> Features</h2>
+  </div>
+  <div class="container-fluid py-5">
+      <div class="row align-middle">
+          <div class="col-md-2 text-center content">{% trans "Blogs" %}</div>
+          <div class="col-md-2 text-center content">{% trans "Deals" %}</div>
+          <div class="col-md-2 text-center content">{% trans "Training Courses" %}</div>
+          <div class="col-md-2 text-center content">{% trans "Expert and Company Listing" %}</div>
+          
+          <div class="col-md-2 text-center content">{% trans "Job Posting" %}</div>
+          <div class="col-md-2 text-center content">{% trans "Private Messaging" %}</div>
       </div>
+  </div>
+  <section id="cta">
+    <div class="container-fluid text-center">
+        <h2>{% trans "Join Our Network" %}</h2>
+        <p>{% trans "Connect with experts and businesses today!" %}</p>
+        <button class="btn btn-primary" onclick="location.href='{% url 'accounts:signup' %}'">{% trans "Sign Up" %}</button>
     </div>
-  </section>
-
-  <section style="width:100%" class="section_color4 py-3 my-2 rounded text-white">
-    <div class="container-fluid" >
-      <h3 style="color:#00e6e6; font-style: bold; font-size: 2rem"> Available Products Announcements </h3>
-      <div class="row">
-        {% if product_deals %} <!-- for class based  we use data.product since the is the name of aour queryset-->
-        {% for deal in product_deals %}
-        <div class="col-md-6 my-2 d-flex">
-          <div class="card mb-4 box-shadow flex-fill">
-            <div class="card-body card-3 column content-panel flex-fill">
-              <!--p class="list"><img src="{% static 'images/forest.jpeg' %}" alt="Smiley face" width="90%" height="250" class="float-start"-->
-               <!--img src="{{ deal.product_image.url}}" alt="testing"  class="img-responsive img-fluid rounded my-3 center" style="width: 95%; height: 150px;"-->
-              <p class="list"><i>Title:</i> {{ deal.product_name }}<br>
-               <i>Dealer name:</i> <span class="about"> </span> {{ deal.dealer }} <br> 
-                <i>Dealer email:</i> <span class="about"><i class="fa-sharp fa-solid fa-at"></i></span> {{ deal.email }} 
-              <br>Location: {{ deal.country }}, {{deal.city}}</p>
-              <p class="list"><i></i> {{ deal.product_description|truncatewords:'25' }}</p>
-              <p>  <small class="text-muted"><i>Date created: </i>{{ deal.created_on|date }}</small></p>
-            </div>
-           
-          </div>
-        </div>
-        {% endfor %}
-        {% else %}
-        <div class="card-body card-3  ">
-          <p> No deals to show for now</p>
-        </div>
-        {% endif %}
-   </div>
-   <div class="">
-    {% if user.is_authenticated %}
-    <button class="btn btnfont" onclick="location.href='{% url 'product_deals:product-deal-list' %}'"> <span class="about2"><i class="fa-solid fa-magnifying-glass"></i> Search for New Deals  </span></button>
-  {% else%}
-  <button type="button" class="btn btnfont " onclick="location.href='{% url 'accounts:login' %}'"><span class="about2"><i class="fa-solid fa-magnifying-glass"></i> Search for New Deals  </span></button>
-  {% endif%}    
-     </div>
-      </div>
-  
-  </section>
-
-  <section style="width:100%" class="section_color2 py-3 rounded">
-    <div class="container-fluid">
-      <h3 style="color:#00e6e6; font-style: bold; font-size: 2rem" > Blogs </h3>
-      <div class="row">
-        {% if blogs %}
-        {% for blog in blogs %} 
-        <div class="col-md-6 my-2 d-flex">
-          <div class="card mb-4 box-shadow flex-fill">
-            <div class="card-body card-3 column content-panel flex-fill">
-              <p class="img-fluid rounded-start"><img src="{{blog.blog_image.url}}" alt="Smiley face" class="img-responsive img-fluid rounded my-3 center" style="width: 95%; height: 150px;">
-              <h4 class="list blog">{{ blog.categories }} </br> {{ blog.title|truncatewords:'10' }}</h4></p>
-              <p class=" list blog">{{ blog.content|truncatewords:'20'|safe }}</p>
-              <p>  <small class="text-muted"><i>Date created: </i>{{ blog.created_on|date }}</small></p>
-            </div>
-          </div>
-        </div>
-    {% endfor %}
-    {% else %}
-    <div class="card-body card-3  ">
-      <p class="white"> No blogs available at this time, please check back later</p>
+</section>
+</section>
+<section class=" rounded card1"  id="features-overview_1">
+  <div class="container-fluid py-5">
+    <div class="row">
+    <div class="col-md-6 feature">
+      <img src="{% static 'images/blog_1.png' %}" class="d-block w-100 rounded" alt="..." style="width: 800px; height: 350px;">
+       
     </div>
-    {% endif %}
-   </div>
-   <div>
-    {% if user.is_authenticated %}
-    <p> <button class="btn btnfont btnbg mb-1" onclick="location.href='{% url 'blogs:blog-list' %}'"> <span class="about"><i class="fa-solid fa-blog mx-3"></i> Read Blogs </span> </button>      
-     {% else%}
-   <button type="button" class="btn btnfont btnbg mx-2" onclick="location.href='{% url 'accounts:login' %}'"><span class="about"><i class="fa-solid fa-magnifying-glass"></i> Read Blogs</span>  </button></p>   
-   {% endif%} 
-     </div>
-      </div>
-  </section>
+  <div class="col-md-6 feature text-center align-middle my-5">
+    <h2 class="content2">{% trans "Blogs" %}</h2></br>
+    <p class="content_p2">{% trans "Stay informed and ahead of the curve with our industry-leading blogs. Authored by experts, our blogs provide valuable insights, latest trends, and actionable strategies. Whether you're a business looking for growth tips or an expert sharing knowledge, our platform is your gateway to thought leadership." %}</p>
+    <div class="">
+      {% if user.is_authenticated %}
+      <button class="btn btn-primary" onclick="location.href='{% url 'deals:deal_list' %}'"> <span class="about2"><i class="fa-solid fa-magnifying-glass"></i>{% trans " Search for New Deals" %}  </span></button>
+    {% else%}
+    <button type="button" class="btn btn-primary" onclick="location.href='{% url 'accounts:login' %}'"><span class="about2"><i class="fa-solid fa-magnifying-glass"></i> Search for New Deals  </span></button> 
+    {% endif%}    
+       </div>
+</div>
+</div>
+</div>
+</section>
 
-
-  <section style="width:100%" class="section_color3 py-3 my-2">
-    <div class="container-fluid container">
-      <h4 style="color:#00e6e6; font-style: bold; font-size: 2rem"> Training Schedule </h4>
-      <div class="row">
-      {% if trainings %} 
-        {% for training in trainings %}
-        <div class="col-md-6 my-2 d-flex">
-          <div class="card mb-4 box-shadow flex-fill">
-            <div class="card-body card-3 flex-fill content-panel">
-              <p class="list"><i><b>Category of Training: </b></i>{{ training.domain}}  <br/> 
-                <b><i>Training Title: </i></b>{{ training.training_title}} </p>
-              <p class="list"><i><b>Teacher:</b></i> {{ training.teacher }} - {{ training.email }}</p>
-              <!--p class="list"><span class="about"><i class="fa-sharp fa-solid fa-at"></i> {{ training.email }} </p-->
-              <p><span class="about"> </span><b>Training Type:</b> {{ training.training_type }} &nbsp &nbsp {{ training.duration }} &nbsp &nbsp {{ training.training_mode }}</p>
-              <p class="list"><i></i> <b>Teacher's Biographie:</b> {{ training.teacher_bio|truncatewords:'50' }}</p>
-              <p class="list"><i></i> <b>Training Description:</b>  {{ training.description|truncatewords:'50' }}</p>
-              <p>  <small class="text-muted"><i><b>Start Date: </b></i>{{ training.start_date|date }}  </small> 
-                <small class="text-muted"><i><b>To:</b> </i>{{ training.end_date|date }}  </small><br/>
-                <small class="text-muted"><i><b>Start Time:</b> </i>{{ training.start_time|time }}  </small>
-                <small class="text-muted"><i><b>To:</b> </i>{{ training.end_time|time }}  </small>
-            </p>
-            </div>
-          </div>
-        </div>
-        {% endfor %}
-        {% else %}
-        <div class="card-body card-3  ">
-          <p class="white"> No Training on the the trainings calendar for the time being</p>
-        </div>
-        {% endif %}
-   </div>
-   <div>
-
-    {% if user.is_authenticated %}
-    <p> <button class="btn btnfont btnbg mb-1 mx-2" onclick="location.href='{% url 'trainings:training-list' %}'"> <span class="about"><i class="fa-solid fa-book-open"></i> Check Our Trainings Schedule </span> </button>      
-     {% else%}
-   <button type="button" class="btn btnfont btnbg mx-2" onclick="location.href='{% url 'accounts:login' %}'"><span class="about"><i class="fa-solid fa-book-open"></i> Check Our Trainings Schedule</span>  </button></p>   
-   {% endif%}   
-     </div>
-      </div>
-  </section>
-
-  <section style="width:100%" class="section_color2 py-3 rounded">
-    <div class="container-fluid">
-      <h4 style="color:#00e6e6; font-style: bold; font-size: 2rem"> Farming Technical Forms </h4>
-      <div class="row">
-        {% if fiches %}
-        {% for fiche in fiches %} 
-        <div class="col-md-6 my-2 d-flex">
-          <div class="card mb-4 box-shadow flex-fill">
-            <div class="card-body card-3 content-panel flex-fill">
-              <img src="{{ fiche.fiche_avatar.url}}" alt="testing"  class="img-responsive img-fluid rounded my-3 center" style="width: 95%; height: 150px;">
-              <h5>{{fiche.name}}</h5>
-              <p class="list blog"> {{ fiche.category }} </p>
-              <p class=" list blog">{{ fiche.description|truncatewords:'10'|safe }}</p>
-              <p>  <small class="text-muted"><i>Date created: </i>{{ fiche.created_on|date }}</small></p>
-            </div>
-          </div>
-        </div>
-    {% endfor %}
-    {% else %}
-    <div class="card-body card-3  ">
-      <p class="white"> No blogs available at this time, please check back later</p>
+<section class="rounded card1" id="features-overview">
+  <div class="container-fluid py-5">
+    <div class="row">
+    <div class="col-md-6 feature">
+      <img src="{% static 'images/deals.png' %}" class="d-block w-100 rounded" alt="..." style="width: 800px; height: 350px;">
+       
     </div>
-    {% endif %}
-   </div>
-   <div>
-    {% if user.is_authenticated %}
-    <p> <button class="btn btnfont btnbg mb-1" onclick="location.href='{% url 'fiches:fiche-list' %}'"> <span class="about"><i class="fa-solid fa-blog mx-3"></i>Read More </span> </button>      
-     {% else%}
-   <button type="button" class="btn btnfont btnbg mx-2" onclick="location.href='{% url 'accounts:login' %}'"><span class="about"><i class="fa-solid fa-magnifying-glass"></i> Read More</span>  </button></p>   
-   {% endif%} 
-     </div>
-      </div>
-  </section>
+  <div class="col-md-6 feature text-center align-middle my-5">
+    <h2 class="content">Exclusive Deals</h2></br>
+    <p class="content_p">Unlock exclusive deals and opportunities only found on our platform. Connect with businesses and experts globally to access special offers, partnerships, and collaborations. This is your chance to leverage competitive advantages and foster business growth through strategic deals.</p>
+    <div class="my-3" id="">
+      {% if user.is_authenticated %}
+      <button class="btn btn-primary" onclick="location.href='{% url 'deals:deal_list' %}'"> <span class="about2"><i class="fa-solid fa-magnifying-glass"></i> Search for New Deals  </span></button>
+    {% else%}
+    <button type="button" class="btn btn-primary" onclick="location.href='{% url 'accounts:login' %}'"><span class="about2"><i class="fa-solid fa-magnifying-glass"></i> Search for New Deals  </span></button> 
+    {% endif%}    
+       </div>
+</div>
+</div>
+</div>
+</section>
 
-  <section class=" py-3">
+
+<section class="rounded card1" id="features-overview_1">
+  <div class="container-fluid">
+    <div class="row">
+    <div class="col-md-6 feature">
+      <img src="{% static 'images/experts image.png' %}" class="d-block w-100 rounded" alt="..." style="width: 800px; height: 350px;">
+       
+    </div>
+  <div class="col-md-6 feature text-center align-middle my-5">
+    <h2 class="content2">Expert Profiles</h2></br>
+    <p class="content_p2">Discover and connect with industry leaders and experts. Our expert profiles showcase skills, experiences, and achievements, making it easy for businesses to find the right expertise. Experts can expand their reach, showcase their portfolio, and engage with potential clients or collaborators.</p>
+
+    <div class="">
+      {% if user.is_authenticated %}
+      <button class="btn btn-primary" onclick="location.href='{% url 'deals:deal_list' %}'"> <span class="about2"><i class="fa-solid fa-magnifying-glass"></i> Search for New Deals  </span></button>
+    {% else%}
+    <button type="button" class="btn btn-primary" onclick="location.href='{% url 'accounts:login' %}'"><span class="about2"><i class="fa-solid fa-magnifying-glass"></i>{% trans "Search for New Deals" %}  </span></button> 
+    {% endif%}    
+       </div>
+</div>
+</div>
+</div>
+</section>
+<section class="">
     <div class="card bg-dark text-white content-panel">
-      <img src="{% static 'images/samsung 1.png' %}" class="d-block w-100 rounded" alt="..." style="width: 800px; height: 500px;">
+      <img src="{% static 'images/statistics 2.png' %}" class="d-block w-100 rounded" alt="..." style="width: 800px; height: 500px;">
       <div class="card-img-overlay text-center">
-        <h2 class="card-title">Site Statistics:</h2>
-        <span class="about2"><h3 class=""><b>{{experts_count}}</b></h3></br><p class=""> Experts Registered  </P></span>
+        <h3 class="card-title">{% trans "Site Statistics:" %}</h3>
+        <span class="content2"><h3 class=""><b>{{experts_count}}</b></h3><p class="">{% trans "Experts Registered" %}  </P></span>
 
-          <span class="about2"><h3 class="">{{companies_count}}</h3></br><p class=""> Registered Companies  </P></span>
+          <span class="content2"><h5 class="">{{companies_count}}</h5><p class=""> {% trans "Registered Companies" %}  </P></span>
         
-            <span class="about2"><h3 class=""><b>{{deals_count}}</b></h3></br><p class="">Services Deals Announcements  </P></span>
-              <span class="about2"><h3 class=""><b>{{product_deals_count}}</b></h3><p class="">Products Deals Announcements  </P> </span>
+            <span class="content2"><h5 class=""><b>{{deals_count}}</b></h5><p class="">Services Deals Announcements  </P></span>
+              <span class="content2"><h5 class=""><b>{{product_deals_count}}</b></h5><p class="">Products Deals Announcements  </P> </span>
         
       </div>
     </div>
   </section>
-</body>
-
-
-
-<script>
-  let slideIndex = 0;
-showSlides();
-
-function showSlides() {
-  let i;
-  let slides = document.getElementsByClassName("mySlides");
-  for (i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";
-  }
-  slideIndex++;
-  if (slideIndex > slides.length) {slideIndex = 1}
-  slides[slideIndex-1].style.display = "block";
-  setTimeout(showSlides, 2000); // Change image every 2 seconds
-}
-</script>
-
-<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
-
-
-{% include 'footer.html' %} 
-
-{% endblock content%}
-
+{% include 'footer.html' %}
+  {% endblock content %}

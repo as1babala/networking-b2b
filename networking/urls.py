@@ -1,19 +1,19 @@
 from django.contrib import admin
 from django.urls import path
 from django.contrib import admin
+#from django.conf.urls import url
 from django.conf import settings
-from django.urls import path, include
-from django.conf.urls import url
-from django.urls import include
+from django.urls import path, include, re_path
+
 from django.conf.urls.static import static
-#from products.views import CreateCheckoutSessionView
+from products.views import CreateCheckoutSessionView
 from core.models import *
 #### MFA #######
 from django_otp.admin import OTPAdminSite
 from django_otp.plugins.otp_totp.models import TOTPDevice
 from django_otp.plugins.otp_totp.admin import TOTPDeviceAdmin
 #from rest_framework_simplejwt.views import TokenOBtainPairView, TokenRefreshView, TokenVerifyView
-from django.conf.urls.i18n import i18n_patterns
+
 ### class for MFA usage, this will help create the MFA site for user
 class OTPAdmin(OTPAdminSite):
    pass
@@ -21,6 +21,9 @@ class OTPAdmin(OTPAdminSite):
 admin_site = OTPAdmin(name='OTPAdmin')
 #admin_site.register(CustomUser)
 admin_site.register(TOTPDevice, TOTPDeviceAdmin)
+
+from django.conf.urls.i18n import i18n_patterns
+
 
 
 urlpatterns = [
@@ -31,6 +34,14 @@ urlpatterns = [
     path('manage/', admin.site.urls),
     ### using MFA ###
     #path('manage/', admin_site.urls),
+    
+]
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += i18n_patterns (
+    path('i18n/', include('django.conf.urls.i18n')),
+    # Your translatable URLs
     
     path('', include('accounts.urls', namespace='accounts')),
     path("contacts/", include('contacts.urls', namespace="contacts")),
@@ -54,16 +65,10 @@ urlpatterns = [
     path("product_deals/", include('product_deals.urls', namespace="product_deals")),
     path("discussions/", include('discussions.urls', namespace="discussions")),
     path("products/", include('products.urls', namespace="products")),
-    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
-]
+    #url(r'^ckeditor/', include('ckeditor_uploader.urls')),
+    re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),
 
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-urlpatterns += i18n_patterns(
-    path('i18n/', include('django.conf.urls.i18n')),
-    # Your translatable URLs
-    path('accounts/', include('django.contrib.auth.urls')),
-    
 )
+
 
 

@@ -230,7 +230,7 @@ class ReviewCreateView( LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class ReplyToReviewCreateView(CreateView):
+class ReplyToReviewCreateView(LoginRequiredMixin, CreateView):
     model = ReplyToReview
     #form_class = ReplyToReviewForm
     fields = [ 'comment']
@@ -246,7 +246,7 @@ class ReplyToReviewCreateView(CreateView):
 
     #def get_success_url(self):
         #return reverse_lazy('blogs:review-detail', kwargs={'pk': self.kwargs['review_id']})
-
+@login_required
 def send_reply( request, review_id):
     review = get_object_or_404(Review, id=review_id)
     form = ReplyToReviewForm(request.POST or None)
@@ -261,7 +261,7 @@ def send_reply( request, review_id):
 
     return render(request, 'blogs/reply_create.html', {'form': form, 'review': review})
 
-class ReplyToReviewUpdateView(UpdateView):
+class ReplyToReviewUpdateView(LoginRequiredMixin, UpdateView):
     model = ReplyToReview
     form_class = ReplyToReviewForm
     template_name = 'blogs/reply_create.html'
@@ -270,7 +270,7 @@ class ReplyToReviewUpdateView(UpdateView):
         return reverse_lazy('blogs:review-detail', kwargs={'pk': self.object.review_id})
 
 
-class ReplyToReviewDeleteView(DeleteView):
+class ReplyToReviewDeleteView(LoginRequiredMixin, DeleteView):
     model = ReplyToReview
     template_name = 'replies/reply_confirm_delete.html'
 
@@ -278,7 +278,7 @@ class ReplyToReviewDeleteView(DeleteView):
         return reverse_lazy('review_detail', kwargs={'pk': self.object.review_id})
    
 
-class BlogsSearchView(ListView):
+class BlogsSearchView(LoginRequiredMixin, ListView):
     model = Blog
     template_name = "blogs/blog_search.html"
 
@@ -295,7 +295,7 @@ class BlogsSearchView(ListView):
         )
         return object_list   
 
-class CategoryListView(ListView):
+class CategoryListView(LoginRequiredMixin, ListView):
     model = Category
     template_name = 'blogs/blog_categories.html'
 
@@ -303,7 +303,7 @@ class CategoryListView(ListView):
         context = super().get_context_data(**kwargs)
         context['categories_with_count'] = Category.objects.annotate(post_count=Count('blog')).filter(post_count__gt=0) 
         return context
-
+@login_required
 def category_detail(request, pk):
     category = get_object_or_404(Category, pk=pk)
     blogs = Blog.objects.filter(categories=category)
@@ -311,7 +311,7 @@ def category_detail(request, pk):
 
 
 
-
+@login_required
 def category_list(request):
     categories = Category.objects.all()
     #categories = Category.objects.annotate(num_blogs=Count('blog')).all().order_by('-num_blogs') 

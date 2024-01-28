@@ -58,7 +58,13 @@ urlpatterns = [
     path("employee-register/", EmployeeSignUp, name="employee-signup"),
     
     ### Read content ###
-    path("content-read/", ReadContentView.as_view(), name="content-read" ),  
+    path("content-read/", ReadContentView.as_view(), name="content-read" ), 
+    
+    ##### Email verification ###
+    path('verify-email/', verify_email, name='verify-email'),
+    path('verify-email/done/', verify_email_done, name='verify-email-done'),
+    path('verify-email-confirm/<uidb64>/<token>/', verify_email_confirm, name='verify-email-confirm'),
+    path('verify-email/complete/', verify_email_complete, name='verify-email-complete'), 
 ]
     
     

@@ -15,7 +15,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.core.mail import send_mail
 from django.forms import modelformset_factory
 from core.models import *
-from .forms import *
+from deals.forms import *
 from rfi.forms import *
 from django.db.models import Count
 
@@ -73,7 +73,7 @@ class DealCreateView1(LoginRequiredMixin, CreateView):
     template_name = "deals/deal_create.html"
     form_class = DealsForm
     form_class2 = DealImagesForm
-    success_url = reverse_lazy('deals:deal-list')
+    success_url = reverse_lazy('deals:deal_list')
     
      
     def form_valid(self, form):
@@ -88,7 +88,7 @@ class DealCreateView(LoginRequiredMixin, CreateView):
     model = Deals
     form_class = DealsForm
     template_name = 'deals/deal_create.html'
-    success_url = reverse_lazy('deals:deal-list')  # Replace 'thanks' with your success URL name
+    success_url = reverse_lazy('deals:deal_list')  # Replace 'thanks' with your success URL name
 
     def form_valid(self, form):
         # Deal instance
@@ -175,7 +175,7 @@ class DealUpdateView(LoginRequiredMixin, generic.UpdateView):
     queryset = Deals.objects.all()
     
     def get_success_url(self):
-        return reverse("deals:deal-list")
+        return reverse("deals:deal_list")
     
     
     def form_valid(self, form):
@@ -189,14 +189,14 @@ class DealDeleteView(LoginRequiredMixin, generic.DeleteView):
     context_object_name = "delete_deals"
     
     def get_success_url(self):
-        return reverse("deals:deal-list")
+        return reverse("deals:deal_list")
 
 
 class RfiCreateView1( LoginRequiredMixin, CreateView):
     model = Rfi
     fields = [ 'message']
     template_name = "rfi/rfi_create.html"
-    success_url = reverse_lazy('deals:deal-list')
+    success_url = reverse_lazy('deals:deal_list')
      
     def form_valid(self, form):
         form.instance.client_name = self.request.user
@@ -209,7 +209,7 @@ class RfiCreateView( LoginRequiredMixin, CreateView):
     model = Rfi
     fields = [ 'message']
     template_name = "rfi/rfi_create.html"
-    success_url = reverse_lazy('deals:deal-list')
+    success_url = reverse_lazy('deals:deal_list')
      
     def form_valid(self, form):
         form.instance.client_name = self.request.user

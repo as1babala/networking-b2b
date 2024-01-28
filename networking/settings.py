@@ -14,10 +14,11 @@ from pathlib import Path
 from datetime import timedelta
 import os
 from django.utils.translation import gettext_lazy as _
+import django
+from django.utils.encoding import smart_str
+django.utils.encoding.smart_text = smart_str
 
-
-
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'NETWORKING-B2B.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'networking.settings')
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -70,6 +71,7 @@ INSTALLED_APPS = [
     'django_otp',
     'django_otp.plugins.otp_totp',
     'translation_manager',
+    #'rosetta',
     #'django.contrib.locale',
     #'djstripe',
     
@@ -120,6 +122,7 @@ MIDDLEWARE = [
     'django_otp.middleware.OTPMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #'allauth.account.middleware.AccountMiddleware',
    
     
 ]
@@ -145,7 +148,7 @@ SIMPLE_JWT = {
 }
 '''
 ROOT_URLCONF = 'networking.urls'
-#CSRF_TRUSTED_ORIGINS = ["127.0.0.1:8000"]
+CSRF_TRUSTED_ORIGINS = ["127.0.0.1:8000"]
 
 TEMPLATES = [
     {
@@ -213,8 +216,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 LANGUAGES = [
-    ('en', 'English'),
-    ('fr', 'French'),
+    ('en', _('English')),
+    ('fr', _('French')),
+    #('es', _('Spanish')),
 ]
 
 LANGUAGE_CODE = 'en'
@@ -226,15 +230,16 @@ USE_TZ = True
 
 #AUTH
 LOGIN_REDIRECT_URL = "accounts:home-page"
-LOGOUT_REDIRECT_URL = "accounts:home-page"
+LOGOUT_REDIRECT_URL = "accounts:signup"
 REQUEST_BASE_URL = ""
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-LOCALE_PATHS = (
-    os.path.join(BASE_DIR, 'locale'),
-)
+LOCALE_PATHS = (os.path.join(BASE_DIR, 'locale/'),)
+
+#LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale'),]
+
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 STATIC_ROOT = os.path.join(BASE_DIR, "static_root")
@@ -264,11 +269,14 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 #EMAIL_FILE_PATH = [os.path.join(BASE_DIR, "sent_emails")]
 #EMAIL_ROOT = '/sent_emails/'
-#EMAIL_HOST = 'smtp.gmail.com'
-#EMAIL_USE_TLS = True
-#EMAIL_PORT = 587
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
 EMAIL_HOST_USER = 'babala.assih@gmail.com' # this email will be used to send emails
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS') # host email password required
+#EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS') # host email password required
+EMAIL_HOST_PASSWORD = 'Ble$$Hannah0709'
+DEFAULT_FROM_EMAIL = "Delight youremail@gmail.com"
+
 # now sign in with your host gmail account in your browser
 # open following link and turn it ON
 # https://myaccount.google.com/lesssecureapps

@@ -3,7 +3,7 @@
 {% load bootstrap5 %}
 
 {% block content %}
-
+{% load i18n %}
 
 <style>
     * {box-sizing: border-box;}
@@ -79,8 +79,11 @@
     @media only screen and (max-width: 300px) {
       .text {font-size: 18px}
     }
+    
+
     </style>
-    <h2 class="jumbotron" align="center"><a href="{% url 'accounts:home-page' %}">RESEAU <span>D'ECHANGE ==></span></a></h2>
+    <h2 class="jumbotron" align="center"><a href="{% url 'accounts:home-page' %}">{% trans "RESEAU <span>D'ECHANGE" %} ==></span></a></h2>
+    
     <br>  
     <div class="slideshow-container">
     
