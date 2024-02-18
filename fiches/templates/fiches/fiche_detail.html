@@ -23,10 +23,18 @@
     <small><b>Prepared On Factors:</b> {{fiches.created_on |date}}<br/><br/></small>
 
     <hr />
-    {% if user.is_admin or user.is_employee %}
+    {% if user.is_expert %}
+    <button type="button" class="btn btn-dark" onclick="location.href='{% url 'fiches:fiche-list' %}'">Cancel</button>
+
+    <button type="button" class="btn btn-secondary" onclick="location.href='{% url 'fiches:pdf' fiches.pk %}'">Save the form content</button>
+
+    {% else %}
     <button type="button" class="btn btn-secondary" onclick="location.href='{% url 'fiches:fiche-update' fiches.pk %}'">Edit Content</button>
+    <button type="button" class="btn btn-secondary" onclick="location.href='{% url 'fiches:pdf' fiches.pk %}'">Save the form content</button>
     <button type="button" class="btn btn-danger" onclick="location.href='{% url 'fiches:fiche-delete' fiches.pk %}'">Delete</button>
     <button type="button" class="btn btn-dark" onclick="location.href='{% url 'fiches:fiche-list' %}'">Cancel</button>
+
+
 {% endif  %} 
 
 </p>

@@ -317,4 +317,20 @@ def category_list(request):
     #categories = Category.objects.annotate(num_blogs=Count('blog')).all().order_by('-num_blogs') 
     return render(request, 'blogs/blog_categories.html', {'categories': categories})
 
+#### sending email upon blog creation #####
+from django.core.mail import EmailMessage
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 
+@receiver(pre_save, sender=Blog)  # assuming 'Blog' is your model
+def send_email(sender, instance, **kwargs):
+    # Define the recipient's email address
+    recipient_email = "babala.assih@gmail.com"  # replace this with the actual recipient's email address
+
+    # Create and send the email message
+    email = EmailMessage(
+        'New Blog Created',
+        'Please check the creation of a new blog; it needs your approval',
+        to=[recipient_email]  # Use the recipient's email address here
+    )
+    email.send()

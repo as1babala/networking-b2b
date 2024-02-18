@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>PDF {{obj.name}}</title>
+  <style>
+    .image {
+        width: 100%;    
+        height: auto;
+    }
+  </style>
+</head>
+<body>
+    <h5 class="white">Technical Agruculture Form For {{fiches.name}} | | Form ID#: {{fiches.id}} || Networking Inc.</h5><br/>
+    <p><img src="{{ fiches.fiche_avatar.url}}" alt="testing"  class="img-responsive img-fluid rounded-end rounded rounded_start my-3" style="width: 250px; height: 250px;"></p>
+    <p class="white"><b>Category:</b> {{fiches.category}}<br/>
+    <b>Expertise Level:</b> {{fiches.Expertise_level}}</br></br>
+    <b>Description:</b> </br>{{fiches.description}}<br/><br/>
+    <b>Principal Risk Fcators:</b> </br> {{fiches.principal_risks}}<br/><br/>
+    <b>Technical Factors:</b> </br> {{fiches.Technical_factors}}<br/><br/>
+    <b>Harvest factors:</b></br> {{fiches.harvest_factors}}<br/><br/>
+    <b>Marketing Factor:</b></br> {{fiches.marketing_factor}}<br/><br/>
+    <b>Industrialization Factors to Consider:</b></br> {{fiches.industrialization_factors}}<br/><br>
+    <b>Other Factors:</b></br> {{fiches.other_factors}}<br/><br/>
+    <small><b>Prepared On Factors:</b> {{fiches.created_on |date}}<br/><br/></small>
+</body>
+</html>

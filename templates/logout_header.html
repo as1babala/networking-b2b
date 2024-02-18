@@ -98,30 +98,12 @@ crossorigin="anonymous"></script>
   <body>
   <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
    <div class=""> 
-{% if request.user.is_authenticated and request.user.is_admin %}
 
-{% include 'navbar_admin.html' %}
-
-{% endif %}
-
-{% if request.user.is_authenticated and request.user.is_employee %}
-
-{% include 'navbar_employee.html' %}
-
-{% endif %}
-
-{% if request.user.is_authenticated and request.user.is_expert %}
-
-{% include 'navbar_expert.html' %}
-
-{% endif %}
-
-{% if not request.user.is_authenticated %}
 
 
 {% include 'navbar0.html' %}
 
-{% endif %}
+
 
     
    </div>

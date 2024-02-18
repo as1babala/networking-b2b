@@ -14,7 +14,9 @@ urlpatterns = [
     path('<int:pk>/delete/', FicheTechnicDeleteView.as_view(), name='fiche-delete'),
     path('search/', FicheTechnicSearchView.as_view(), name='fiche-search'),
     path('fiche-read-history/', fiche_read_history, name='fiche-read-history'),
-    path('<slug>/', fiche_detail, name='fiche-detail'), 
+    path('<slug>/', fiche_detail, name='fiche-detail'),
+    path('pdf/', getpdf), 
+    path('<pk>/pdf/', render_pdf_view, name='pdf'),  
     
     
 ]

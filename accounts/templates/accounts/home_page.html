@@ -141,7 +141,7 @@
     <p class="content_p2">{% trans "Stay informed and ahead of the curve with our industry-leading blogs. Authored by experts, our blogs provide valuable insights, latest trends, and actionable strategies. Whether you're a business looking for growth tips or an expert sharing knowledge, our platform is your gateway to thought leadership." %}</p>
     <div class="">
       {% if user.is_authenticated %}
-      <button class="btn btn-primary" onclick="location.href='{% url 'deals:deal_list' %}'"> <span class="about2"><i class="fa-solid fa-magnifying-glass"></i>{% trans " Search for New Deals" %}  </span></button>
+      <button class="btn btn-primary" onclick="location.href='{% url 'blogs:blog-list' %}'"> <span class="about2"><i class="fa-solid fa-magnifying-glass"></i>{% trans " Search for New Deals" %}  </span></button>
     {% else%}
     <button type="button" class="btn btn-primary" onclick="location.href='{% url 'accounts:login' %}'"><span class="about2"><i class="fa-solid fa-magnifying-glass"></i> Search for New Deals  </span></button> 
     {% endif%}    
@@ -163,7 +163,7 @@
     <p class="content_p">Unlock exclusive deals and opportunities only found on our platform. Connect with businesses and experts globally to access special offers, partnerships, and collaborations. This is your chance to leverage competitive advantages and foster business growth through strategic deals.</p>
     <div class="my-3" id="">
       {% if user.is_authenticated %}
-      <button class="btn btn-primary" onclick="location.href='{% url 'deals:deal_list' %}'"> <span class="about2"><i class="fa-solid fa-magnifying-glass"></i> Search for New Deals  </span></button>
+      <button class="btn btn-primary" onclick="location.href='{% url 'deals:deal-list' %}'"> <span class="about2"><i class="fa-solid fa-magnifying-glass"></i> Search for New Deals  </span></button>
     {% else%}
     <button type="button" class="btn btn-primary" onclick="location.href='{% url 'accounts:login' %}'"><span class="about2"><i class="fa-solid fa-magnifying-glass"></i> Search for New Deals  </span></button> 
     {% endif%}    
@@ -187,7 +187,7 @@
 
     <div class="">
       {% if user.is_authenticated %}
-      <button class="btn btn-primary" onclick="location.href='{% url 'deals:deal_list' %}'"> <span class="about2"><i class="fa-solid fa-magnifying-glass"></i> Search for New Deals  </span></button>
+      <button class="btn btn-primary" onclick="location.href='{% url 'profiles:expert-profile' %}'"> <span class="about2"><i class="fa-solid fa-magnifying-glass"></i> Search for New Deals  </span></button>
     {% else%}
     <button type="button" class="btn btn-primary" onclick="location.href='{% url 'accounts:login' %}'"><span class="about2"><i class="fa-solid fa-magnifying-glass"></i>{% trans "Search for New Deals" %}  </span></button> 
     {% endif%}    

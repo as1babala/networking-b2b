@@ -23,7 +23,9 @@ urlpatterns = [
     
     ### Site links ###
     #path('logout/', logout_view, name='logout'),
-    path("register/", SignUp, name="signup"), 
+    #path("register/", SignUp, name="signup"),
+    #path("register/", signup, name="signup"),
+    path("register/", register, name="signup"),  
     path("", home, name="home"),
     path("testing", testing, name="testing"),
     path("welcome", home_page, name="home-page"),
@@ -65,6 +67,11 @@ urlpatterns = [
     path('verify-email/done/', verify_email_done, name='verify-email-done'),
     path('verify-email-confirm/<uidb64>/<token>/', verify_email_confirm, name='verify-email-confirm'),
     path('verify-email/complete/', verify_email_complete, name='verify-email-complete'), 
+    #path('verify-email-confirm/<uidb64>/<token>/', activate, name='verify-email-confirm'),
+    path('activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/',  
+        activate, name='activate'),  
+    
+    path('activate/<uidb64>/<token>', activate, name='activate'),
 ]
     
     

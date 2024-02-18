@@ -274,8 +274,11 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'babala.assih@gmail.com' # this email will be used to send emails
 #EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS') # host email password required
+EMAIL_HOST_PASSWORD = "xqcbvbyuwmkcccbo"
+#EMAIL_HOST_PASSWORD = "xqcb vbyu wmkc ccbo"
 EMAIL_HOST_PASSWORD = 'Ble$$Hannah0709'
-DEFAULT_FROM_EMAIL = "Delight youremail@gmail.com"
+DEFAULT_FROM_EMAIL = "Delight babala.assih@gmail.com"
+PASSWORD_RESET_TIMEOUT = 14400
 
 # now sign in with your host gmail account in your browser
 # open following link and turn it ON

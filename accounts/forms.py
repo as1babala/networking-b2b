@@ -19,7 +19,7 @@ class UserCreateForm(UserCreationForm):
     #password = forms.CharField(max_length=30, widget=forms.PasswordInput(attrs={'placeholder': "Your password"}))
     #partnership_type = forms.MultipleChoiceField(choices=PARTNERSHIP_TYPE,widget=forms.CheckboxSelectMultiple)
     #partnership_type = forms.MultipleChoiceField(choices=PARTNERSHIP_TYPE)
-    
+    email = forms.EmailField(max_length=200, label="Email Address", required=True, help_text='Required') 
     class Meta:
         model = CustomUser
        

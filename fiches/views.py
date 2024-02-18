@@ -1,3 +1,5 @@
+from reportlab.pdfgen import canvas  
+from django.http import HttpResponse  
 from itertools import count
 from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
@@ -17,6 +19,7 @@ from django.core.mail import send_mail
 from core.models import FicheTechnic
 from .forms import *
 from django.db.models import Count
+from xhtml2pdf import pisa
 
 # Create your views here.
 
@@ -137,3 +140,38 @@ def fiche_detail(request, slug):
 def fiche_read_history(request):
     # Assuming you have the user object available
     return render(request, 'fiches/fiche_read_history.html', {'reader': request.user})
+
+
+def getpdf(request):  
+    response = HttpResponse(content_type='application/pdf')  
+    response['Content-Disposition'] = 'attachment; filename="fiches/test_file.pdf"'  
+    p = canvas.Canvas(response)  
+    p.setFont("Times-Roman", 55)  
+    p.drawString(100,700, "Hello, Javatpoint.")  
+    p.showPage()  
+    p.save()  
+    return response
+
+
+@login_required
+def render_pdf_view(request, pk):
+    template_path = 'fiches/pdf.html'
+    fiches = get_object_or_404(FicheTechnic, pk=pk)
+    context = {'fiches': fiches}
+
+    response = HttpResponse(content_type='application/pdf')
+# you want to display
+    response['Content-Disposition'] = 'filename="report.pdf"'
+# you want to download
+    #response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+
+
+    template = get_template(template_path)
+    html = template.render(context)
+
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response

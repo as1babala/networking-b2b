@@ -60,7 +60,7 @@ class CustomUser(AbstractUser):
     is_reviewer = models.BooleanField('Is reviewer', default=False)
     is_approver = models.BooleanField('Is approver', default=False)
     agreement = models.BooleanField(_('By clicking I accept to become member and share my information with your organization'), default=False)
-    email = models.EmailField(_('Email Address'), max_length=50, unique=True)
+    #email = models.EmailField(_('Email Address'), max_length=50, unique=True)
     email_is_verified = models.BooleanField(default=False)
     #partnership_type = models.CharField('What type of partnership do you want to establish? ',choices=PARTNERSHIP_TYPE, max_length=50, default='')
         
