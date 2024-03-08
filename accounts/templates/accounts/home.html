@@ -13,7 +13,8 @@
     
     /* Slideshow container */
     .slideshow-container {
-      max-width: 1000px;
+      /*max-width: 1000px;*/
+      max-width: 100%;
       position: relative;
       margin: auto;
     }
@@ -79,18 +80,28 @@
     @media only screen and (max-width: 300px) {
       .text {font-size: 18px}
     }
+
+    .dark-overlay {
+      /* Overlay color - black with 50% opacity */
+      background-color: rgba(0, 0, 0, 0.5);
+      width: 100%;
+      height: 100%;
+      position: absolute;
+    }
     
 
-    </style>
+  </style>
+  <section class="rounded card1" id="features-overview_1" style="width:100%; height: 550px">
+    <div class="container-fluid rounded">
     <h2 class="jumbotron" align="center"><a href="{% url 'accounts:home-page' %}">{% trans "RESEAU <span>D'ECHANGE" %} ==></span></a></h2>
     
     <br>  
     <div class="slideshow-container">
     
-    <div class="mySlides fade">
+    <div class="mySlides fade rounded">
       <div class="numbertext">1 / 4</div>
       <img src="{% static 'images/financing.jpeg' %}" style="width:100%; height: 550px" class="img-responsive img-fluid rounded my-3 center">
-      <div class="text" style="color:#006699; font-style: bold; font-size: 4rem; border-bottom: 1px solid white;"><h2>FINANCING PARTNERSHIP</h2></div>
+      <div class="text " style="color:#006699; font-style: bold; font-size: 4rem; border-bottom: 1px solid white;"><h2>FINANCING PARTNERSHIP</h2></div>
     </div>
     
     <div class="mySlides fade">
@@ -102,13 +113,13 @@
     <div class="mySlides fade">
       <div class="numbertext">3 / 4</div>
       <img src="{% static 'images/leadership1.avif' %}" style="width:100%; height: 550px" class="img-responsive img-fluid rounded my-3 center">
-      <div class="text" style="color:#006699; font-style: bold; font-size: 4rem; border-bottom: 1px solid white;"><h2>LEADERSHIP PARTNERSHIP</h2></div>
+      <div class="text " style="color:#006699; font-style: bold; font-size: 4rem; border-bottom: 1px solid white;"><h2>LEADERSHIP PARTNERSHIP</h2></div>
     </div>
     
     <div class="mySlides fade">
       <div class="numbertext">4 / 4</div>
       <img src="{% static 'images/technic.jpeg' %}" style="width:100%; height: 550px" class="img-responsive img-fluid rounded my-3 center">
-      <div class="text" style="color:#CC0000; font-style: bold; font-size: 4rem; border-bottom: 1px solid white;"><h2>TECHNICAL PARTNERSHIP</h2></div>
+      <div class="text " style="color:#CC0000; font-style: bold; font-size: 4rem; border-bottom: 1px solid white;"><h2 class="">TECHNICAL PARTNERSHIP</h2></div>
     </div>
     <br>
 
@@ -118,7 +129,8 @@
       <span class="dot"></span> 
       <span class="dot"></span> 
     </div>
-    
+  </div>
+</section>
     <script>
     var slideIndex = 0;
     showSlides();

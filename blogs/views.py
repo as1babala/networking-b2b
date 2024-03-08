@@ -303,6 +303,7 @@ class CategoryListView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['categories_with_count'] = Category.objects.annotate(post_count=Count('blog')).filter(post_count__gt=0) 
         return context
+    
 @login_required
 def category_detail(request, pk):
     category = get_object_or_404(Category, pk=pk)
@@ -317,6 +318,7 @@ def category_list(request):
     #categories = Category.objects.annotate(num_blogs=Count('blog')).all().order_by('-num_blogs') 
     return render(request, 'blogs/blog_categories.html', {'categories': categories})
 
+
 #### sending email upon blog creation #####
 from django.core.mail import EmailMessage
 from django.db.models.signals import pre_save
@@ -330,7 +332,8 @@ def send_email(sender, instance, **kwargs):
     # Create and send the email message
     email = EmailMessage(
         'New Blog Created',
-        'Please check the creation of a new blog; it needs your approval',
+        'Please check the creation of a new blog; it needs your approval. Follow the following link to approve the blog. Thanks the Administration',
         to=[recipient_email]  # Use the recipient's email address here
     )
     email.send()
+###### Draft to be approved ###

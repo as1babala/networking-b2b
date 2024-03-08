@@ -367,7 +367,7 @@ def pre_save_expert_p(sender, instance, *args, **kwargs):
         
 def post_save_expert_p(sender, instance, created, *args, **kwargs):
     if created:
-        if instance.is_expert:
+        if instance.is_expert and instance.user.is_active:
             ExpertProfile.objects.create(user=instance, last_name = instance.last_name, first_name = instance.first_name, company_name = instance.company_name, email = instance.email, commercial=instance.commercial, technical=instance.technical, financial=instance.financial, management=instance.management
                                      )
 

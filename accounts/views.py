@@ -492,15 +492,20 @@ def verify_email_complete(request):
 
 #### Registrations Email Confirmation method ###
 #@user_not_authenticated
+def initial_registration(request):
+    return render(request, 'accounts/initial_registration.html')
+
 def register(request):
     if request.method == "POST":
         form = UserCreateForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
+            user.is_expert = True
             user.is_active = False
+            user.email_is_verified = False
             user.save()
             activateEmail(request, user, form.cleaned_data.get('email'))
-            return redirect('accounts:home-page')
+            return redirect('accounts:verify-email')
 
         else:
             for error in list(form.errors.values()):
@@ -541,7 +546,9 @@ def activate(request, uidb64, token):
         user = None
 
     if user is not None and account_activation_token.check_token(user, token):
+        user.is_expert = True
         user.is_active = True
+        user.email_is_verified = True
         user.save()
 
         messages.success(request, 'Thank you for your email confirmation. Now you can login your account.')

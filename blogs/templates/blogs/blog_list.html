@@ -134,12 +134,12 @@
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                   {% if blog.author == request.user %}
-              <p><button type="button" class="btn btn-secondary mx-2" onclick="location.href='{% url 'blogs:blog-update' blog.pk %}'"><i class="fa-sharp fa-solid fa-pen-to-square"></i> Update</button></p>
+              <p><button type="button" class="btn btn-secondary mx-2" onclick="location.href='{% url 'blogs:blog-update' blog.pk %}'"><i class="fa-sharp fa-solid fa-pen-to-square"></i> Update</button>
               {% endif %} 
-              <p><button type="button" class="btn btn-secondary mx-2" onclick="location.href='{% url 'blogs:blog-detail' blog.pk %}'"><i class="fa-sharp fa-solid fa-circle-info"></i> Read blog </p>
+              <button type="button" class="btn btn-secondary mx-2" onclick="location.href='{% url 'blogs:blog-detail' blog.pk %}'"><i class="fa-sharp fa-solid fa-circle-info"></i> Read blog </button>
               
               {% if user.is_admin %}
-               <p><button type="button" class="btn btn-danger" onclick="location.href='{% url 'blogs:blog-delete' blog.pk %}'"><i class="fa-sharp fa-solid fa-trash-can"></i> Delete blog </p-->
+               <p><button type="button" class="btn btn-danger" onclick="location.href='{% url 'blogs:blog-delete' blog.pk %}'"><i class="fa-sharp fa-solid fa-trash-can"></i> Delete blog </button>
                 {% endif %}
                
                </div>

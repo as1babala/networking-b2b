@@ -7,7 +7,7 @@
 
 {% block content %}
 
-    <section>
+    <section class="py-5">
     <div class="container">
       <div class="row">
         {% if drafts %}
@@ -25,17 +25,7 @@
               <p class="list"><i></i> {{ draft.content|truncatewords:'50' }}</p>
               <p>  <small class="text-muted"><i><span class="about">Date created: </i>{{ draft.created_on|date }}</span></small></p>
             <div class="d-flex justify-content-between align-items-center">
-            <!--div class="btn-group">
-                  {% if draft.author == request.user %}
-              <p><button type="button" class="btn btn-secondary mx-2" onclick="location.href='{% url 'blogs:blog-update' blog.pk %}'"><i class="fa-sharp fa-solid fa-pen-to-square"></i> Update</button></p>
-              {% endif %} 
-              <p><button type="button" class="btn btn-secondary mx-2" onclick="location.href='{% url 'blogs:blog-detail' blog.pk %}'"><i class="fa-sharp fa-solid fa-circle-info"></i> Read blog </p>
-              
-              {% if user.is_admin %}
-               <p><button type="button" class="btn btn-danger" onclick="location.href='{% url 'blogs:blog-delete' blog.pk %}'"><i class="fa-sharp fa-solid fa-trash-can"></i> Delete blog </p>
-                {% endif %}
-
-               </div-->
+            
                 </div>
             </div>
           </div>

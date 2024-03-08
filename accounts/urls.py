@@ -8,7 +8,7 @@ app_name = "accounts"
 urlpatterns = [
     
     path("login/", auth_views.LoginView.as_view(template_name="accounts/login.html"),name='login'),
-    path("logout/", auth_views.LogoutView.as_view(template_name="accounts/login.html"), name="logout"),
+    path("logout/", auth_views.LogoutView.as_view(template_name="accounts/logout.html"), name="logout"),
     
     #### Password reset  ###
     path("reset_password/", auth_views.PasswordResetView.as_view(template_name="accounts/password_reset.html"), name="password_reset"),
@@ -63,7 +63,7 @@ urlpatterns = [
     path("content-read/", ReadContentView.as_view(), name="content-read" ), 
     
     ##### Email verification ###
-    path('verify-email/', verify_email, name='verify-email'),
+    #path('verify-email/', verify_email, name='verify-email'),
     path('verify-email/done/', verify_email_done, name='verify-email-done'),
     path('verify-email-confirm/<uidb64>/<token>/', verify_email_confirm, name='verify-email-confirm'),
     path('verify-email/complete/', verify_email_complete, name='verify-email-complete'), 
@@ -72,6 +72,7 @@ urlpatterns = [
         activate, name='activate'),  
     
     path('activate/<uidb64>/<token>', activate, name='activate'),
+    path('verify-email/', initial_registration, name='verify-email'),
 ]
     
     
