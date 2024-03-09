@@ -31,14 +31,14 @@ login
 {% endif %}
 
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"> 
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">  <!-- Link to your CSS file -->
 <script src="{% static 'js/login.js' %}"></script>  <!-- Link to your JavaScript file -->
-{% endblock head %}
+{% endblock %}
 
-<section class="py-5 ">
-<div class="login-container">
-    <h2 class="" style="color:#0A2647; font-style: bold">Login</h2>
+<section class="py-3">
+<div class="login-container" >
+  <h2 class="" style="color:#0A2647; font-style: bold">Login</h2>
   <form method="post" id="loginForm">
     {% csrf_token %}
     {{ form.as_p }}
@@ -49,14 +49,15 @@ login
         <span class="about"><i class="fa-solid fa-pen"></i></span><a href="{% url 'accounts:pass-change' %} ">  Change password   </a>
 
         <span class="about"> </span><a href="{% url 'accounts:pass-change' %}">    </a>
-       <br/> <span class="about"><i class="fa-solid fa-lock"></i></span><a href="{% url 'accounts:password_reset' %} " >  Click here to reset your password</a>
+       <br/></br> <span class="about"><i class="fa-solid fa-lock"></i></span><a href="{% url 'accounts:password-reset' %} " >  Click here to reset your password</a>
     </p>
   </div>
   <div>
-    <h4 class="white text-center my-3"><span class="about2"> Not a Member? </span></h4><br> 
-                
+      </br>
+    <h4 class="text-center" style="color:#0A2647; font-style: bold"> Not a Member?</h4><br></br>
+
                 <button class="btn btn-primary" onclick="location.href='{% url 'accounts:signup' %}'"> <span class="about "><i class="fa-sharp fa-solid fa-address-card"></i></span> Join Our Netwrok! </button>
-        
+
                 <button class="btn btn-primary  mx-2 " onclick="location.href='{% url 'contacts:contact-create' %}'"> <span class="about"><i class="fa-solid fa-envelope"></i></span> Contact us </button>
   </div>
 </div>
@@ -66,29 +67,29 @@ login
 <!--div class=" rounded col-container py-5">
     <div class="row">
         <div class="col-6 shadow p-3 mb-5 border mx-2 ">
-           
+
             <form action="" method="POST" class="form p-3  white mx-2 mb-2 my-2">
                 <h3 class="white">Already A User?</h3>
                 <h3 class='white'>Login</h3></br>
                 {% csrf_token %}
-                {% bootstrap_form form %}    
+                {% bootstrap_form form %}
                 <button type="submit" class="btn btnfont btnbg mt-3">Login</button>
             </form>
-        
+
                 <p class="text-center">
                     <span class="about"><i class="fa-solid fa-pen"></i></span><a href="{% url 'accounts:pass-change' %} ">  Change password   </a>
 
                     <span class="about"> </span><a href="{% url 'accounts:pass-change' %}">    </a>
                    <br/> <span class="about"><i class="fa-solid fa-lock"></i></span><a href="{% url 'accounts:password_reset' %} " >  Click here to reset your password</a>
                 <p>
-   
+
         </div>
         <div class="col-5 shadow p-3 mb-5 border border-2 mx-2 background-image">
-            <h4 class="white text-center my-5">Do You Want To </br>Become A Member? </h4><br> 
-                
+            <h4 class="white text-center my-5">Do You Want To </br>Become A Member? </h4><br>
+
                 <button class="btn btnfont btnbg mb-1 mx-2 my-4" onclick="location.href='{% url 'accounts:signup' %}'"> <span class="about "><i class="fa-sharp fa-solid fa-address-card"></i></span> Join Our Netwrok! </button>
                 <br/>
-                <h4 class="text-white text-center my-5">For any issues or concerns / information </h4><br/>  
+                <h4 class="text-white text-center my-5">For any issues or concerns / information </h4><br/>
                 <button class="btn btnfont btnbg mb-1 mx-2 my-4" onclick="location.href='{% url 'contacts:contact-create' %}'"> <span class="about"><i class="fa-solid fa-envelope"></i></span> Contact us </button>
         </div>
     </div>

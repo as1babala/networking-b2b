@@ -9,23 +9,25 @@ from django.shortcuts import render, redirect, reverse
 from django.views.generic import (
     TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 )
-from django.http import HttpResponse  
+from django.http import HttpResponse
 from django.urls import reverse_lazy
 from core.models import *
 from core.forms import *
 from .forms import *
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.decorators import login_required
+
 # Add below existing imports
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_str, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
+from .tokens import account_activation_token
 from django.core.mail import EmailMessage
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import get_language, activate, gettext
 from django.utils import translation
+
 from .tokens import account_activation_token, generate_confirmation_token
 
 # Create your views here.
@@ -58,7 +60,7 @@ class HomePageView(ListView):
             "companies_count": Enterprises.objects.count(),
             "deals_count": Deals.objects.count(),
             "product_deals_count": ProductDeals.objects.count(),
-           
+
         }
         return my_set
 
@@ -76,10 +78,10 @@ def home_page(request):
     companies_count= Enterprises.objects.count()
     deals_count= Deals.objects.count()
     product_deals_count= ProductDeals.objects.count()
-    return render (request, 'accounts/home_page.html',{"deals": deals, "blogs": blogs, #"experts": experts, 
-                                                       "fiches": fiches, "companies":companies, "jobs": jobs, "trainings": trainings, "experts": experts,"experts_count": experts_count, "companies_count": companies_count, "deals_count": deals_count, "product_deals_count": product_deals_count, "product_deals": product_deals}) 
-    
-'''
+    return render (request, 'accounts/home_page.html',{"deals": deals, "blogs": blogs, #"experts": experts,
+                                                       "fiches": fiches, "companies":companies, "jobs": jobs, "trainings": trainings, "experts": experts,"experts_count": experts_count, "companies_count": companies_count, "deals_count": deals_count, "product_deals_count": product_deals_count, "product_deals": product_deals})
+
+
 def translate(language):
     cur_language = get_language()
     try:
@@ -88,7 +90,6 @@ def translate(language):
     finally:
         activate(cur_language)
     return text
-'''
 
 def aboutus(request):
     #trans = translate(language='fr')
@@ -115,25 +116,14 @@ class home_business( generic.ListView):
     #queryset = Opportunities.objects.all() # not adding context here
     #context_object_name = "opportunities"
     #paginate_by = 5
-'''
-class home_expert( generic.ListView):
-    template_name = "accounts/home_expert.html"
-    queryset = Experts.objects.all() # not adding context here
-    context_object_name = "experts"
-    paginate_by = 5
-'''
+
+
 class home_employee( generic.ListView):
     template_name = "accounts/home_employee.html"
-    #queryset = Employees.objects.all() # not adding context here
-    #context_object_name = "opportunities"
-    #paginate_by = 5
-
 
 class home_admin( generic.ListView):
     template_name = "accounts/home_admin.html"
-    #queryset = Opportunities.objects.all() # not adding context here
-    #context_object_name = "opportunities"
-    #paginate_by = 5
+
 
 ### Signup views ####
 def SignUp1(request):
@@ -151,14 +141,14 @@ def SignUp1(request):
             user.save()
             #UserProfile.objects.create(name=name, user=user)
             login(request, user) # old line of code just remove the comment to activate it
-            #return redirect('accounts:home-page') 
+            #return redirect('accounts:home-page')
             #activateEmail(request, user, form.cleaned_data.get('email')) # new line
             return redirect('accounts:home-page')
     else:
         form = UserCreateForm()
     return render(request, 'accounts/signup.html', {'form': form})
 
-def SignUp_v1(request):
+def SignUp2(request):
     if request.method == 'POST':
         next = request.GET.get('next')
         form = UserCreateForm(request.POST)
@@ -217,48 +207,51 @@ def SignUp(request):
     return render(request, 'accounts/signup.html', context)
 
 
-def signup(request):  
-    if request.method == 'POST':  
-        form = UserCreateForm(request.POST)  
-        if form.is_valid():  
-            # save form in the memory not in database  
-            user = form.save(commit=False)  
-            user.is_active = False  
-            user.save()  
-            # to get the domain of the current site  
-            current_site = get_current_site(request)  
-            mail_subject = 'Activation link has been sent to your email id'  
-            message = render_to_string('accounts/acc_active_email.html', {  
-                'user': user,  
-                'domain': current_site.domain,  
-                'uid':urlsafe_base64_encode(force_bytes(user.pk)),  
-                'token':account_activation_token.make_token(user),  
-            })  
-            to_email = form.cleaned_data.get('email')  
-            email = EmailMessage(  
-                        mail_subject, message, to=[to_email]  
-            )  
-            email.send()  
-            return HttpResponse('Please confirm your email address to complete the registration')  
-    else:  
-        form = UserCreateForm()  
-    return render(request, 'accounts/signup.html', {'form': form})  
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreateForm(request.POST)
+        if form.is_valid():
+            # save form in the memory not in database
+            user = form.save(commit=False)
+            user.is_active = False
+            user.save()
+            to_email = form.cleaned_data.get('email')
+            # to get the domain of the current site
+            current_site = get_current_site(request)
+            mail_subject = 'Activation link has been sent to your email id'
+            message = render_to_string('accounts/acc_active_email.html', {
+                'user': user,
+                'domain': current_site.domain,
+                'uid':urlsafe_base64_encode(force_bytes(user.pk)),
+                'token':account_activation_token.make_token(user),
+            })
+            to_email = form.cleaned_data.get('email')
+            email = EmailMessage(
+                        mail_subject, message, to=[to_email]
+            )
+            email.send()
+            return HttpResponse('Please confirm your email address to complete the registration')
+    else:
+        form = UserCreateForm()
+    return render(request, 'accounts/signup.html', {'form': form})
 
-def activate1(request, uidb64, token):  
+
+def activate(request, uidb64, token):
     #User = get_user_model()
-    User = CustomUser  
-    try:  
-        uid = force_text(urlsafe_base64_decode(uidb64))  
-        user = User.objects.get(pk=uid)  
-    except(TypeError, ValueError, OverflowError, User.DoesNotExist):  
-        user = None  
-    if user is not None and account_activation_token.check_token(user, token):  
-        user.is_active = True  
-        user.save()  
-        #return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
-        return redirect('accounts:home-page')  
-    else:  
-        return HttpResponse('Activation link is invalid!')  
+    User = CustomUser
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        #return redirect('accounts:home-page')
+        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+    else:
+        return HttpResponse('Activation link is invalid!')
+
 
 def login_view(request):
     form = UserCreateForm(request.POST or None)
@@ -277,16 +270,17 @@ def login_view(request):
             elif user is not None and user.is_expert:
                 login(request, user)
                 return redirect('accounts:home-expert')
-            
+
             else:
                 msg = 'Invalid credentials'
         else:
             msg = 'Error validating form'
     return render(request, 'accounts/login.html', {'form': form, 'msg': msg})
 
+
 def stats(request):
     deals_count = Deals.objects.count()
-    
+
     return render(request, 'accounts/stats.html', {'deals_counts': deals_count})
 
 ### User Work experience ###
@@ -295,15 +289,15 @@ class WorkExperienceListView(ListView):
     model = WorkExperience
     template_name = 'accounts/work_experience_list.html'
     context_object_name = 'work_experiences'
-    
-    
+
+
 class WorkExperienceCreateView( LoginRequiredMixin, CreateView):
     model = WorkExperience
     template_name = "accounts/work_experience_create.html"
     fields = ['company_name', 'position', 'work_location_address', 'work_city', 'work_country', 'job_title',
           'start_date', 'end_date', 'description']
     success_url = reverse_lazy('accounts:experience-list')
-     
+
     def form_valid(self, form):
         form.instance.email = self.request.user.email
         form.instance.user = self.request.user
@@ -314,22 +308,22 @@ class WorkExperienceUpdateView(LoginRequiredMixin, generic.UpdateView):
     template_name = "accounts/expert_experience_update.html"
     form_class = WorkExperienceForm
     queryset = WorkExperience.objects.all()
-    
+
     def get_success_url(self):
         return reverse("profiles:expert-profile-list")
-     
+
 class ExpertPortfolioListView(ListView):
     model = ExpertPortfolio
     template_name = 'accounts/expert_portfolio_list.html'
     context_object_name = 'expert_portfolios'
-    
+
 class ExpertPortfolioCreateView( LoginRequiredMixin, CreateView):
     model = ExpertPortfolio
     template_name = "accounts/expert_portfolio_create.html"
     fields = ['project_title', 'project_type', 'client_name', 'technologies_used', "project_city", "project_country",
           'reference_email', 'start_date', 'end_date','description',]
     success_url = reverse_lazy('accounts:portfolio-list')
-     
+
     def form_valid(self, form):
         form.instance.consultant_email = self.request.user.email
         form.instance.consultant = self.request.user
@@ -340,39 +334,39 @@ class ExpertPortfolioUpdateView(LoginRequiredMixin, generic.UpdateView):
     template_name = "accounts/expert_portfolio_update.html"
     form_class = ProjectPortfolioForm
     queryset = ExpertPortfolio.objects.all()
-    
+
     def get_success_url(self):
         return reverse("profiles:expert-profile-list")
-    
+
 class EducationListView(ListView):
     model = Education
     template_name = 'accounts/education_list.html'
     context_object_name = 'education'
-    
+
 class EducationCreateView( LoginRequiredMixin, CreateView):
     model = Education
     template_name = "accounts/education_create.html"
-    fields = ["institution_name", "degree", "specialization", "minor", "start_date", "end_date","gpa","graduated", "description" ] 
+    fields = ["institution_name", "degree", "specialization", "minor", "start_date", "end_date","gpa","graduated", "description" ]
     success_url = reverse_lazy('profiles:expert-user-profile-list')
-     
+
     def form_valid(self, form):
         form.instance.student_email = self.request.user.email
         form.instance.student = self.request.user
-        
-        return super().form_valid(form) 
+
+        return super().form_valid(form)
 
 class EducationUpdateView(LoginRequiredMixin, generic.UpdateView):
     template_name = "accounts/education_update.html"
     form_class = EducationModelForm
     queryset = Education.objects.all()
-    
+
     def get_success_url(self):
         return reverse("profiles:expert-profile-list")
-    
+
 def logout_view(request):
     logout(request)
     return redirect('accounts/login.html')
- 
+
 def AdminSignUp(request):
     if request.method == 'POST':
         form = UserCreateForm(request.POST)
@@ -389,7 +383,7 @@ def AdminSignUp(request):
             user.save()
             #UserProfile.objects.create(name=name, user=user)
             login(request, user) # old line of code just remove the comment to activate it
-            #return redirect('accounts:home-page') 
+            #return redirect('accounts:home-page')
             #activateEmail(request, user, form.cleaned_data.get('email')) # new line
             return redirect('accounts:home-page')
     else:
@@ -413,7 +407,7 @@ def EmployeeSignUp(request):
             user.save()
             #UserProfile.objects.create(name=name, user=user)
             login(request, user) # old line of code just remove the comment to activate it
-            #return redirect('accounts:home-page') 
+            #return redirect('accounts:home-page')
             #activateEmail(request, user, form.cleaned_data.get('email')) # new line
             return redirect('accounts:home-page')
     else:
@@ -431,20 +425,22 @@ class ReadContentView(ListView):
             "blogs_read": BlogRead.objects.all(),
             "deals_read": DealRead.objects.all(),
             "product_deals_read": ProductDealRead.objects.all(),
-            
+
              }
         return message_all
 
 
 # send email with verification link
-def verify_email(request):
+def verify_email1(request):
     if request.method == "POST":
+        form = UserCreateForm(request.POST)
         if request.user.email_is_verified != True:
         #if request.user.is_active != True:
             current_site = get_current_site(request)
             user = request.user
             #print(user.email_verified)
             #email = request.user.email
+            email = form.cleaned_data.get('email')
             subject = "Verify Email"
             message = render_to_string('accounts/verify_email_message.html', {
                 'request': request,
@@ -452,9 +448,10 @@ def verify_email(request):
                 'domain': current_site.domain,
                 'uid':urlsafe_base64_encode(force_bytes(user.id)),
                 'token':account_activation_token.make_token(user),
-                #'protocol': 'https' if request.secure() else 'http'
+                'protocol': 'https' if request.secure() else 'http'
             })
-            #email = form.cleaned_data.get('email')  
+            #email = form.cleaned_data.get('email')
+
             email = EmailMessage(
                 subject, message, to=[email]
             )
@@ -464,6 +461,40 @@ def verify_email(request):
         else:
             return redirect('accounts:signup')
     return render(request, 'accounts/verify_email.html')
+
+def verify_email(request):
+    if request.method == "POST":
+        form = UserCreateForm(request.POST)  # Adjust YourFormClass to your actual form class
+        if form.is_valid():
+            user = request.user
+            if not user.email_is_verified:
+                current_site = get_current_site(request)
+                #email = form.cleaned_data['email']
+                email = request.user.email
+                subject = "Verify Email"
+                message = render_to_string('accounts/verify_email_message.html', {
+                    'user': user,
+                    'domain': current_site.domain,
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token': account_activation_token.make_token(user),
+                    'protocol': 'https' if request.secure() else 'http',
+                })
+
+                email_message = EmailMessage(subject, message, to=[email])
+                email_message.content_subtype = 'html'
+                email_message.send()
+                return redirect('accounts:verify-email-done')
+            else:
+                # Handle the case where the user's email is already verified
+                return redirect('accounts:home-page')
+        else:
+            # Handle the case where the form is not valid
+            # You might want to return to the same page with form errors
+            return render(request, 'accounts/verify_email.html', {'form': form})
+    else:
+        # If not a POST request, instantiate an empty form
+        form = UserCreateForm()
+        return render(request, 'accounts/verify_email.html', {'form': form})
 
 
 def verify_email_done(request):
@@ -481,7 +512,7 @@ def verify_email_confirm(request, uidb64, token):
         user.is_active = True
         user.save()
         messages.success(request, 'Your email has been verified.')
-        return redirect('accounts:verify-email-complete')   
+        return redirect('accounts:verify-email-complete')
     else:
         messages.warning(request, 'The link is invalid.')
     return render(request, 'accounts/verify_email_confirm.html')
@@ -490,10 +521,12 @@ def verify_email_confirm(request, uidb64, token):
 def verify_email_complete(request):
     return render(request, 'accounts/verify_email_complete.html')
 
+
 #### Registrations Email Confirmation method ###
 #@user_not_authenticated
 def initial_registration(request):
     return render(request, 'accounts/initial_registration.html')
+
 
 def register(request):
     if request.method == "POST":
@@ -555,101 +588,8 @@ def activate(request, uidb64, token):
         return redirect('accounts:login')
     else:
         messages.error(request, 'Activation link is invalid!')
-    
+
     return redirect('accounts:home-page')
 
-'''
-from .forms import SetPasswordForm
-...
-@login_required
-def password_change(request):
-    user = request.user
-    if request.method == 'POST':
-        form = SetPasswordForm(user, request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Your password has been changed")
-            return redirect('login')
-        else:
-            for error in list(form.errors.values()):
-                messages.error(request, error)
 
-    form = SetPasswordForm(user)
-    return render(request, 'password_reset_confirm.html', {'form': form})
 
-from .forms import PasswordResetForm
-from django.db.models.query_utils import Q
-...
-
-@user_not_authenticated
-def password_reset_request(request):
-    if request.method == 'POST':
-        form = PasswordResetForm(request.POST)
-        if form.is_valid():
-            user_email = form.cleaned_data['email']
-            associated_user = get_user_model().objects.filter(Q(email=user_email)).first()
-            if associated_user:
-                subject = "Password Reset request"
-                message = render_to_string("template_reset_password.html", {
-                    'user': associated_user,
-                    'domain': get_current_site(request).domain,
-                    'uid': urlsafe_base64_encode(force_bytes(associated_user.pk)),
-                    'token': account_activation_token.make_token(associated_user),
-                    "protocol": 'https' if request.is_secure() else 'http'
-                })
-                email = EmailMessage(subject, message, to=[associated_user.email])
-                if email.send():
-                    messages.success(request,
-                        """
-                        <h2>Password reset sent</h2><hr>
-                        <p>
-                            We've emailed you instructions for setting your password, if an account exists with the email you entered. 
-                            You should receive them shortly.<br>If you don't receive an email, please make sure you've entered the address 
-                            you registered with, and check your spam folder.
-                        </p>
-                        """
-                    )
-                else:
-                    messages.error(request, "Problem sending reset password email, <b>SERVER PROBLEM</b>")
-
-            return redirect('homepage')
-
-        for key, error in list(form.errors.items()):
-            if key == 'captcha' and error[0] == 'This field is required.':
-                messages.error(request, "You must pass the reCAPTCHA test")
-                continue
-
-    form = PasswordResetForm()
-    return render(
-        request=request, 
-        template_name="password_reset.html", 
-        context={"form": form}
-        )
-    
-def passwordResetConfirm(request, uidb64, token):
-    User = get_user_model()
-    try:
-        uid = force_str(urlsafe_base64_decode(uidb64))
-        user = User.objects.get(pk=uid)
-    except:
-        user = None
-
-    if user is not None and account_activation_token.check_token(user, token):
-        if request.method == 'POST':
-            form = SetPasswordForm(user, request.POST)
-            if form.is_valid():
-                form.save()
-                messages.success(request, "Your password has been set. You may go ahead and <b>log in </b> now.")
-                return redirect('homepage')
-            else:
-                for error in list(form.errors.values()):
-                    messages.error(request, error)
-
-        form = SetPasswordForm(user)
-        return render(request, 'password_reset_confirm.html', {'form': form})
-    else:
-        messages.error(request, "Link is expired")
-
-    messages.error(request, 'Something went wrong, redirecting back to Homepage')
-    return redirect("homepage")
-    '''
