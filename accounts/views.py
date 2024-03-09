@@ -557,3 +557,6 @@ def activate(request, uidb64, token):
         messages.error(request, 'Activation link is invalid!')
     
     return redirect('accounts:home-page')
+####
+def password_reset_done(request):
+    return render(request, 'accounts/password_reset_done.html')

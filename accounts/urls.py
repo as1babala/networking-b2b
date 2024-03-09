@@ -12,10 +12,17 @@ urlpatterns = [
     
     #### Password reset  ###
     path("reset_password/", auth_views.PasswordResetView.as_view(template_name="accounts/password_reset.html"), name="password_reset"),
-    path("reset_complete/", auth_views.PasswordResetCompleteView.as_view(template_name="accounts/reset_complete.html"), name="password_reset_done"),
-    #path("reset_password_confirmation/", auth_views.PasswordResetConfirmView.as_view(template_name="accounts/reset_confirmation.html"), name="password_reset_done"),
+    
+    path("password_reset/done/", auth_views.PasswordResetDoneView.as_view(template_name="accounts/password_reset_sent.html"), name="password_reset_done"),
+     
     path("reset/<uidb64>/<token>/ ", auth_views.PasswordResetConfirmView.as_view(template_name="accounts/reset_confirmation.html"), name="password_reset_confirmation"), 
-    path("reset_password_done/", auth_views.PasswordResetDoneView.as_view(template_name="accounts/reset_confirmation.html"), name="password_reset_done"),
+    
+    path("reset_complete/", auth_views.PasswordResetCompleteView.as_view(template_name="accounts/password_reset_complete.html"), name="password_reset_done"),
+    
+    #path("reset_password_confirmation/", auth_views.PasswordResetConfirmView.as_view(template_name="accounts/reset_confirmation.html"), name="password_reset_done"),
+    
+     
+    
    
     ### password change ###
     path("password_change/", auth_views.PasswordChangeView.as_view(template_name="accounts/password_change.html"), name="pass-change"),
@@ -73,6 +80,9 @@ urlpatterns = [
     
     path('activate/<uidb64>/<token>', activate, name='activate'),
     path('verify-email/', initial_registration, name='verify-email'),
+    
+    ###### Password reset
+   
 ]
     
     

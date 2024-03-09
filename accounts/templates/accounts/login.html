@@ -30,18 +30,15 @@ login
     </div>
 {% endif %}
 
-
-
-
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"> 
 <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">  <!-- Link to your CSS file -->
 <script src="{% static 'js/login.js' %}"></script>  <!-- Link to your JavaScript file -->
-{% endblock %}
+{% endblock head %}
 
 <section class="py-5 ">
 <div class="login-container">
-  <h2><span class="about2">Login</span></h2>
+    <h2 class="" style="color:#0A2647; font-style: bold">Login</h2>
   <form method="post" id="loginForm">
     {% csrf_token %}
     {{ form.as_p }}
